@@ -71,6 +71,37 @@ export function appendCareLog(
   };
 }
 
+export function addRoutineToState(
+  state: CareAppState,
+  input: {
+    id: string;
+    title: string;
+    category: CareCategory;
+    time: string;
+    frequency: Routine['frequency'];
+    reminderMinutesBefore: number;
+  },
+): CareAppState {
+  const title = input.title.trim();
+  if (!title || !isValidRoutineTime(input.time)) return state;
+
+  return {
+    ...state,
+    routines: [
+      ...state.routines,
+      {
+        id: input.id,
+        petId: state.pet.id,
+        title,
+        category: input.category,
+        time: input.time,
+        frequency: input.frequency,
+        reminderMinutesBefore: input.reminderMinutesBefore,
+      },
+    ],
+  };
+}
+
 export function completeRoutineInState(
   state: CareAppState,
   input: {
@@ -98,6 +129,10 @@ export function completeRoutineInState(
     tags: [routine.title],
     sourceRoutineId: routine.id,
   });
+}
+
+function isValidRoutineTime(value: string) {
+  return /^([01]\d|2[0-3]):[0-5]\d$/.test(value);
 }
 
 export function updateNotificationPreferences(

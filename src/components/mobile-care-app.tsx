@@ -28,6 +28,7 @@ import {
   type CareCategory,
 } from '../lib/care';
 import {
+  addRoutineToState,
   appendCareLog,
   completeRoutineInState,
   createCareAppState,
@@ -69,6 +70,10 @@ export function MobileCareApp() {
   const [walkDistance, setWalkDistance] = useState('1.2');
   const [symptom, setSymptom] = useState('피부 가려움');
   const [memoryTitle, setMemoryTitle] = useState('기분 좋은 오후');
+  const [routineTitle, setRoutineTitle] = useState('저녁 산책');
+  const [routineTime, setRoutineTime] = useState('19:00');
+  const [routineCategory, setRoutineCategory] = useState<CareCategory>('walk');
+  const [routineReminder, setRoutineReminder] = useState('30');
   const [memoryPreview, setMemoryPreview] = useState<string | null>(null);
   const [locationConsent, setLocationConsent] = useState(false);
   const [walkPath, setWalkPath] = useState<WalkPoint[]>([]);
@@ -132,6 +137,19 @@ export function MobileCareApp() {
         routineId,
         id: createLogId(),
         now: createOccurredAt(current.activeDate),
+      }),
+    );
+  }
+
+  function addRoutine() {
+    setCareState((current) =>
+      addRoutineToState(current, {
+        id: createRoutineId(),
+        title: routineTitle,
+        category: routineCategory,
+        time: routineTime,
+        frequency: 'daily',
+        reminderMinutesBefore: Number(routineReminder) || 0,
       }),
     );
   }
@@ -299,6 +317,35 @@ export function MobileCareApp() {
                 <Bell size={18} />
               </div>
               <div className="notice-list">
+                <div className="routine-form" aria-label="새 루틴 추가">
+                  <label className="compact-field">
+                    <span>루틴</span>
+                    <input value={routineTitle} onChange={(event) => setRoutineTitle(event.target.value)} />
+                  </label>
+                  <div className="routine-grid">
+                    <label className="compact-field">
+                      <span>시간</span>
+                      <input type="time" value={routineTime} onChange={(event) => setRoutineTime(event.target.value)} />
+                    </label>
+                    <label className="compact-field">
+                      <span>분류</span>
+                      <select value={routineCategory} onChange={(event) => setRoutineCategory(event.target.value as CareCategory)}>
+                        <option value="meal">식사</option>
+                        <option value="walk">산책</option>
+                        <option value="health">건강</option>
+                        <option value="memory">추억</option>
+                      </select>
+                    </label>
+                    <label className="compact-field">
+                      <span>알림</span>
+                      <input inputMode="numeric" value={routineReminder} onChange={(event) => setRoutineReminder(event.target.value)} />
+                    </label>
+                  </div>
+                  <button className="secondary-action" onClick={addRoutine} type="button">
+                    <Plus size={18} />
+                    루틴 추가
+                  </button>
+                </div>
                 <div className="notice-row">
                   <span>메일</span>
                   <strong>이메일 알림</strong>
@@ -482,6 +529,14 @@ function createLogId() {
   }
 
   return `log-${Date.now()}`;
+}
+
+function createRoutineId() {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return `routine-${crypto.randomUUID()}`;
+  }
+
+  return `routine-${Date.now()}`;
 }
 
 function categoryCopy(category: CareCategory) {

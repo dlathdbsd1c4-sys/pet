@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import {
+  addRoutineToState,
   appendCareLog,
   completeRoutineInState,
   createCareAppState,
@@ -112,6 +113,67 @@ describe('completeRoutineInState', () => {
     assert.equal(second.logs.length, 1);
     assert.equal(second.logs[0].title, 'Morning meal 완료');
     assert.equal(second.logs[0].sourceRoutineId, 'routine-breakfast');
+  });
+});
+
+describe('addRoutineToState', () => {
+  it('adds a new routine for the current pet without mutating the previous state', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    const next = addRoutineToState(state, {
+      id: 'routine-walk',
+      title: 'Evening walk',
+      category: 'walk',
+      time: '19:00',
+      frequency: 'daily',
+      reminderMinutesBefore: 30,
+    });
+
+    assert.equal(state.routines.length, 1);
+    assert.equal(next.routines.length, 2);
+    assert.deepEqual(next.routines[1], {
+      id: 'routine-walk',
+      petId: 'pet-1',
+      title: 'Evening walk',
+      category: 'walk',
+      time: '19:00',
+      frequency: 'daily',
+      reminderMinutesBefore: 30,
+    });
+  });
+
+  it('ignores routine requests with missing title or invalid time', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    const missingTitle = addRoutineToState(state, {
+      id: 'routine-empty',
+      title: '  ',
+      category: 'meal',
+      time: '12:00',
+      frequency: 'daily',
+      reminderMinutesBefore: 10,
+    });
+    const invalidTime = addRoutineToState(state, {
+      id: 'routine-bad-time',
+      title: 'Lunch',
+      category: 'meal',
+      time: 'noon',
+      frequency: 'daily',
+      reminderMinutesBefore: 10,
+    });
+
+    assert.equal(missingTitle, state);
+    assert.equal(invalidTime, state);
   });
 });
 

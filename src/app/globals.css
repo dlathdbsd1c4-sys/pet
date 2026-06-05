@@ -15,7 +15,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -258,6 +259,44 @@ h2 {
 .expert-list {
   display: grid;
   gap: 8px;
+}
+
+.routine-form {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #dce8e2;
+  border-radius: 8px;
+  background: #fbfdfc;
+}
+
+.routine-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  gap: 8px;
+}
+
+.compact-field {
+  display: grid;
+  gap: 5px;
+}
+
+.compact-field span {
+  color: #52655c;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.compact-field input,
+.compact-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  padding: 0 9px;
+  border: 1px solid #cbdcd4;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #24302b;
 }
 
 .notice-row,
