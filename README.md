@@ -39,6 +39,8 @@ GOOGLE_CALENDAR_CLIENT_ID=
 
 `supabase/schema.sql`에는 Auth 사용자 기준의 개인 케어 공간, 향후 가족 공유를 위한 멤버십, 반려동물/루틴/로그/사진/전문가 추천 테이블과 RLS 정책이 포함되어 있습니다.
 
+`src/lib/supabase-mappers.ts`는 앱 상태를 `pets`, `routines`, `care_logs`, `notification_preferences`, Storage 경로 형태로 변환합니다. Supabase CRUD 연결 시 이 매퍼를 통해 프론트 상태와 DB 스키마를 맞춥니다.
+
 Supabase SQL editor에서 적용하기 전에 프로젝트의 Data API 노출 범위와 Storage 정책을 확인하세요. RLS는 `auth.uid()`와 `care_space_members`를 기준으로 하며, 사용자 수정 가능한 `user_metadata`를 권한 판단에 사용하지 않습니다.
 
 ## 검증
