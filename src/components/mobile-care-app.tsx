@@ -18,7 +18,7 @@ import {
   Utensils,
 } from 'lucide-react';
 import type { ComponentType } from 'react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   buildTodayTimeline,
@@ -26,8 +26,14 @@ import {
   recommendExperts,
   toIcsCalendar,
   type CareCategory,
-  type CareLog,
 } from '../lib/care';
+import {
+  appendCareLog,
+  completeRoutineInState,
+  createCareAppState,
+  createCareStateStorage,
+  updateNotificationPreferences,
+} from '../lib/care-state';
 import { experts, initialLogs, primaryPet, routines } from '../lib/sample-data';
 
 type TabId = 'today' | 'health' | 'meal' | 'walk' | 'experts';
@@ -48,9 +54,17 @@ const tabs: Array<{ id: TabId; label: string; icon: ComponentType<{ size?: numbe
   { id: 'experts', label: '추천', icon: Stethoscope },
 ];
 
+const initialCareState = createCareAppState({
+  activeDate: today,
+  pet: primaryPet,
+  routines,
+  logs: initialLogs,
+});
+
 export function MobileCareApp() {
   const [activeTab, setActiveTab] = useState<TabId>('today');
-  const [logs, setLogs] = useState<CareLog[]>(initialLogs);
+  const [careState, setCareState] = useState(initialCareState);
+  const [hasLoadedStoredState, setHasLoadedStoredState] = useState(false);
   const [mealAmount, setMealAmount] = useState('70');
   const [walkDistance, setWalkDistance] = useState('1.2');
   const [symptom, setSymptom] = useState('피부 가려움');
@@ -59,11 +73,28 @@ export function MobileCareApp() {
   const [locationConsent, setLocationConsent] = useState(false);
   const [walkPath, setWalkPath] = useState<WalkPoint[]>([]);
   const [locationMessage, setLocationMessage] = useState('위치 동의 시 GPS 경로를 함께 남길 수 있어요.');
-  const [emailReminder, setEmailReminder] = useState(true);
+  const storage = useMemo(() => {
+    if (typeof window === 'undefined') return null;
+    return createCareStateStorage({
+      key: 'pet-care-mobile-web-state',
+      storage: window.localStorage,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!storage) return;
+    setCareState(storage.load(initialCareState));
+    setHasLoadedStoredState(true);
+  }, [storage]);
+
+  useEffect(() => {
+    if (!storage || !hasLoadedStoredState) return;
+    storage.save(careState);
+  }, [careState, hasLoadedStoredState, storage]);
 
   const timeline = useMemo(
-    () => buildTodayTimeline({ date: today, routines, logs }),
-    [logs],
+    () => buildTodayTimeline({ date: careState.activeDate, routines: careState.routines, logs: careState.logs }),
+    [careState],
   );
   const calorieRange = useMemo(
     () =>
@@ -76,40 +107,41 @@ export function MobileCareApp() {
     [],
   );
   const expertRecommendations = useMemo(
-    () => recommendExperts({ pet: primaryPet, logs, experts }).slice(0, 3),
-    [logs],
+    () => recommendExperts({ pet: primaryPet, logs: careState.logs, experts }).slice(0, 3),
+    [careState.logs],
   );
   const dueCount = timeline.filter((item) => item.kind === 'routine' && item.status === 'due').length;
+  const emailReminder = careState.notificationPreferences.emailEnabled;
 
   function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string) {
-    const now = new Date();
-    const occurredAt = `${today}T${now.toTimeString().slice(0, 8)}+09:00`;
-    setLogs((current) => [
-      ...current,
-      {
-        id: `log-${crypto.randomUUID()}`,
-        petId: primaryPet.id,
+    setCareState((current) =>
+      appendCareLog(current, {
+        id: createLogId(),
+        now: createOccurredAt(current.activeDate),
         category,
         title,
-        occurredAt,
-        sourceRoutineId,
         tags,
-      },
-    ]);
+        sourceRoutineId,
+      }),
+    );
   }
 
   function completeRoutine(routineId: string) {
-    const routine = routines.find((item) => item.id === routineId);
-    if (!routine) return;
-    addLog(routine.category, `${routine.title} 완료`, [routine.title], routine.id);
+    setCareState((current) =>
+      completeRoutineInState(current, {
+        routineId,
+        id: createLogId(),
+        now: createOccurredAt(current.activeDate),
+      }),
+    );
   }
 
   function downloadCalendar() {
     const ics = toIcsCalendar({
       calendarName: `${primaryPet.name} 케어 루틴`,
       timezone: 'Asia/Seoul',
-      routines,
-      startDate: today,
+      routines: careState.routines,
+      startDate: careState.activeDate,
     });
     const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -188,7 +220,7 @@ export function MobileCareApp() {
             <span>남은 루틴</span>
           </div>
           <div>
-            <span className="metric">{logs.length}</span>
+            <span className="metric">{careState.logs.length}</span>
             <span>오늘 기록</span>
           </div>
           <div>
@@ -272,13 +304,19 @@ export function MobileCareApp() {
                   <strong>이메일 알림</strong>
                   <button
                     className={emailReminder ? 'toggle-on' : 'toggle-off'}
-                    onClick={() => setEmailReminder((enabled) => !enabled)}
+                    onClick={() =>
+                      setCareState((current) =>
+                        updateNotificationPreferences(current, {
+                          emailEnabled: !current.notificationPreferences.emailEnabled,
+                        }),
+                      )
+                    }
                     type="button"
                   >
                     {emailReminder ? '켜짐' : '꺼짐'}
                   </button>
                 </div>
-                {routines.map((routine) => (
+                {careState.routines.map((routine) => (
                   <div key={routine.id} className="notice-row">
                     <span>{routine.time}</span>
                     <strong>{routine.title}</strong>
@@ -306,7 +344,7 @@ export function MobileCareApp() {
                 건강 기록 추가
               </button>
               <div className="record-list">
-                {logs
+                {careState.logs
                   .filter((log) => log.category === 'health')
                   .map((log) => (
                     <article key={log.id} className="record-row">
@@ -431,6 +469,19 @@ export function MobileCareApp() {
       </section>
     </main>
   );
+}
+
+function createOccurredAt(activeDate: string) {
+  const now = new Date();
+  return `${activeDate}T${now.toTimeString().slice(0, 8)}+09:00`;
+}
+
+function createLogId() {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return `log-${crypto.randomUUID()}`;
+  }
+
+  return `log-${Date.now()}`;
 }
 
 function categoryCopy(category: CareCategory) {

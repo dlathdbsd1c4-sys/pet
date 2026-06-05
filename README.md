@@ -11,6 +11,7 @@
 - 추억: 사진 선택과 짧은 일지
 - 추천: 케어 이력 태그 기반 전문가 추천 사유
 - 알림: 앱 내 알림 센터, 이메일 알림 설정, `.ics` 다운로드와 Google Calendar 템플릿 링크
+- 모바일 브라우저 저장: 기록, 루틴 완료, 알림 설정을 `localStorage`에 저장해 새로고침 후에도 유지
 
 ## 실행
 
@@ -32,7 +33,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 GOOGLE_CALENDAR_CLIENT_ID=
 ```
 
-현재 화면은 샘플 데이터로 동작하며, Supabase 연결 값이 있을 때 `src/lib/supabase-client.ts`를 통해 브라우저 클라이언트를 만들 수 있습니다.
+현재 화면은 샘플 데이터를 초기값으로 사용하고, 사용 중 추가한 기록과 알림 설정은 모바일 브라우저의 `localStorage`에 저장됩니다. Supabase 연결 값이 있을 때 `src/lib/supabase-client.ts`를 통해 브라우저 클라이언트를 만들 수 있습니다.
 
 ## Supabase
 
