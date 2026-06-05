@@ -28,4 +28,16 @@ describe('mobile browser delivery', () => {
     assert.equal(dependencyNames.some((name) => name.includes('next-pwa')), false);
     assert.equal(dependencyNames.some((name) => name.includes('workbox')), false);
   });
+
+  it('keeps the mobile commerce-inspired care shell in place', () => {
+    const component = readFileSync('src/components/mobile-care-app.tsx', 'utf8');
+    const css = readFileSync('src/app/globals.css', 'utf8');
+
+    assert.match(component, /무엇을 기록할까요/);
+    assert.match(component, /오늘 케어 미션/);
+    assert.match(component, /추천 케어/);
+    assert.match(css, /\.commerce-header/);
+    assert.match(css, /\.care-hero/);
+    assert.match(css, /\.bottom-tabbar/);
+  });
 });

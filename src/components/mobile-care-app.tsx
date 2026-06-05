@@ -4,6 +4,7 @@ import {
   Bell,
   CalendarDays,
   Camera,
+  ChevronDown,
   CheckCircle2,
   Circle,
   Dog,
@@ -13,6 +14,7 @@ import {
   MapPin,
   Navigation,
   Plus,
+  Search,
   Stethoscope,
   Store,
   Utensils,
@@ -219,18 +221,42 @@ export function MobileCareApp() {
   return (
     <main className="app-canvas">
       <section className="mobile-shell" aria-label="반려동물 통합 케어">
-        <header className="topbar">
-          <div>
-            <p className="eyebrow">모바일 웹 케어</p>
-            <h1>{primaryPet.name}</h1>
-            <p className="pet-meta">
-              {primaryPet.breed} · {primaryPet.weightKg}kg · {primaryPet.sex}
-            </p>
+        <header className="commerce-header">
+          <div className="commerce-brand">
+            <button className="pet-select" type="button">
+              <span>강아지</span>
+              <ChevronDown size={14} />
+            </button>
+            <button className="care-room-chip" type="button">
+              <span className="care-room-label">{primaryPet.name} 케어룸</span>
+              <ChevronDown size={14} />
+            </button>
           </div>
-          <button className="pet-avatar" aria-label="반려동물 프로필">
-            <Dog size={30} />
-          </button>
+          <div className="header-actions">
+            <button className="header-icon" type="button" aria-label="알림">
+              <Bell size={21} />
+            </button>
+            <button className="header-icon" onClick={downloadCalendar} type="button" aria-label="캘린더">
+              <CalendarDays size={21} />
+            </button>
+          </div>
         </header>
+
+        <button className="search-pill" onClick={() => setActiveTab('today')} type="button">
+          <Search size={18} />
+          <span>무엇을 기록할까요?</span>
+        </button>
+
+        <section className="care-hero" aria-label="오늘 케어 미션">
+          <div className="hero-copy">
+            <p>오늘 케어 미션</p>
+            <h1>{primaryPet.name}의 루틴을 챙겨요</h1>
+            <span>{dueCount > 0 ? `${dueCount}개 루틴이 기다리고 있어요` : '오늘 루틴을 모두 완료했어요'}</span>
+          </div>
+          <div className="hero-pet-card" aria-hidden="true">
+            <Dog size={52} />
+          </div>
+        </section>
 
         <section className="status-strip" aria-label="오늘 케어 요약">
           <div>
@@ -247,7 +273,32 @@ export function MobileCareApp() {
           </div>
         </section>
 
-        <nav className="tabbar" aria-label="케어 메뉴">
+        <section className="care-shortcuts" aria-label="추천 케어">
+          <div className="shortcut-title">
+            <h2>추천 케어</h2>
+            <span>자주 쓰는 기능</span>
+          </div>
+          <div className="shortcut-rail">
+            <button onClick={() => addLog('meal', '간식 급여', ['간식'])} type="button">
+              <Utensils size={18} />
+              <span>간식</span>
+            </button>
+            <button onClick={() => setActiveTab('walk')} type="button">
+              <Footprints size={18} />
+              <span>산책 기록</span>
+            </button>
+            <button onClick={() => setActiveTab('health')} type="button">
+              <HeartPulse size={18} />
+              <span>건강수첩</span>
+            </button>
+            <button onClick={() => setActiveTab('experts')} type="button">
+              <Stethoscope size={18} />
+              <span>전문가</span>
+            </button>
+          </div>
+        </section>
+
+        <nav className="bottom-tabbar" aria-label="케어 메뉴">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             return (
@@ -257,7 +308,7 @@ export function MobileCareApp() {
                 onClick={() => setActiveTab(tab.id)}
                 type="button"
               >
-                <Icon size={18} />
+                <Icon size={19} />
                 <span>{tab.label}</span>
               </button>
             );
