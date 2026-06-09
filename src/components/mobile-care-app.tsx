@@ -4,10 +4,8 @@ import {
   Bell,
   CalendarDays,
   Camera,
-  ChevronDown,
   CheckCircle2,
   Circle,
-  Dog,
   Footprints,
   HeartPulse,
   MapPin,
@@ -15,7 +13,6 @@ import {
   Navigation,
   Play,
   Plus,
-  Search,
   Stethoscope,
   Store,
   Utensils,
@@ -203,6 +200,36 @@ export function MobileCareApp() {
       icon: MapPin,
     },
   ];
+  const careShortcutItems = [
+    {
+      id: 'snack',
+      label: '간식',
+      detail: '간식 급여를 바로 남겨요',
+      icon: Utensils,
+      action: () => addLog('meal', '간식 급여', ['간식']),
+    },
+    {
+      id: 'walk-record',
+      label: '산책 기록',
+      detail: '시간과 거리부터 저장',
+      icon: Footprints,
+      action: () => setActiveTab('walk'),
+    },
+    {
+      id: 'health-book',
+      label: '건강수첩',
+      detail: '증상과 투약 기록',
+      icon: HeartPulse,
+      action: () => setActiveTab('health'),
+    },
+    {
+      id: 'local-care',
+      label: '동네 케어',
+      detail: '병원과 펫시터 보기',
+      icon: Stethoscope,
+      action: () => setActiveTab('experts'),
+    },
+  ];
 
   function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string) {
     setCareState((current) =>
@@ -305,82 +332,11 @@ export function MobileCareApp() {
   return (
     <main className="app-canvas">
       <section className="mobile-shell" aria-label="반려동물 통합 케어">
-        <header className="commerce-header">
-          <div className="commerce-brand">
-            <button className="pet-select" type="button">
-              <span>강아지</span>
-              <ChevronDown size={14} />
-            </button>
-            <button className="care-room-chip" type="button">
-              <span className="care-room-label">{primaryPet.name} 케어룸</span>
-              <ChevronDown size={14} />
-            </button>
-          </div>
-          <div className="header-actions">
-            <button className="header-icon" type="button" aria-label="알림">
-              <Bell size={21} />
-            </button>
-            <button className="header-icon" onClick={downloadCalendar} type="button" aria-label="캘린더">
-              <CalendarDays size={21} />
-            </button>
-          </div>
+        <header className="calm-header">
+          <p>오늘의 케어</p>
+          <h1>몽이와 오늘 케어</h1>
+          <span>가족이 함께 보는 산책, 식사, 건강 기록</span>
         </header>
-
-        <button className="search-pill" onClick={() => setActiveTab('today')} type="button">
-          <Search size={18} />
-          <span>무엇을 기록할까요?</span>
-        </button>
-
-        <section className="care-hero" aria-label="오늘 케어 미션">
-          <div className="hero-copy">
-            <p>오늘 케어 미션</p>
-            <h1>{primaryPet.name}의 루틴을 챙겨요</h1>
-            <span>{completedCareCount}개 핵심 케어를 완료했어요</span>
-          </div>
-          <div className="hero-pet-card" aria-hidden="true">
-            <Dog size={52} />
-          </div>
-        </section>
-
-        <section className="status-strip" aria-label="오늘 케어 요약">
-          <div>
-            <span className="metric">{completedCareCount}</span>
-            <span>핵심 완료</span>
-          </div>
-          <div>
-            <span className="metric">{careState.logs.length}</span>
-            <span>오늘 기록</span>
-          </div>
-          <div>
-            <span className="metric">{calorieRange.minKcal}</span>
-            <span>kcal 시작</span>
-          </div>
-        </section>
-
-        <section className="care-shortcuts" aria-label="추천 케어">
-          <div className="shortcut-title">
-            <h2>추천 케어</h2>
-            <span>자주 쓰는 기능</span>
-          </div>
-          <div className="shortcut-rail">
-            <button onClick={() => addLog('meal', '간식 급여', ['간식'])} type="button">
-              <Utensils size={18} />
-              <span>간식</span>
-            </button>
-            <button onClick={() => setActiveTab('walk')} type="button">
-              <Footprints size={18} />
-              <span>산책 기록</span>
-            </button>
-            <button onClick={() => setActiveTab('health')} type="button">
-              <HeartPulse size={18} />
-              <span>건강수첩</span>
-            </button>
-            <button onClick={() => setActiveTab('experts')} type="button">
-              <Stethoscope size={18} />
-              <span>전문가</span>
-            </button>
-          </div>
-        </section>
 
         <nav className="bottom-tabbar" aria-label="케어 메뉴">
           {tabs.map((tab) => {
@@ -403,8 +359,12 @@ export function MobileCareApp() {
           <div className="view-stack">
             <section className="pet-profile-card" aria-label="우리 아이 프로필">
               <div className="profile-summary">
-                <div className="profile-avatar" aria-hidden="true">
-                  <Dog size={34} />
+                <div className="profile-avatar">
+                  <img
+                    className="pet-photo"
+                    src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=320&q=80"
+                    alt={`${primaryPet.name} 사진`}
+                  />
                 </div>
                 <div>
                   <p className="eyebrow">우리 아이 프로필</p>
@@ -415,15 +375,15 @@ export function MobileCareApp() {
                 </div>
               </div>
               <div className="profile-stats" aria-label="프로필 요약">
-                <span>
+                <span className="soft-metric">
                   <strong>{completedCareCount}</strong>
                   완료
                 </span>
-                <span>
+                <span className="soft-metric">
                   <strong>{careState.logs.length}</strong>
                   기록
                 </span>
-                <span>
+                <span className="soft-metric">
                   <strong>{calorieRange.minKcal}</strong>
                   kcal
                 </span>
@@ -460,6 +420,27 @@ export function MobileCareApp() {
                         <em>{item.detail}</em>
                       </span>
                       <CheckCircle2 size={20} />
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="care-shortcuts" aria-label="추천 케어">
+              <div className="shortcut-title">
+                <h2>추천 케어</h2>
+                <span>자주 쓰는 기능</span>
+              </div>
+              <div className="shortcut-grid">
+                {careShortcutItems.map((shortcut) => {
+                  const Icon = shortcut.icon;
+                  return (
+                    <button key={shortcut.id} onClick={shortcut.action} type="button">
+                      <span className="shortcut-icon">
+                        <Icon size={18} />
+                      </span>
+                      <strong>{shortcut.label}</strong>
+                      <em>{shortcut.detail}</em>
                     </button>
                   );
                 })}
