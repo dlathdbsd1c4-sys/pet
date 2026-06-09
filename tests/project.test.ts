@@ -64,10 +64,12 @@ describe('mobile browser delivery', () => {
   it('keeps the mobile home breathable with expanded spacing', () => {
     const css = readFileSync('src/app/globals.css', 'utf8');
 
-    assert.match(css, /\.mobile-shell \{[\s\S]*padding: 18px 16px 120px/);
-    assert.match(css, /\.view-stack \{[\s\S]*gap: 18px/);
+    assert.match(css, /\.mobile-shell \{[\s\S]*padding: 20px 16px 124px/);
+    assert.match(css, /\.view-stack \{[\s\S]*gap: 30px/);
     assert.match(css, /\.section-block,[\s\S]*\.pet-profile-card \{[\s\S]*padding: 18px/);
-    assert.match(css, /\.profile-stats \{[\s\S]*gap: 12px/);
+    assert.match(css, /\.care-status-list,[\s\S]*\.family-feed \{[\s\S]*gap: 20px/);
+    assert.match(css, /\.shortcut-grid \{[\s\S]*gap: 20px/);
+    assert.match(css, /\.recent-record-grid,[\s\S]*\.quick-actions \{[\s\S]*gap: 14px/);
   });
 
   it('keeps icon-backed action buttons consistent', () => {
