@@ -8,12 +8,12 @@ import {
   CheckCircle2,
   Circle,
   Dog,
-  Download,
   Footprints,
   HeartPulse,
   MapPin,
   MessageCircle,
   Navigation,
+  Play,
   Plus,
   Search,
   Stethoscope,
@@ -527,8 +527,11 @@ export function MobileCareApp() {
             <section className="section-block">
               <div className="section-title">
                 <h2>오늘 케어 타임라인</h2>
-                <button className="icon-button" onClick={downloadCalendar} type="button" aria-label="ICS 캘린더 다운로드">
-                  <Download size={18} />
+                <button className="surface-action" onClick={() => setActiveTab('today')} type="button">
+                  <span className="action-icon">
+                    <Plus size={16} />
+                  </span>
+                  빠른 기록
                 </button>
               </div>
               <div className="timeline">
@@ -541,7 +544,10 @@ export function MobileCareApp() {
                       <p>{categoryCopy(item.category)}</p>
                     </div>
                     {item.kind === 'routine' && item.status === 'due' && (
-                      <button className="small-action" onClick={() => completeRoutine(item.id)} type="button">
+                      <button className="small-action action-button" onClick={() => completeRoutine(item.id)} type="button">
+                        <span className="action-icon">
+                          <CheckCircle2 size={14} />
+                        </span>
                         완료
                       </button>
                     )}
@@ -599,8 +605,10 @@ export function MobileCareApp() {
                       <input inputMode="numeric" value={routineReminder} onChange={(event) => setRoutineReminder(event.target.value)} />
                     </label>
                   </div>
-                  <button className="secondary-action" onClick={addRoutine} type="button">
-                    <Plus size={18} />
+                  <button className="secondary-action action-button" onClick={addRoutine} type="button">
+                    <span className="action-icon">
+                      <Plus size={18} />
+                    </span>
                     루틴 추가
                   </button>
                 </div>
@@ -644,9 +652,11 @@ export function MobileCareApp() {
                 <span>증상 메모</span>
                 <input value={symptom} onChange={(event) => setSymptom(event.target.value)} />
               </label>
-              <button className="primary-action" onClick={() => addLog('health', symptom, ['피부', '가려움'])} type="button">
-                <Plus size={18} />
-                건강 기록 추가
+              <button className="primary-action action-button" onClick={() => addLog('health', symptom, ['피부', '가려움'])} type="button">
+                <span className="action-icon">
+                  <Plus size={18} />
+                </span>
+                기록 추가
               </button>
               <div className="record-list">
                 {careState.logs
@@ -677,9 +687,11 @@ export function MobileCareApp() {
                 <span>급여량 g</span>
                 <input inputMode="decimal" value={mealAmount} onChange={(event) => setMealAmount(event.target.value)} />
               </label>
-              <button className="primary-action" onClick={() => addLog('meal', `사료 ${mealAmount}g 급여`, ['사료', '급여'])} type="button">
-                <Plus size={18} />
-                급여 기록 추가
+              <button className="primary-action action-button" onClick={() => addLog('meal', `사료 ${mealAmount}g 급여`, ['사료', '급여'])} type="button">
+                <span className="action-icon">
+                  <Utensils size={18} />
+                </span>
+                급여 추가
               </button>
             </section>
             <section className="recommendation-slot">
@@ -704,12 +716,16 @@ export function MobileCareApp() {
                 <input inputMode="decimal" value={walkDistance} onChange={(event) => setWalkDistance(event.target.value)} />
               </label>
               <div className="walk-controls">
-                <button className="secondary-action" onClick={captureLocation} type="button">
-                  <MapPin size={18} />
-                  GPS 지점
+                <button className="secondary-action action-button" onClick={captureLocation} type="button">
+                  <span className="action-icon">
+                    <Play size={18} />
+                  </span>
+                  산책 시작
                 </button>
-                <button className="primary-action" onClick={() => addLog('walk', `${walkDistance}km 산책`, ['산책', locationConsent ? 'GPS' : '수동'])} type="button">
-                  <Plus size={18} />
+                <button className="primary-action action-button" onClick={() => addLog('walk', `${walkDistance}km 산책`, ['산책', locationConsent ? 'GPS' : '수동'])} type="button">
+                  <span className="action-icon">
+                    <MapPin size={18} />
+                  </span>
                   산책 저장
                 </button>
               </div>

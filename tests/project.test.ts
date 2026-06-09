@@ -56,4 +56,22 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.recent-record-grid/);
     assert.match(css, /\.family-feed/);
   });
+
+  it('uses a cohesive warm visual system and icon-backed action buttons', () => {
+    const component = readFileSync('src/components/mobile-care-app.tsx', 'utf8');
+    const css = readFileSync('src/app/globals.css', 'utf8');
+
+    assert.match(component, /className="surface-action"/);
+    assert.match(component, /className="primary-action action-button"/);
+    assert.match(component, /className="secondary-action action-button"/);
+    assert.match(component, /className="action-icon"/);
+    assert.match(component, /빠른 기록/);
+    assert.match(component, /기록 추가/);
+    assert.match(component, /산책 시작/);
+    assert.match(component, /급여 추가/);
+    assert.match(css, /--accent-coral/);
+    assert.match(css, /\.action-button/);
+    assert.match(css, /\.action-icon/);
+    assert.match(css, /\.surface-action/);
+  });
 });
