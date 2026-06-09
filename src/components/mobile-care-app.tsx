@@ -18,7 +18,7 @@ import {
   Utensils,
   Users,
 } from 'lucide-react';
-import type { ComponentType } from 'react';
+import type { ComponentType, CSSProperties } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -118,6 +118,9 @@ export function MobileCareApp() {
   );
   const emailReminder = careState.notificationPreferences.emailEnabled;
   const completedCareCount = 3;
+  const todayGoalTotal = 3;
+  const todayGoalProgress = Math.min(100, Math.round((completedCareCount / todayGoalTotal) * 100));
+  const heroProgressStyle = { '--progress-value': `${todayGoalProgress}%` } as CSSProperties;
   const careStatusItems = [
     {
       id: 'walk',
@@ -357,35 +360,61 @@ export function MobileCareApp() {
 
         {activeTab === 'today' && (
           <div className="view-stack">
-            <section className="pet-profile-card" aria-label="우리 아이 프로필">
-              <div className="profile-summary">
-                <div className="profile-avatar">
+            <section className="pet-profile-card pet-hero-card" aria-label="우리 아이 오늘 케어 요약">
+              <div className="pet-hero-main">
+                <div className="hero-photo-frame">
                   <img
-                    className="pet-photo"
-                    src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=320&q=80"
+                    className="pet-photo hero-pet-photo"
+                    src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=420&q=80"
                     alt={`${primaryPet.name} 사진`}
                   />
+                  <span className="completion-badge">
+                    <CheckCircle2 size={14} />
+                    좋음
+                  </span>
                 </div>
-                <div>
+                <div className="hero-copy-block">
                   <p className="eyebrow">우리 아이 프로필</p>
-                  <h2>{primaryPet.name}</h2>
+                  <h2>{primaryPet.name}의 하루가 잘 채워지고 있어요</h2>
                   <p className="profile-meta">
                     {primaryPet.breed} · {primaryPet.weightKg}kg · {primaryPet.sex}
                   </p>
+                  <div className="hero-status-tags" aria-label="오늘 상태 태그">
+                    <span>완료</span>
+                    <span>좋음</span>
+                    <span>예정 0</span>
+                  </div>
                 </div>
               </div>
+
+              <div className="hero-progress-panel">
+                <div className="progress-ring" style={heroProgressStyle} aria-label={`오늘 목표 ${completedCareCount}/${todayGoalTotal} 완료`}>
+                  <div>
+                    <strong>{todayGoalProgress}%</strong>
+                    <span>완료</span>
+                  </div>
+                </div>
+                <div className="hero-progress-copy">
+                  <strong>오늘 목표 {completedCareCount}/{todayGoalTotal} 완료 🎉</strong>
+                  <span>산책 1.2km · 식사 완료</span>
+                  <div className="hero-progress-bar" style={heroProgressStyle} aria-hidden="true">
+                    <span />
+                  </div>
+                </div>
+              </div>
+
               <div className="profile-stats" aria-label="프로필 요약">
                 <span className="soft-metric">
                   <strong>{completedCareCount}</strong>
-                  완료
+                  <em>완료</em>
                 </span>
                 <span className="soft-metric">
                   <strong>{careState.logs.length}</strong>
-                  기록
+                  <em>기록</em>
                 </span>
                 <span className="soft-metric">
                   <strong>{calorieRange.minKcal}</strong>
-                  kcal
+                  <em>kcal</em>
                 </span>
               </div>
               <div className="profile-actions">

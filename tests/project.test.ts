@@ -37,6 +37,9 @@ describe('mobile browser delivery', () => {
     assert.match(component, /몽이와 오늘 케어/);
     assert.match(component, /우리 아이 프로필/);
     assert.match(component, /오늘의 케어 현황/);
+    assert.match(component, /className="pet-profile-card pet-hero-card"/);
+    assert.match(component, /오늘 목표/);
+    assert.match(component, /className="progress-ring"/);
     assert.doesNotMatch(component, /className="pet-select"/);
     assert.doesNotMatch(component, /className="care-room-chip"/);
     assert.doesNotMatch(component, /className="header-icon"/);
@@ -48,17 +51,22 @@ describe('mobile browser delivery', () => {
 
     assert.match(component, /from 'lucide-react'/);
     assert.doesNotMatch(component, /@heroicons|phosphor/);
-    assert.match(component, /className="pet-photo"/);
+    assert.match(component, /className="pet-photo hero-pet-photo"/);
     assert.match(component, /photo-1552053831-71594a27632d/);
-    assert.match(css, /--accent-primary/);
+    assert.match(css, /--bg-app: #f8f4ef/);
+    assert.match(css, /--ink: #2d2a26/);
+    assert.match(css, /--accent-primary: #e88a73/);
     assert.match(css, /--accent-blue: var\(--accent-primary\)/);
-    assert.match(css, /--surface-blue: #fff7ef/);
+    assert.match(css, /--surface-blue: #fff7f2/);
     assert.doesNotMatch(css, /#d8296d|#0f7d5e|#1f7a5e|#345d8a|#244d7a/);
     assert.match(css, /--radius-card: 20px/);
     assert.match(css, /\.soft-metric/);
-    assert.match(css, /\.soft-metric strong,[\s\S]*font-size: 16px/);
+    assert.match(css, /\.pet-hero-card \.profile-stats strong \{[\s\S]*font-size: 24px/);
+    assert.match(css, /\.progress-ring \{[\s\S]*conic-gradient/);
     assert.match(css, /\.shortcut-grid/);
     assert.match(css, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
+    assert.match(css, /\.shortcut-grid button \{[\s\S]*height: 138px/);
+    assert.match(css, /\.tab\.active \{[\s\S]*background: var\(--accent-primary-soft\)/);
   });
 
   it('keeps the mobile home breathable with expanded spacing', () => {
