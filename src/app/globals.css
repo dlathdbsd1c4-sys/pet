@@ -370,6 +370,243 @@ h2 {
   margin-bottom: 12px;
 }
 
+.section-chip,
+.ghost-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid #e5e9e4;
+  border-radius: 999px;
+  background: #f8faf7;
+  color: #637168;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.ghost-action {
+  background: #ffffff;
+}
+
+.pet-profile-card {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #dfe8e2;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(36, 48, 43, 0.07);
+}
+
+.profile-summary {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-avatar {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 1px solid #ffe0d5;
+  border-radius: 8px;
+  background: #fff4ea;
+  color: #d8296d;
+}
+
+.profile-meta {
+  margin-top: 5px;
+  color: #68766f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.profile-stats span {
+  display: grid;
+  gap: 3px;
+  min-height: 58px;
+  padding: 9px;
+  border-radius: 8px;
+  background: #f4f8f6;
+  color: #6c7971;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.profile-stats strong {
+  color: #0f7d5e;
+  font-size: 20px;
+}
+
+.profile-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.profile-actions button {
+  min-height: 42px;
+  border: 1px solid #eadde4;
+  border-radius: 8px;
+  background: #fff8fb;
+  color: #b51f5a;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.care-status-list,
+.family-feed {
+  display: grid;
+  gap: 8px;
+}
+
+.care-status-item {
+  display: grid;
+  grid-template-columns: 38px 1fr 22px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px;
+  border: 1px solid #e2e9e3;
+  border-radius: 8px;
+  background: #fbfdfc;
+  color: #24302b;
+  text-align: left;
+}
+
+.care-status-item.done {
+  border-color: #cfe7dc;
+  background: #f2fbf6;
+}
+
+.status-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0f7d5e;
+}
+
+.care-status-item span:nth-child(2) {
+  display: grid;
+  gap: 3px;
+}
+
+.care-status-item em {
+  color: #68766f;
+  font-size: 12px;
+  font-style: normal;
+}
+
+.care-status-item > svg {
+  color: #0f7d5e;
+}
+
+.recent-record-grid,
+.neighborhood-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.recent-record-grid button,
+.neighborhood-grid button {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+  min-height: 108px;
+  padding: 11px 9px;
+  border: 1px solid #e6e9ee;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #24302b;
+  text-align: left;
+}
+
+.recent-record-grid button svg,
+.neighborhood-grid button svg {
+  color: #d8296d;
+}
+
+.recent-record-grid button span,
+.neighborhood-grid button span {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #68766f;
+  font-size: 12px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.family-feed-item {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  gap: 9px;
+  min-height: 58px;
+  padding: 9px;
+  border-radius: 8px;
+  background: #f5f8fb;
+}
+
+.family-feed-item > span {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #e8f1fb;
+  color: #244d7a;
+  font-weight: 900;
+}
+
+.family-feed-item p,
+.family-feed-item time {
+  color: #68766f;
+  font-size: 12px;
+}
+
+.family-feed-item time {
+  white-space: nowrap;
+}
+
+.neighborhood-grid {
+  margin-top: 10px;
+  grid-template-columns: 1fr;
+}
+
+.neighborhood-grid button {
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  min-height: 78px;
+  background: #fffaf4;
+  border-color: #efe0d2;
+}
+
+.neighborhood-grid button svg {
+  grid-row: 1 / span 2;
+}
+
+.neighborhood-grid button strong,
+.neighborhood-grid button span {
+  grid-column: 2;
+}
+
 .timeline {
   display: grid;
   gap: 10px;

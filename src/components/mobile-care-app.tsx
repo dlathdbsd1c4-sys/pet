@@ -12,12 +12,14 @@ import {
   Footprints,
   HeartPulse,
   MapPin,
+  MessageCircle,
   Navigation,
   Plus,
   Search,
   Stethoscope,
   Store,
   Utensils,
+  Users,
 } from 'lucide-react';
 import type { ComponentType } from 'react';
 import { useEffect, useMemo, useState } from 'react';
@@ -117,8 +119,90 @@ export function MobileCareApp() {
     () => recommendExperts({ pet: primaryPet, logs: careState.logs, experts }).slice(0, 3),
     [careState.logs],
   );
-  const dueCount = timeline.filter((item) => item.kind === 'routine' && item.status === 'due').length;
   const emailReminder = careState.notificationPreferences.emailEnabled;
+  const completedCareCount = 3;
+  const careStatusItems = [
+    {
+      id: 'walk',
+      label: '산책 완료',
+      detail: '저녁 산책 1.2km 기록',
+      icon: Footprints,
+      done: true,
+    },
+    {
+      id: 'meal',
+      label: '식사 완료',
+      detail: `${mealAmount}g 급여와 물 섭취 확인`,
+      icon: Utensils,
+      done: true,
+    },
+    {
+      id: 'health',
+      label: '약 복용 완료',
+      detail: '심장사상충 약 복용 체크',
+      icon: HeartPulse,
+      done: true,
+    },
+  ];
+  const recentRecordCards = [
+    {
+      id: 'walk',
+      title: '산책',
+      description: '20분 · 1.2km · 컨디션 좋음',
+      icon: Footprints,
+      tab: 'walk' as const,
+    },
+    {
+      id: 'health',
+      title: '건강',
+      description: symptom,
+      icon: HeartPulse,
+      tab: 'health' as const,
+    },
+    {
+      id: 'photo',
+      title: '사진',
+      description: memoryTitle,
+      icon: Camera,
+      tab: 'experts' as const,
+    },
+  ];
+  const familyUpdates = [
+    {
+      id: 'mom-walk',
+      actor: '엄마',
+      action: '산책 기록 추가',
+      detail: '동네 공원 20분',
+      time: '10분 전',
+    },
+    {
+      id: 'sibling-photo',
+      actor: '동생',
+      action: '사진 업로드',
+      detail: '새 장난감 사진 2장',
+      time: '32분 전',
+    },
+  ];
+  const neighborhoodActions = [
+    {
+      id: 'sitter',
+      label: '펫시터 연결',
+      description: '가족 일정이 비는 날 맡길 사람 찾기',
+      icon: Users,
+    },
+    {
+      id: 'walk-friend',
+      label: '산책 친구 찾기',
+      description: '같은 동네 산책 루틴 맞추기',
+      icon: MessageCircle,
+    },
+    {
+      id: 'local-vet',
+      label: '동네 병원 정보',
+      description: '최근 건강 기록 기반으로 가까운 병원 보기',
+      icon: MapPin,
+    },
+  ];
 
   function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string) {
     setCareState((current) =>
@@ -251,7 +335,7 @@ export function MobileCareApp() {
           <div className="hero-copy">
             <p>오늘 케어 미션</p>
             <h1>{primaryPet.name}의 루틴을 챙겨요</h1>
-            <span>{dueCount > 0 ? `${dueCount}개 루틴이 기다리고 있어요` : '오늘 루틴을 모두 완료했어요'}</span>
+            <span>{completedCareCount}개 핵심 케어를 완료했어요</span>
           </div>
           <div className="hero-pet-card" aria-hidden="true">
             <Dog size={52} />
@@ -260,8 +344,8 @@ export function MobileCareApp() {
 
         <section className="status-strip" aria-label="오늘 케어 요약">
           <div>
-            <span className="metric">{dueCount}</span>
-            <span>남은 루틴</span>
+            <span className="metric">{completedCareCount}</span>
+            <span>핵심 완료</span>
           </div>
           <div>
             <span className="metric">{careState.logs.length}</span>
@@ -317,6 +401,129 @@ export function MobileCareApp() {
 
         {activeTab === 'today' && (
           <div className="view-stack">
+            <section className="pet-profile-card" aria-label="우리 아이 프로필">
+              <div className="profile-summary">
+                <div className="profile-avatar" aria-hidden="true">
+                  <Dog size={34} />
+                </div>
+                <div>
+                  <p className="eyebrow">우리 아이 프로필</p>
+                  <h2>{primaryPet.name}</h2>
+                  <p className="profile-meta">
+                    {primaryPet.breed} · {primaryPet.weightKg}kg · {primaryPet.sex}
+                  </p>
+                </div>
+              </div>
+              <div className="profile-stats" aria-label="프로필 요약">
+                <span>
+                  <strong>{completedCareCount}</strong>
+                  완료
+                </span>
+                <span>
+                  <strong>{careState.logs.length}</strong>
+                  기록
+                </span>
+                <span>
+                  <strong>{calorieRange.minKcal}</strong>
+                  kcal
+                </span>
+              </div>
+              <div className="profile-actions">
+                <button onClick={() => setActiveTab('health')} type="button">건강 기록</button>
+                <button onClick={() => setActiveTab('experts')} type="button">사진 앨범</button>
+              </div>
+            </section>
+
+            <section className="section-block care-status-panel" aria-label="오늘의 케어 현황">
+              <div className="section-title">
+                <div>
+                  <p className="eyebrow">TODAY</p>
+                  <h2>오늘의 케어 현황</h2>
+                </div>
+                <span className="section-chip">{completedCareCount}/3 완료</span>
+              </div>
+              <div className="care-status-list">
+                {careStatusItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      className={item.done ? 'care-status-item done' : 'care-status-item'}
+                      onClick={() => setActiveTab(item.id === 'walk' ? 'walk' : item.id === 'meal' ? 'meal' : 'health')}
+                      type="button"
+                    >
+                      <span className="status-icon">
+                        <Icon size={18} />
+                      </span>
+                      <span>
+                        <strong>{item.label}</strong>
+                        <em>{item.detail}</em>
+                      </span>
+                      <CheckCircle2 size={20} />
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="section-block recent-record-panel" aria-label="최근 기록">
+              <div className="section-title">
+                <div>
+                  <p className="eyebrow">LOG</p>
+                  <h2>최근 기록</h2>
+                </div>
+                <button className="ghost-action" onClick={() => setActiveTab('health')} type="button">
+                  전체
+                </button>
+              </div>
+              <div className="recent-record-grid">
+                {recentRecordCards.map((record) => {
+                  const Icon = record.icon;
+                  return (
+                    <button key={record.id} onClick={() => setActiveTab(record.tab)} type="button">
+                      <Icon size={19} />
+                      <strong>{record.title}</strong>
+                      <span>{record.description}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="section-block family-share-panel" aria-label="가족 공유 현황">
+              <div className="section-title">
+                <div>
+                  <p className="eyebrow">FAMILY</p>
+                  <h2>가족 공유 현황</h2>
+                </div>
+                <MessageCircle size={18} />
+              </div>
+              <div className="family-feed">
+                {familyUpdates.map((update) => (
+                  <article key={update.id} className="family-feed-item">
+                    <span>{update.actor.slice(0, 1)}</span>
+                    <div>
+                      <strong>{update.actor}가 {update.action}</strong>
+                      <p>{update.detail}</p>
+                    </div>
+                    <time>{update.time}</time>
+                  </article>
+                ))}
+              </div>
+              <div className="neighborhood-grid" aria-label="동네 케어 연결">
+                {neighborhoodActions.map((action) => {
+                  const Icon = action.icon;
+                  return (
+                    <button key={action.id} onClick={() => setActiveTab('experts')} type="button">
+                      <Icon size={18} />
+                      <strong>{action.label}</strong>
+                      <span>{action.description}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
             <section className="section-block">
               <div className="section-title">
                 <h2>오늘 케어 타임라인</h2>

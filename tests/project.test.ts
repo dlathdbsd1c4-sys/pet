@@ -40,4 +40,20 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.care-hero/);
     assert.match(css, /\.bottom-tabbar/);
   });
+
+  it('anchors the main screen around pet profile, care status, recent records, and family sharing', () => {
+    const component = readFileSync('src/components/mobile-care-app.tsx', 'utf8');
+    const css = readFileSync('src/app/globals.css', 'utf8');
+
+    assert.match(component, /우리 아이 프로필/);
+    assert.match(component, /오늘의 케어 현황/);
+    assert.match(component, /최근 기록/);
+    assert.match(component, /가족 공유 현황/);
+    assert.match(component, /펫시터 연결/);
+    assert.match(component, /동네 병원 정보/);
+    assert.match(css, /\.pet-profile-card/);
+    assert.match(css, /\.care-status-list/);
+    assert.match(css, /\.recent-record-grid/);
+    assert.match(css, /\.family-feed/);
+  });
 });
