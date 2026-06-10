@@ -467,9 +467,10 @@ export function MobileCareApp() {
                     {primaryPet.breed} · {primaryPet.weightKg}kg · {primaryPet.sex}
                   </p>
                   <div className="hero-status-tags" aria-label="오늘 상태 태그">
-                    <span>완료</span>
-                    <span>좋음</span>
-                    <span>예정 0</span>
+                    <span>오늘 상태 좋음</span>
+                    <span>산책 1.2km 완료</span>
+                    <span>식사 3회 완료</span>
+                    <span>건강 상태 양호</span>
                   </div>
                 </div>
               </div>
@@ -482,7 +483,7 @@ export function MobileCareApp() {
                   </div>
                 </div>
                 <div className="hero-progress-copy">
-                  <strong>오늘 목표 {completedCareCount}/{todayGoalTotal} 완료 🎉</strong>
+                  <strong>오늘 목표 {completedCareCount}/{todayGoalTotal} 완료</strong>
                   <span>산책 1.2km · 식사 완료</span>
                   <div className="hero-progress-bar" style={heroProgressStyle} aria-hidden="true">
                     <span />
@@ -654,24 +655,28 @@ export function MobileCareApp() {
                 </button>
               </div>
               <div className="timeline">
-                {timeline.map((item) => (
-                  <article key={`${item.kind}-${item.id}`} className={`timeline-item ${item.status}`}>
-                    <span className="time">{item.time}</span>
-                    <span className="timeline-icon">{item.status === 'completed' ? <CheckCircle2 size={18} /> : <Circle size={18} />}</span>
-                    <div>
-                      <strong>{item.title}</strong>
-                      <p>{categoryCopy(item.category)}</p>
-                    </div>
-                    {item.kind === 'routine' && item.status === 'due' && (
-                      <button className="small-action action-button" onClick={() => completeRoutine(item.id)} type="button">
-                        <span className="action-icon">
-                          <CheckCircle2 size={14} />
-                        </span>
-                        완료
-                      </button>
-                    )}
-                  </article>
-                ))}
+                {timeline.map((item) => {
+                  const statusLabel = timelineStatusCopy(item.status);
+                  return (
+                    <article key={`${item.kind}-${item.id}`} className={`timeline-item ${item.status}`}>
+                      <span className="time">{item.time}</span>
+                      <span className="timeline-icon">{item.status === 'completed' ? <CheckCircle2 size={18} /> : <Circle size={18} />}</span>
+                      <div>
+                        <strong>{timelineTitleWithStatus(item.title, item.status)}</strong>
+                        <p>{categoryCopy(item.category)} · {statusLabel}</p>
+                      </div>
+                      <span className={`timeline-status ${item.status}`}>{statusLabel}</span>
+                      {item.kind === 'routine' && item.status === 'due' && (
+                        <button className="small-action action-button" onClick={() => completeRoutine(item.id)} type="button">
+                          <span className="action-icon">
+                            <CheckCircle2 size={14} />
+                          </span>
+                          완료
+                        </button>
+                      )}
+                    </article>
+                  );
+                })}
               </div>
             </section>
 
@@ -1067,6 +1072,15 @@ function createRoutineId() {
   }
 
   return `routine-${Date.now()}`;
+}
+
+function timelineStatusCopy(status: 'due' | 'completed') {
+  return status === 'completed' ? '완료' : '예정';
+}
+
+function timelineTitleWithStatus(title: string, status: 'due' | 'completed') {
+  const statusCopy = timelineStatusCopy(status);
+  return title.endsWith(statusCopy) ? title : `${title} ${statusCopy}`;
 }
 
 function categoryCopy(category: CareCategory) {

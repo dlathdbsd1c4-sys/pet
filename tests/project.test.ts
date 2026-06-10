@@ -37,6 +37,10 @@ describe('mobile browser delivery', () => {
     assert.match(component, /몽이와 오늘 케어/);
     assert.match(component, /우리 아이 프로필/);
     assert.match(component, /오늘의 케어 현황/);
+    assert.match(component, /오늘 상태 좋음/);
+    assert.match(component, /산책 1\.2km 완료/);
+    assert.match(component, /식사 3회 완료/);
+    assert.match(component, /건강 상태 양호/);
     assert.match(component, /className="pet-profile-card pet-hero-card"/);
     assert.match(component, /오늘 목표/);
     assert.match(component, /className="progress-ring"/);
@@ -54,6 +58,7 @@ describe('mobile browser delivery', () => {
     assert.match(component, /className="tab-symbol"/);
     assert.doesNotMatch(component, /mark: '⌂'|mark: '♡'|mark: '⋔'|mark: '⌁'|mark: '⌖'/);
     assert.doesNotMatch(component, /emoji: '🏠'|emoji: '🩺'|emoji: '🍽️'|emoji: '🐾'|emoji: '📍'/);
+    assert.doesNotMatch(component, /🎉|🏠|🩺|🍽️|🐾|📍/);
     assert.doesNotMatch(component, /className="pet-select"/);
     assert.doesNotMatch(component, /className="care-room-chip"/);
     assert.doesNotMatch(component, /className="header-icon"/);
@@ -88,6 +93,8 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.compact-stat-panel \.detail-stat-grid article/);
     assert.match(css, /\.tab-symbol/);
     assert.match(css, /\.tab svg/);
+    assert.match(css, /\.timeline-status/);
+    assert.match(css, /grid-template-columns: 44px 24px 1fr auto auto/);
     assert.match(css, /border-radius: 28px 28px 0 0/);
     assert.match(css, /min-height: 72px/);
     assert.doesNotMatch(css, /\.tab-emoji/);
@@ -135,6 +142,9 @@ describe('mobile browser delivery', () => {
     assert.match(component, /최근 산책/);
     assert.match(component, /이번 주 총 거리/);
     assert.match(component, /오늘 기분 좋아요/);
+    assert.match(component, /timelineStatusCopy/);
+    assert.match(component, /timelineTitleWithStatus/);
+    assert.match(component, /className=\{`timeline-status \$\{item\.status\}`\}/);
     assert.match(component, /내 주변 현황/);
     assert.match(component, /반경 1km/);
     assert.match(component, /localCareStats/);
