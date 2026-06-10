@@ -49,12 +49,12 @@ type WalkPoint = {
 
 const today = '2026-05-29';
 
-const tabs: Array<{ id: TabId; label: string; icon: ComponentType<{ size?: number }> }> = [
-  { id: 'today', label: '홈', icon: Bell },
-  { id: 'health', label: '건강', icon: HeartPulse },
-  { id: 'meal', label: '식사', icon: Utensils },
-  { id: 'walk', label: '산책', icon: Footprints },
-  { id: 'experts', label: '동네케어', icon: MapPin },
+const tabs: Array<{ id: TabId; label: string; emoji: string; icon: ComponentType<{ size?: number }> }> = [
+  { id: 'today', label: '홈', emoji: '🏠', icon: Bell },
+  { id: 'health', label: '건강', emoji: '🩺', icon: HeartPulse },
+  { id: 'meal', label: '식사', emoji: '🍽️', icon: Utensils },
+  { id: 'walk', label: '산책', emoji: '🐾', icon: Footprints },
+  { id: 'experts', label: '동네케어', emoji: '📍', icon: MapPin },
 ];
 
 const detailPageTitles: Record<Exclude<TabId, 'today'>, string> = {
@@ -428,7 +428,12 @@ export function MobileCareApp() {
                 onClick={() => setActiveTab(tab.id)}
                 type="button"
               >
-                <Icon size={19} />
+                <span className="tab-symbol">
+                  <Icon size={18} />
+                  <span className="tab-emoji" aria-hidden="true">
+                    {tab.emoji}
+                  </span>
+                </span>
                 <span>{tab.label}</span>
               </button>
             );

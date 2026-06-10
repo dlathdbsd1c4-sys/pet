@@ -45,6 +45,13 @@ describe('mobile browser delivery', () => {
     assert.match(component, /뒤로가기/);
     assert.match(component, /label: '동네케어'/);
     assert.match(component, /experts: '동네케어'/);
+    assert.match(component, /emoji: '🏠'/);
+    assert.match(component, /emoji: '🩺'/);
+    assert.match(component, /emoji: '🍽️'/);
+    assert.match(component, /emoji: '🐾'/);
+    assert.match(component, /emoji: '📍'/);
+    assert.match(component, /className="tab-symbol"/);
+    assert.match(component, /className="tab-emoji"/);
     assert.doesNotMatch(component, /className="pet-select"/);
     assert.doesNotMatch(component, /className="care-room-chip"/);
     assert.doesNotMatch(component, /className="header-icon"/);
@@ -76,6 +83,8 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.tab\.active \{[\s\S]*background: var\(--accent-primary-soft\)/);
     assert.match(css, /\.detail-stat-grid/);
     assert.match(css, /\.local-care-grid/);
+    assert.match(css, /\.tab-symbol/);
+    assert.match(css, /\.tab-emoji/);
   });
 
   it('keeps the mobile home breathable with expanded spacing', () => {

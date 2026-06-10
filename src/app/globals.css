@@ -1609,6 +1609,32 @@ body {
   font-weight: 750;
 }
 
+.tab-symbol {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 22px;
+}
+
+.tab-emoji {
+  position: absolute;
+  top: -7px;
+  right: -10px;
+  display: inline-flex;
+  min-width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(232, 138, 115, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 253, 249, 0.94);
+  font-size: 11px;
+  line-height: 1;
+  box-shadow: var(--shadow-soft);
+}
+
 .tab.active {
   border: 1px solid rgba(232, 138, 115, 0.22);
   border-radius: 16px;
@@ -1616,6 +1642,11 @@ body {
   color: var(--accent-primary);
   font-weight: 950;
   box-shadow: inset 0 0 0 1px rgba(232, 138, 115, 0.08);
+}
+
+.tab.active .tab-emoji {
+  border-color: rgba(232, 138, 115, 0.28);
+  background: #ffffff;
 }
 
 .profile-stats span,
