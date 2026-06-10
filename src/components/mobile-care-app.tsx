@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   Circle,
   Footprints,
+  Grip,
   HeartPulse,
   MapPin,
   MessageCircle,
@@ -19,7 +20,7 @@ import {
   Utensils,
   Users,
 } from 'lucide-react';
-import type { CSSProperties } from 'react';
+import type { ComponentType, CSSProperties } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -49,12 +50,12 @@ type WalkPoint = {
 
 const today = '2026-05-29';
 
-const tabs: Array<{ id: TabId; label: string; mark: string }> = [
-  { id: 'today', label: '홈', mark: '⌂' },
-  { id: 'health', label: '건강', mark: '♡' },
-  { id: 'meal', label: '식사', mark: '⋔' },
-  { id: 'walk', label: '산책', mark: '⌁' },
-  { id: 'experts', label: '동네케어', mark: '⌖' },
+const tabs: Array<{ id: TabId; label: string; icon: ComponentType<{ size?: number; strokeWidth?: number }> }> = [
+  { id: 'today', label: '오늘', icon: Bell },
+  { id: 'health', label: '건강', icon: HeartPulse },
+  { id: 'meal', label: '식사', icon: Utensils },
+  { id: 'walk', label: '산책', icon: Grip },
+  { id: 'experts', label: '추천', icon: Store },
 ];
 
 const detailPageTitles: Record<Exclude<TabId, 'today'>, string> = {
@@ -420,6 +421,7 @@ export function MobileCareApp() {
 
         <nav className="bottom-tabbar" aria-label="케어 메뉴">
           {tabs.map((tab) => {
+            const Icon = tab.icon;
             return (
               <button
                 key={tab.id}
@@ -428,9 +430,7 @@ export function MobileCareApp() {
                 type="button"
               >
                 <span className="tab-symbol">
-                  <span className="tab-line-mark" aria-hidden="true">
-                    {tab.mark}
-                  </span>
+                  <Icon size={23} strokeWidth={2.25} />
                 </span>
                 <span>{tab.label}</span>
               </button>

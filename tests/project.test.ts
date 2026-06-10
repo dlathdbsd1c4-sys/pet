@@ -43,20 +43,20 @@ describe('mobile browser delivery', () => {
     assert.match(component, /className="detail-header"/);
     assert.match(component, /className="back-button"/);
     assert.match(component, /뒤로가기/);
-    assert.match(component, /label: '동네케어'/);
+    assert.match(component, /label: '오늘'/);
     assert.match(component, /experts: '동네케어'/);
-    assert.match(component, /mark: '⌂'/);
-    assert.match(component, /mark: '♡'/);
-    assert.match(component, /mark: '⋔'/);
-    assert.match(component, /mark: '⌁'/);
-    assert.match(component, /mark: '⌖'/);
+    assert.match(component, /label: '추천'/);
+    assert.match(component, /icon: Bell/);
+    assert.match(component, /icon: HeartPulse/);
+    assert.match(component, /icon: Utensils/);
+    assert.match(component, /icon: Grip/);
+    assert.match(component, /icon: Store/);
     assert.match(component, /className="tab-symbol"/);
-    assert.match(component, /className="tab-line-mark"/);
+    assert.doesNotMatch(component, /mark: '⌂'|mark: '♡'|mark: '⋔'|mark: '⌁'|mark: '⌖'/);
     assert.doesNotMatch(component, /emoji: '🏠'|emoji: '🩺'|emoji: '🍽️'|emoji: '🐾'|emoji: '📍'/);
     assert.doesNotMatch(component, /className="pet-select"/);
     assert.doesNotMatch(component, /className="care-room-chip"/);
     assert.doesNotMatch(component, /className="header-icon"/);
-    assert.doesNotMatch(component, /label: '추천'/);
   });
 
   it('uses Lucide only, a single warm primary palette, large cards, and a real pet photo slot', () => {
@@ -85,8 +85,11 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.detail-stat-grid/);
     assert.match(css, /\.local-care-grid/);
     assert.match(css, /\.tab-symbol/);
-    assert.match(css, /\.tab-line-mark/);
+    assert.match(css, /\.tab svg/);
+    assert.match(css, /border-radius: 28px 28px 0 0/);
+    assert.match(css, /min-height: 72px/);
     assert.doesNotMatch(css, /\.tab-emoji/);
+    assert.doesNotMatch(css, /\.tab-line-mark/);
   });
 
   it('keeps the mobile home breathable with expanded spacing', () => {
