@@ -21,7 +21,7 @@
   --accent-sage: var(--accent-primary);
   --accent-blue: var(--accent-primary);
   --radius-card: 20px;
-  --shadow-soft: 0 10px 24px rgba(45, 42, 38, 0.06);
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 html,
@@ -1206,6 +1206,34 @@ body {
   font-weight: 700;
 }
 
+.detail-header {
+  display: grid;
+  gap: 10px;
+  padding: 12px 2px 22px;
+}
+
+.detail-header h1 {
+  color: var(--ink);
+  font-size: 24px;
+  line-height: 1.12;
+}
+
+.back-button {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 36px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: var(--shadow-soft);
+}
+
 .care-hero,
 .status-strip div,
 .section-block,
@@ -1221,7 +1249,12 @@ body {
 .record-row,
 .expert-row,
 .calorie-band,
-.map-panel {
+.map-panel,
+.detail-stat-grid article,
+.detail-record-row,
+.week-check-grid span,
+.walk-record-stack article,
+.local-care-grid article {
   border-radius: var(--radius-card);
 }
 
@@ -1464,6 +1497,7 @@ body {
   color: var(--muted);
   font-size: 12px;
   font-style: normal;
+  font-weight: 850;
   line-height: 1.35;
 }
 
@@ -1532,6 +1566,13 @@ body {
   font-size: 12px;
   font-style: normal;
   font-weight: 800;
+}
+
+.soft-metric small {
+  color: var(--soft-muted);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.25;
 }
 
 .shortcut-grid button {
@@ -1635,6 +1676,212 @@ body {
 
 .bottom-tabbar {
   background: rgba(255, 253, 249, 0.98);
+}
+
+.detail-stat-grid,
+.weekly-care-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.detail-stat-grid article,
+.weekly-care-grid article {
+  display: grid;
+  min-height: 96px;
+  align-content: start;
+  gap: 5px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.detail-stat-grid strong,
+.weekly-care-grid strong {
+  color: var(--ink);
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.detail-stat-grid span,
+.weekly-care-grid span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.3;
+}
+
+.weekly-care-grid em {
+  color: var(--accent-primary);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.detail-record-list,
+.walk-record-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-record-row {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 70px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface-warm);
+  box-shadow: var(--shadow-soft);
+}
+
+.detail-record-row time {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent-primary);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.detail-record-row div,
+.walk-record-stack article div,
+.local-care-grid article {
+  display: grid;
+  gap: 5px;
+}
+
+.detail-record-row strong,
+.walk-record-stack strong,
+.local-care-grid strong {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.detail-record-row span,
+.walk-record-stack span,
+.local-care-grid p,
+.local-care-grid em {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.week-check-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.week-check-grid span {
+  display: grid;
+  min-height: 70px;
+  place-items: center;
+  gap: 4px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  box-shadow: var(--shadow-soft);
+}
+
+.week-check-grid span.done {
+  background: var(--accent-primary-soft);
+  color: var(--accent-primary);
+}
+
+.week-check-grid strong {
+  font-size: 14px;
+}
+
+.week-check-grid em {
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.walk-record-stack article {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 74px;
+  padding: 13px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.walk-record-stack b {
+  display: inline-flex;
+  min-width: 64px;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent-primary-soft);
+  color: var(--accent-primary);
+  font-size: 13px;
+}
+
+.local-care-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.local-care-grid article {
+  min-height: 154px;
+  align-content: start;
+  padding: 15px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.local-care-grid p,
+.local-care-grid em {
+  margin: 0;
+}
+
+.local-care-grid em {
+  color: var(--accent-primary);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.section-block,
+.quick-actions,
+.recommendation-slot,
+.pet-profile-card,
+.care-status-item,
+.recent-record-grid button,
+.neighborhood-grid button,
+.family-feed-item,
+.routine-form,
+.notice-row,
+.record-row,
+.expert-row,
+.calorie-band,
+.map-panel,
+.shortcut-grid button,
+.detail-stat-grid article,
+.weekly-care-grid article,
+.detail-record-row,
+.week-check-grid span,
+.walk-record-stack article,
+.local-care-grid article {
+  box-shadow: var(--shadow-soft);
+}
+
+.care-status-item.done {
+  box-shadow: var(--shadow-soft);
 }
 
 @media (min-width: 720px) {

@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  ArrowLeft,
   Bell,
   CalendarDays,
   Camera,
@@ -49,12 +50,19 @@ type WalkPoint = {
 const today = '2026-05-29';
 
 const tabs: Array<{ id: TabId; label: string; icon: ComponentType<{ size?: number }> }> = [
-  { id: 'today', label: '오늘', icon: Bell },
+  { id: 'today', label: '홈', icon: Bell },
   { id: 'health', label: '건강', icon: HeartPulse },
   { id: 'meal', label: '식사', icon: Utensils },
   { id: 'walk', label: '산책', icon: Footprints },
-  { id: 'experts', label: '추천', icon: Stethoscope },
+  { id: 'experts', label: '동네케어', icon: MapPin },
 ];
+
+const detailPageTitles: Record<Exclude<TabId, 'today'>, string> = {
+  health: '건강수첩',
+  meal: '식사 기록',
+  walk: '산책 기록',
+  experts: '동네케어',
+};
 
 const initialCareState = createCareAppState({
   activeDate: today,
@@ -121,6 +129,7 @@ export function MobileCareApp() {
   const todayGoalTotal = 3;
   const todayGoalProgress = Math.min(100, Math.round((completedCareCount / todayGoalTotal) * 100));
   const heroProgressStyle = { '--progress-value': `${todayGoalProgress}%` } as CSSProperties;
+  const detailPageTitle = activeTab === 'today' ? null : detailPageTitles[activeTab];
   const careStatusItems = [
     {
       id: 'walk',
@@ -207,31 +216,89 @@ export function MobileCareApp() {
     {
       id: 'snack',
       label: '간식',
-      detail: '간식 급여를 바로 남겨요',
+      detail: '최근 급여 3시간 전',
       icon: Utensils,
       action: () => addLog('meal', '간식 급여', ['간식']),
     },
     {
       id: 'walk-record',
       label: '산책 기록',
-      detail: '시간과 거리부터 저장',
+      detail: '오늘 1.2km 완료',
       icon: Footprints,
       action: () => setActiveTab('walk'),
     },
     {
       id: 'health-book',
       label: '건강수첩',
-      detail: '증상과 투약 기록',
+      detail: '메모 2건 등록',
       icon: HeartPulse,
       action: () => setActiveTab('health'),
     },
     {
       id: 'local-care',
       label: '동네 케어',
-      detail: '병원과 펫시터 보기',
+      detail: '근처 병원 3곳',
       icon: Stethoscope,
       action: () => setActiveTab('experts'),
     },
+  ];
+  const weeklyCareStats = [
+    {
+      id: 'weekly-walk',
+      value: '5회',
+      label: '산책 횟수',
+      detail: '지난주보다 +2',
+    },
+    {
+      id: 'weekly-meal',
+      value: '18건',
+      label: '식사 기록',
+      detail: '규칙적으로 유지',
+    },
+    {
+      id: 'weekly-health',
+      value: '4건',
+      label: '건강 기록',
+      detail: '메모 안정',
+    },
+  ];
+  const recentHealthRecords = [
+    { id: 'health-0608', date: '6/8', title: '피부 상태 양호', detail: '가려움 줄고 컨디션 좋음' },
+    { id: 'health-0605', date: '6/5', title: '심장사상충 약 복용', detail: '월간 복약 완료' },
+    { id: 'health-0601', date: '6/1', title: '병원 정기 검진', detail: '체중 5.2kg, 특이사항 없음' },
+  ];
+  const healthStats = [
+    { id: 'health-month', value: '12건', label: '이번 달 기록' },
+    { id: 'health-medicine', value: '100%', label: '복약 완료율' },
+    { id: 'health-visit', value: 'D+7', label: '최근 병원 방문' },
+  ];
+  const recentMealRecords = [
+    { id: 'meal-breakfast', time: '08:00', title: '아침 급여', detail: `${mealAmount}g 완료` },
+    { id: 'meal-snack', time: '13:20', title: '점심 간식', detail: '30g, 닭가슴살 큐브' },
+    { id: 'meal-dinner', time: '19:30', title: '저녁 급여', detail: '예정 · 권장량 70g' },
+  ];
+  const mealWeekRecords = ['월', '화', '수', '목', '금'].map((day) => ({
+    id: `meal-week-${day}`,
+    day,
+    done: day !== '금',
+  }));
+  const walkStats = [
+    { id: 'walk-distance', value: '6.4km', label: '이번 주 총 거리' },
+    { id: 'walk-time', value: '24분', label: '평균 산책 시간' },
+    { id: 'walk-count', value: '5회', label: '산책 횟수' },
+  ];
+  const recentWalkRecords = [
+    { id: 'walk-today', title: '오늘 산책', distance: '1.2km', detail: '23분 · 137kcal 소모' },
+    { id: 'walk-yesterday', title: '어제 저녁', distance: '1.4km', detail: '26분 · 동네 공원' },
+    { id: 'walk-park', title: '주말 산책', distance: '2.1km', detail: '35분 · 컨디션 좋음' },
+  ];
+  const localCareRecommendations = [
+    { id: 'local-vet', label: '동물병원', detail: '근처 병원 3곳', meta: '야간 진료 1곳', icon: Stethoscope },
+    { id: 'local-walk', label: '산책 친구', detail: '반경 1km 5명', meta: '저녁 루틴 맞음', icon: MessageCircle },
+    { id: 'local-cafe', label: '애견카페', detail: '평점 높은 4곳', meta: '소형견 구역 있음', icon: Store },
+    { id: 'local-shop', label: '펫샵', detail: '사료/간식 매장 6곳', meta: '오늘 영업 중', icon: Store },
+    { id: 'local-grooming', label: '미용샵', detail: '예약 가능 2곳', meta: '목욕 패키지 추천', icon: Camera },
+    { id: 'local-sitter', label: '펫시터', detail: '검증된 돌봄 4명', meta: '주말 가능', icon: Users },
   ];
 
   function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string) {
@@ -335,11 +402,21 @@ export function MobileCareApp() {
   return (
     <main className="app-canvas">
       <section className="mobile-shell" aria-label="반려동물 통합 케어">
-        <header className="calm-header">
-          <p>오늘의 케어</p>
-          <h1>몽이와 오늘 케어</h1>
-          <span>가족이 함께 보는 산책, 식사, 건강 기록</span>
-        </header>
+        {activeTab === 'today' ? (
+          <header className="calm-header">
+            <p>오늘의 케어</p>
+            <h1>몽이와 오늘 케어</h1>
+            <span>가족이 함께 보는 산책, 식사, 건강 기록</span>
+          </header>
+        ) : (
+          <header className="detail-header">
+            <button className="back-button" onClick={() => setActiveTab('today')} type="button">
+              <ArrowLeft size={18} />
+              뒤로가기
+            </button>
+            <h1>{detailPageTitle}</h1>
+          </header>
+        )}
 
         <nav className="bottom-tabbar" aria-label="케어 메뉴">
           {tabs.map((tab) => {
@@ -407,14 +484,17 @@ export function MobileCareApp() {
                 <span className="soft-metric">
                   <strong>{completedCareCount}</strong>
                   <em>완료</em>
+                  <small>오늘 목표 달성</small>
                 </span>
                 <span className="soft-metric">
                   <strong>{careState.logs.length}</strong>
                   <em>기록</em>
+                  <small>오늘 작성</small>
                 </span>
                 <span className="soft-metric">
                   <strong>{calorieRange.minKcal}</strong>
                   <em>kcal</em>
+                  <small>권장 범위 내</small>
                 </span>
               </div>
               <div className="profile-actions">
@@ -497,6 +577,25 @@ export function MobileCareApp() {
                     </button>
                   );
                 })}
+              </div>
+            </section>
+
+            <section className="section-block weekly-care-panel" aria-label="이번 주 케어 현황">
+              <div className="section-title">
+                <div>
+                  <p className="eyebrow">WEEK</p>
+                  <h2>이번 주 케어 현황</h2>
+                </div>
+                <span className="section-chip">좋음</span>
+              </div>
+              <div className="weekly-care-grid">
+                {weeklyCareStats.map((stat) => (
+                  <article key={stat.id}>
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                    <em>{stat.detail}</em>
+                  </article>
+                ))}
               </div>
             </section>
 
@@ -653,6 +752,16 @@ export function MobileCareApp() {
 
         {activeTab === 'health' && (
           <div className="view-stack">
+            <section className="section-block detail-stat-panel" aria-label="건강 통계">
+              <div className="detail-stat-grid">
+                {healthStats.map((stat) => (
+                  <article key={stat.id}>
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                  </article>
+                ))}
+              </div>
+            </section>
             <section className="section-block">
               <div className="section-title">
                 <h2>건강수첩</h2>
@@ -677,6 +786,23 @@ export function MobileCareApp() {
                       <span>{log.tags?.join(', ')}</span>
                     </article>
                   ))}
+              </div>
+            </section>
+            <section className="section-block">
+              <div className="section-title">
+                <h2>최근 건강 기록</h2>
+                <span className="section-chip">관리 중</span>
+              </div>
+              <div className="detail-record-list">
+                {recentHealthRecords.map((record) => (
+                  <article key={record.id} className="detail-record-row">
+                    <time>{record.date}</time>
+                    <div>
+                      <strong>{record.title}</strong>
+                      <span>{record.detail}</span>
+                    </div>
+                  </article>
+                ))}
               </div>
             </section>
           </div>
@@ -704,6 +830,37 @@ export function MobileCareApp() {
                 급여 추가
               </button>
             </section>
+            <section className="section-block">
+              <div className="section-title">
+                <h2>최근 급여 기록</h2>
+                <span className="section-chip">오늘 2/3</span>
+              </div>
+              <div className="detail-record-list">
+                {recentMealRecords.map((record) => (
+                  <article key={record.id} className="detail-record-row">
+                    <time>{record.time}</time>
+                    <div>
+                      <strong>{record.title}</strong>
+                      <span>{record.detail}</span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+            <section className="section-block">
+              <div className="section-title">
+                <h2>주간 급여 현황</h2>
+                <span className="section-chip">규칙적</span>
+              </div>
+              <div className="week-check-grid">
+                {mealWeekRecords.map((record) => (
+                  <span key={record.id} className={record.done ? 'done' : ''}>
+                    <strong>{record.day}</strong>
+                    <em>{record.done ? '완료' : '예정'}</em>
+                  </span>
+                ))}
+              </div>
+            </section>
             <section className="recommendation-slot">
               <Store size={18} />
               <div>
@@ -716,6 +873,16 @@ export function MobileCareApp() {
 
         {activeTab === 'walk' && (
           <div className="view-stack">
+            <section className="section-block detail-stat-panel" aria-label="주간 산책 통계">
+              <div className="detail-stat-grid">
+                {walkStats.map((stat) => (
+                  <article key={stat.id}>
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                  </article>
+                ))}
+              </div>
+            </section>
             <section className="section-block">
               <div className="section-title">
                 <h2>산책 기록</h2>
@@ -745,6 +912,23 @@ export function MobileCareApp() {
                 <span>{walkPath.length > 0 ? `${walkPath.length}개 위치 지점 기록됨` : '수동 기록 가능'}</span>
               </div>
             </section>
+            <section className="section-block">
+              <div className="section-title">
+                <h2>최근 산책</h2>
+                <span className="section-chip">오늘 완료</span>
+              </div>
+              <div className="walk-record-stack">
+                {recentWalkRecords.map((record) => (
+                  <article key={record.id}>
+                    <div>
+                      <strong>{record.title}</strong>
+                      <span>{record.detail}</span>
+                    </div>
+                    <b>{record.distance}</b>
+                  </article>
+                ))}
+              </div>
+            </section>
           </div>
         )}
 
@@ -752,18 +936,35 @@ export function MobileCareApp() {
           <div className="view-stack">
             <section className="section-block">
               <div className="section-title">
-                <h2>전문가 추천</h2>
-                <Stethoscope size={18} />
+                <h2>동네케어</h2>
+                <span className="section-chip">6개 추천</span>
               </div>
-              <div className="expert-list">
-                {expertRecommendations.map((recommendation) => (
-                  <article key={recommendation.expert.id} className="expert-row">
-                    <div>
-                      <strong>{recommendation.expert.name}</strong>
-                      <p>{recommendation.reason}</p>
-                      <span>{recommendation.expert.area} · 평점 {recommendation.expert.rating}</span>
-                    </div>
-                    <b>{recommendation.score}</b>
+              <div className="local-care-grid">
+                {localCareRecommendations.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <article key={item.id}>
+                      <span className="shortcut-icon">
+                        <Icon size={18} />
+                      </span>
+                      <strong>{item.label}</strong>
+                      <p>{item.detail}</p>
+                      <em>{item.meta}</em>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+            <section className="section-block">
+              <div className="section-title">
+                <h2>최근 케어 기록</h2>
+                <Camera size={18} />
+              </div>
+              <div className="record-list">
+                {careState.logs.slice(0, 4).map((log) => (
+                  <article key={log.id} className="record-row">
+                    <strong>{log.title}</strong>
+                    <span>{categoryCopy(log.category)} · {log.tags?.join(', ') || '태그 없음'}</span>
                   </article>
                 ))}
               </div>
@@ -783,6 +984,24 @@ export function MobileCareApp() {
                 <input type="file" accept="image/*" onChange={(event) => handleMemoryFile(event.target.files?.[0])} />
               </label>
               {memoryPreview && <img className="memory-preview" src={memoryPreview} alt="선택한 추억 사진 미리보기" />}
+            </section>
+            <section className="section-block">
+              <div className="section-title">
+                <h2>동네 케어 추천</h2>
+                <Stethoscope size={18} />
+              </div>
+              <div className="expert-list">
+                {expertRecommendations.map((recommendation) => (
+                  <article key={recommendation.expert.id} className="expert-row">
+                    <div>
+                      <strong>{recommendation.expert.name}</strong>
+                      <p>{recommendation.reason}</p>
+                      <span>{recommendation.expert.area} · 평점 {recommendation.expert.rating}</span>
+                    </div>
+                    <b>{recommendation.score}</b>
+                  </article>
+                ))}
+              </div>
             </section>
           </div>
         )}
