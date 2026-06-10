@@ -1251,6 +1251,7 @@ body {
 .calorie-band,
 .map-panel,
 .detail-stat-grid article,
+.local-summary-grid article,
 .detail-record-row,
 .week-check-grid span,
 .walk-record-stack article,
@@ -1329,6 +1330,13 @@ body {
   color: var(--ink);
   font-size: 22px;
   line-height: 1.2;
+}
+
+.pet-mood-copy {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 760;
+  line-height: 1.45;
 }
 
 .hero-status-tags {
@@ -1705,14 +1713,20 @@ body {
 }
 
 .detail-stat-grid,
-.weekly-care-grid {
+.weekly-care-grid,
+.local-summary-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
+.local-summary-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .detail-stat-grid article,
-.weekly-care-grid article {
+.weekly-care-grid article,
+.local-summary-grid article {
   display: grid;
   min-height: 96px;
   align-content: start;
@@ -1723,20 +1737,35 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+.compact-stat-panel .detail-stat-grid article {
+  min-height: 76px;
+  padding: 12px 10px;
+}
+
 .detail-stat-grid strong,
-.weekly-care-grid strong {
+.weekly-care-grid strong,
+.local-summary-grid strong {
   color: var(--ink);
   font-size: 21px;
   font-weight: 900;
   letter-spacing: 0;
 }
 
+.compact-stat-panel .detail-stat-grid strong {
+  font-size: 19px;
+}
+
 .detail-stat-grid span,
-.weekly-care-grid span {
+.weekly-care-grid span,
+.local-summary-grid span {
   color: var(--muted);
   font-size: 12px;
   font-weight: 850;
   line-height: 1.3;
+}
+
+.compact-stat-panel .detail-stat-grid span {
+  font-size: 11px;
 }
 
 .weekly-care-grid em {
@@ -1899,6 +1928,7 @@ body {
 .shortcut-grid button,
 .detail-stat-grid article,
 .weekly-care-grid article,
+.local-summary-grid article,
 .detail-record-row,
 .week-check-grid span,
 .walk-record-stack article,

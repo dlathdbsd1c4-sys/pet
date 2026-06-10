@@ -55,7 +55,7 @@ const tabs: Array<{ id: TabId; label: string; icon: ComponentType<{ size?: numbe
   { id: 'health', label: '건강', icon: HeartPulse },
   { id: 'meal', label: '식사', icon: Utensils },
   { id: 'walk', label: '산책', icon: Grip },
-  { id: 'experts', label: '추천', icon: Store },
+  { id: 'experts', label: '동네케어', icon: Store },
 ];
 
 const detailPageTitles: Record<Exclude<TabId, 'today'>, string> = {
@@ -301,6 +301,12 @@ export function MobileCareApp() {
     { id: 'local-grooming', label: '미용샵', detail: '예약 가능 2곳', meta: '목욕 패키지 추천', icon: Camera },
     { id: 'local-sitter', label: '펫시터', detail: '검증된 돌봄 4명', meta: '주말 가능', icon: Users },
   ];
+  const localCareStats = [
+    { id: 'near-vets', value: '3곳', label: '동물병원' },
+    { id: 'near-shops', value: '6곳', label: '펫샵' },
+    { id: 'near-friends', value: '5명', label: '산책 친구' },
+    { id: 'near-sitters', value: '4명', label: '펫시터' },
+  ];
 
   function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string) {
     setCareState((current) =>
@@ -456,6 +462,7 @@ export function MobileCareApp() {
                 <div className="hero-copy-block">
                   <p className="eyebrow">우리 아이 프로필</p>
                   <h2>{primaryPet.name}의 하루가 잘 채워지고 있어요</h2>
+                  <p className="pet-mood-copy">오늘 기분 좋아요. 산책 1.2km와 식사 3회까지 안정적으로 완료했어요.</p>
                   <p className="profile-meta">
                     {primaryPet.breed} · {primaryPet.weightKg}kg · {primaryPet.sex}
                   </p>
@@ -755,7 +762,7 @@ export function MobileCareApp() {
 
         {activeTab === 'health' && (
           <div className="view-stack">
-            <section className="section-block detail-stat-panel" aria-label="건강 통계">
+            <section className="section-block detail-stat-panel compact-stat-panel" aria-label="건강 통계">
               <div className="detail-stat-grid">
                 {healthStats.map((stat) => (
                   <article key={stat.id}>
@@ -937,6 +944,23 @@ export function MobileCareApp() {
 
         {activeTab === 'experts' && (
           <div className="view-stack">
+            <section className="section-block detail-stat-panel" aria-label="내 주변 현황">
+              <div className="section-title">
+                <div>
+                  <p className="eyebrow">LOCAL</p>
+                  <h2>내 주변 현황</h2>
+                </div>
+                <span className="section-chip">반경 1km</span>
+              </div>
+              <div className="local-summary-grid">
+                {localCareStats.map((stat) => (
+                  <article key={stat.id}>
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                  </article>
+                ))}
+              </div>
+            </section>
             <section className="section-block">
               <div className="section-title">
                 <h2>동네케어</h2>

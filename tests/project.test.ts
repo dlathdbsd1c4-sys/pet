@@ -44,8 +44,8 @@ describe('mobile browser delivery', () => {
     assert.match(component, /className="back-button"/);
     assert.match(component, /뒤로가기/);
     assert.match(component, /label: '오늘'/);
+    assert.match(component, /label: '동네케어'/);
     assert.match(component, /experts: '동네케어'/);
-    assert.match(component, /label: '추천'/);
     assert.match(component, /icon: Bell/);
     assert.match(component, /icon: HeartPulse/);
     assert.match(component, /icon: Utensils/);
@@ -84,6 +84,8 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.tab\.active \{[\s\S]*background: var\(--accent-primary-soft\)/);
     assert.match(css, /\.detail-stat-grid/);
     assert.match(css, /\.local-care-grid/);
+    assert.match(css, /\.local-summary-grid/);
+    assert.match(css, /\.compact-stat-panel \.detail-stat-grid article/);
     assert.match(css, /\.tab-symbol/);
     assert.match(css, /\.tab svg/);
     assert.match(css, /border-radius: 28px 28px 0 0/);
@@ -132,6 +134,11 @@ describe('mobile browser delivery', () => {
     assert.match(component, /주간 급여 현황/);
     assert.match(component, /최근 산책/);
     assert.match(component, /이번 주 총 거리/);
+    assert.match(component, /오늘 기분 좋아요/);
+    assert.match(component, /내 주변 현황/);
+    assert.match(component, /반경 1km/);
+    assert.match(component, /localCareStats/);
+    assert.match(component, /className="local-summary-grid"/);
     assert.match(component, /동물병원/);
     assert.match(component, /산책 친구/);
     assert.match(component, /애견카페/);
