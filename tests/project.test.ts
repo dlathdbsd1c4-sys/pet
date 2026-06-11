@@ -64,7 +64,7 @@ describe('mobile browser delivery', () => {
     assert.doesNotMatch(component, /className="header-icon"/);
   });
 
-  it('uses Lucide only, a single warm primary palette, large cards, and a real pet photo slot', () => {
+  it('uses Lucide only, a sage green brand palette, large cards, and a real pet photo slot', () => {
     const component = readFileSync('src/components/mobile-care-app.tsx', 'utf8');
     const css = readFileSync('src/app/globals.css', 'utf8');
 
@@ -72,16 +72,25 @@ describe('mobile browser delivery', () => {
     assert.doesNotMatch(component, /@heroicons|phosphor/);
     assert.match(component, /className="pet-photo hero-pet-photo"/);
     assert.match(component, /photo-1552053831-71594a27632d/);
-    assert.match(css, /--bg-app: #f8f4ef/);
-    assert.match(css, /--ink: #2d2a26/);
-    assert.match(css, /--accent-primary: #e88a73/);
-    assert.match(css, /--shadow-soft: 0 4px 12px rgba\(0, 0, 0, 0\.04\)/);
+    assert.match(css, /--bg-app: #faf8f2/);
+    assert.match(css, /--bg-shell: #fffdfa/);
+    assert.match(css, /--surface: #ffffff/);
+    assert.match(css, /--ink: #2b2b2b/);
+    assert.match(css, /--muted: #6b7280/);
+    assert.match(css, /--accent-primary: #6faf8f/);
+    assert.match(css, /--accent-primary-hover: #5d9e7e/);
+    assert.match(css, /--accent-primary-soft: #eaf6f0/);
+    assert.match(css, /--accent-sage: #8bc5a3/);
+    assert.match(css, /--shadow-soft: 0 5px 16px rgba\(43, 43, 43, 0\.055\)/);
+    assert.match(css, /--shadow-hero: 0 14px 32px rgba\(95, 142, 116, 0\.16\)/);
     assert.match(css, /--accent-blue: var\(--accent-primary\)/);
-    assert.match(css, /--surface-blue: #fff7f2/);
-    assert.doesNotMatch(css, /#d8296d|#0f7d5e|#1f7a5e|#345d8a|#244d7a/);
+    assert.match(css, /--surface-blue: #eef8f4/);
+    assert.doesNotMatch(css, /#d8296d|#b51f5a|#e88a73|#fff0eb|rgba\(232, 138, 115/);
     assert.match(css, /--radius-card: 20px/);
     assert.match(css, /\.soft-metric/);
     assert.match(css, /\.pet-hero-card \.profile-stats strong \{[\s\S]*font-size: 24px/);
+    assert.match(css, /\.pet-hero-card \{[\s\S]*linear-gradient\(160deg, #ffffff 0%, #eef8f4 100%\)/);
+    assert.match(css, /\.section-chip,[\s\S]*\.ghost-action \{[\s\S]*color: var\(--accent-primary\)/);
     assert.match(css, /\.progress-ring \{[\s\S]*conic-gradient/);
     assert.match(css, /\.shortcut-grid/);
     assert.match(css, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
