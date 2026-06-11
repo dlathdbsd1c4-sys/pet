@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>반려동물 통합 케어</title>
+    <link rel="stylesheet" href="/src/app/globals.css" />
+    <style>
+      [hidden] {
+        display: none !important;
+      }
+
+      .preview-page {
+        min-height: 100vh;
+      }
+
+      .preview-page .tab svg,
+      .preview-page .back-button svg {
+        flex: 0 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app-canvas preview-page">
+      <section class="mobile-shell" aria-label="반려동물 통합 케어">
+        <nav class="bottom-tabbar" aria-label="케어 메뉴">
+          <button class="tab active" data-tab="today" type="button">
+            <span class="tab-symbol">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.05">
+                <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5"></path>
+                <path d="M9.5 20a2.5 2.5 0 0 0 5 0"></path>
+              </svg>
+            </span>
+            <span>오늘</span>
+          </button>
+          <button class="tab" data-tab="health" type="button">
+            <span class="tab-symbol">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.05">
+                <path d="M19.5 5.5a5 5 0 0 0-7.1 0L12 6l-.4-.5a5 5 0 0 0-7.1 7.1L12 20l7.5-7.4a5 5 0 0 0 0-7.1Z"></path>
+                <path d="M8 12h2l1-2 2 4 1-2h2"></path>
+              </svg>
+            </span>
+            <span>건강</span>
+          </button>
+          <button class="tab" data-tab="meal" type="button">
+            <span class="tab-symbol">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.05">
+                <path d="M5.2 10.8h13.6l-1.15 5.25A3 3 0 0 1 14.72 18.4H9.28a3 3 0 0 1-2.93-2.35L5.2 10.8Z"></path>
+                <path d="M4.75 10.8h14.5"></path>
+                <path d="M10 14.15h4"></path>
+              </svg>
+            </span>
+            <span>식사</span>
+          </button>
+          <button class="tab" data-tab="walk" type="button">
+            <span class="tab-symbol">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.05">
+                <circle cx="7.2" cy="9.1" r="1.55"></circle>
+                <circle cx="12" cy="7" r="1.6"></circle>
+                <circle cx="16.8" cy="9.1" r="1.55"></circle>
+                <path d="M8.55 15.85c0-2.35 1.62-4.18 3.45-4.18s3.45 1.83 3.45 4.18c0 1.45-.9 2.35-2.08 2.35-.53 0-.88-.22-1.37-.22s-.84.22-1.37.22c-1.18 0-2.08-.9-2.08-2.35Z"></path>
+              </svg>
+            </span>
+            <span>산책</span>
+          </button>
+          <button class="tab" data-tab="experts" type="button">
+            <span class="tab-symbol">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.05">
+                <path d="M4 10.5 12 4l8 6.5"></path>
+                <path d="M6 10v9h12v-9"></path>
+                <path d="M9 19v-5h6v5"></path>
+              </svg>
+            </span>
+            <span>동네케어</span>
+          </button>
+        </nav>
+
+        <div data-view="today">
+          <header class="calm-header">
+            <p>오늘의 케어</p>
+            <h1>몽이와 오늘 케어</h1>
+            <span>가족이 함께 보는 산책, 식사, 건강 기록</span>
+          </header>
+
+          <div class="view-stack">
+            <section class="pet-profile-card pet-hero-card" aria-label="우리 아이 오늘 케어 요약">
+              <div class="pet-hero-main">
+                <div class="hero-photo-frame">
+                  <img class="pet-photo hero-pet-photo" src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=420&q=80" alt="몽이 사진" />
+                  <span class="completion-badge">좋음</span>
+                </div>
+                <div class="pet-copy">
+                  <p>우리 아이 프로필</p>
+                  <h2>몽이의 하루가 잘 채워지고 있어요</h2>
+                  <span>오늘 기분 좋아요. 산책 1.2km와 식사 3회까지 안정적으로 완료했어요.</span>
+                  <strong>말티푸 · 5.2kg · 남아</strong>
+                </div>
+              </div>
+              <div class="hero-tags">
+                <span>오늘 상태 좋음</span>
+                <span>산책 1.2km 완료</span>
+                <span>식사 3회 완료</span>
+                <span>건강 상태 양호</span>
+              </div>
+              <div class="hero-progress-card">
+                <div class="progress-ring" style="--progress-value: 100%;">
+                  <span>100%</span>
+                  <em>완료</em>
+                </div>
+                <div>
+                  <h3>오늘 목표 3/3 완료</h3>
+                  <p>산책 1.2km · 식사 완료</p>
+                  <div class="progress-track"><span style="width: 100%;"></span></div>
+                </div>
+              </div>
+              <div class="profile-stats">
+                <span><strong>3</strong><em>완료</em><small>오늘 목표 달성</small></span>
+                <span><strong>3</strong><em>기록</em><small>오늘 작성</small></span>
+                <span><strong>503</strong><em>kcal</em><small>권장 범위 내</small></span>
+              </div>
+              <div class="profile-actions">
+                <button data-go="health" type="button">건강 기록</button>
+                <button data-go="experts" type="button">동네케어</button>
+              </div>
+            </section>
+
+            <section class="section-block care-status-panel" aria-label="오늘의 케어 현황">
+              <div class="section-title">
+                <div>
+                  <p class="eyebrow">TODAY</p>
+                  <h2>오늘의 케어 현황</h2>
+                </div>
+                <span class="section-chip">3/3 완료</span>
+              </div>
+              <div class="care-status-list">
+                <button class="care-status-item done" data-go="walk" type="button">
+                  <span class="status-icon">산</span>
+                  <span><strong>산책 완료</strong><em>저녁 산책 1.2km 기록</em></span>
+                  <b>완료</b>
+                </button>
+                <button class="care-status-item done" data-go="meal" type="button">
+                  <span class="status-icon">식</span>
+                  <span><strong>식사 완료</strong><em>70g 급여와 물 섭취 확인</em></span>
+                  <b>완료</b>
+                </button>
+                <button class="care-status-item done" data-go="health" type="button">
+                  <span class="status-icon">건</span>
+                  <span><strong>약 복용 완료</strong><em>심장사상충 약 복용 체크</em></span>
+                  <b>완료</b>
+                </button>
+              </div>
+            </section>
+
+            <section class="section-block">
+              <div class="section-title">
+                <div>
+                  <p class="eyebrow">CARE</p>
+                  <h2>추천 케어</h2>
+                </div>
+                <span>자주 쓰는 기능</span>
+              </div>
+              <div class="care-shortcut-grid">
+                <button data-go="meal" type="button"><span class="status-icon">식</span><strong>간식</strong><em>최근 급여 3시간 전</em></button>
+                <button data-go="walk" type="button"><span class="status-icon">산</span><strong>산책 기록</strong><em>오늘 1.2km 완료</em></button>
+                <button data-go="health" type="button"><span class="status-icon">건</span><strong>건강수첩</strong><em>메모 2건 등록</em></button>
+                <button data-go="experts" type="button"><span class="status-icon">동</span><strong>동네 케어</strong><em>근처 병원 3곳</em></button>
+              </div>
+            </section>
+
+            <section class="section-block">
+              <div class="section-title">
+                <div>
+                  <p class="eyebrow">LOG</p>
+                  <h2>최근 기록</h2>
+                </div>
+                <button class="ghost-action" data-go="health" type="button">전체</button>
+              </div>
+              <div class="recent-record-grid">
+                <button data-go="walk" type="button"><strong>산책</strong><span>20분 · 1.2km · 컨디션 좋음</span></button>
+                <button data-go="health" type="button"><strong>건강</strong><span>피부 가려움 최근 메모</span></button>
+                <button data-go="experts" type="button"><strong>사진</strong><span>기분 좋은 오후</span></button>
+              </div>
+            </section>
+
+            <section class="section-block weekly-care-panel">
+              <div class="section-title">
+                <div>
+                  <p class="eyebrow">WEEK</p>
+                  <h2>이번 주 케어 현황</h2>
+                </div>
+                <span class="section-chip">좋음</span>
+              </div>
+              <div class="weekly-care-grid">
+                <article><strong>5회</strong><span>산책 횟수</span><em>지난주보다 +2</em></article>
+                <article><strong>18건</strong><span>식사 기록</span><em>규칙적으로 유지</em></article>
+                <article><strong>4건</strong><span>건강 기록</span><em>메모 안정</em></article>
+              </div>
+            </section>
+
+            <section class="section-block family-panel">
+              <div class="section-title">
+                <div>
+                  <p class="eyebrow">FAMILY</p>
+                  <h2>가족 공유 현황</h2>
+                </div>
+              </div>
+              <div class="family-feed">
+                <article class="family-feed-item"><span>엄</span><div><strong>엄마가 산책 기록 추가</strong><em>동네 공원 20분</em></div><time>10분 전</time></article>
+                <article class="family-feed-item"><span>동</span><div><strong>동생이 사진 업로드</strong><em>새 장난감 사진 2장</em></div><time>32분 전</time></article>
+              </div>
+            </section>
+
+            <section class="section-block">
+              <div class="section-title"><h2>오늘 케어 타임라인</h2></div>
+              <div class="timeline">
+                <article class="timeline-item done"><span class="time">08:00</span><span class="timeline-dot"></span><div><strong>아침 급여 완료</strong><em>식사 · 완료</em></div><span class="timeline-status">완료</span></article>
+                <article class="timeline-item done"><span class="time">09:30</span><span class="timeline-dot"></span><div><strong>약 복용 완료</strong><em>건강 · 완료</em></div><span class="timeline-status">완료</span></article>
+                <article class="timeline-item upcoming"><span class="time">19:00</span><span class="timeline-dot"></span><div><strong>저녁 산책 예정</strong><em>산책 · 예정</em></div><span class="timeline-status">예정</span></article>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div data-view="health" hidden>
+          <header class="detail-header">
+            <button class="back-button" data-go="today" type="button">← 뒤로가기</button>
+            <h1>건강수첩</h1>
+          </header>
+          <div class="view-stack">
+            <section class="section-block detail-stat-panel compact-stat-panel">
+              <div class="detail-stat-grid">
+                <article><strong>12건</strong><span>이번 달 기록</span></article>
+                <article><strong>100%</strong><span>복약 완료율</span></article>
+                <article><strong>D+7</strong><span>최근 병원 방문</span></article>
+              </div>
+            </section>
+            <section class="section-block">
+              <div class="section-title"><h2>건강수첩</h2><span class="section-chip">관리 중</span></div>
+              <label class="field"><span>증상 메모</span><input value="피부 가려움" /></label>
+              <button class="primary-action action-button" type="button">기록 추가</button>
+            </section>
+            <section class="section-block">
+              <div class="section-title"><h2>최근 건강 기록</h2><span class="section-chip">관리 중</span></div>
+              <div class="detail-record-list">
+                <article class="detail-record-row"><time>6/8</time><div><strong>피부 상태 양호</strong><span>가려움 줄고 컨디션 좋음</span></div></article>
+                <article class="detail-record-row"><time>6/5</time><div><strong>심장사상충 약 복용</strong><span>월간 복약 완료</span></div></article>
+                <article class="detail-record-row"><time>6/1</time><div><strong>병원 정기 검진</strong><span>체중 5.2kg, 특이사항 없음</span></div></article>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div data-view="meal" hidden>
+          <header class="detail-header">
+            <button class="back-button" data-go="today" type="button">← 뒤로가기</button>
+            <h1>식사 기록</h1>
+          </header>
+          <div class="view-stack">
+            <section class="section-block">
+              <div class="section-title"><h2>식사 기록</h2><span class="section-chip">권장 범위 내</span></div>
+              <div class="calorie-band"><span>503-616 kcal</span><p>몽이의 체중과 활동량 기준 참고값입니다.</p></div>
+              <label class="field"><span>급여량 g</span><input value="70" /></label>
+              <button class="primary-action action-button" type="button">급여 추가</button>
+            </section>
+            <section class="section-block">
+              <div class="section-title"><h2>최근 급여 기록</h2><span class="section-chip">오늘 2/3</span></div>
+              <div class="detail-record-list">
+                <article class="detail-record-row"><time>08:00</time><div><strong>아침 급여</strong><span>70g 완료</span></div></article>
+                <article class="detail-record-row"><time>13:20</time><div><strong>점심 간식</strong><span>30g, 닭가슴살 큐브</span></div></article>
+                <article class="detail-record-row"><time>19:30</time><div><strong>저녁 급여</strong><span>예정 · 권장량 70g</span></div></article>
+              </div>
+            </section>
+            <section class="section-block">
+              <div class="section-title"><h2>주간 급여 현황</h2><span class="section-chip">규칙적</span></div>
+              <div class="meal-week-grid">
+                <article class="done"><strong>월</strong><span>완료</span></article>
+                <article class="done"><strong>화</strong><span>완료</span></article>
+                <article class="done"><strong>수</strong><span>완료</span></article>
+                <article class="done"><strong>목</strong><span>완료</span></article>
+                <article><strong>금</strong><span>예정</span></article>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div data-view="walk" hidden>
+          <header class="detail-header">
+            <button class="back-button" data-go="today" type="button">← 뒤로가기</button>
+            <h1>산책 기록</h1>
+          </header>
+          <div class="view-stack">
+            <section class="section-block detail-stat-panel">
+              <div class="detail-stat-grid">
+                <article><strong>6.4km</strong><span>이번 주 총 거리</span></article>
+                <article><strong>24분</strong><span>평균 산책 시간</span></article>
+                <article><strong>5회</strong><span>산책 횟수</span></article>
+              </div>
+            </section>
+            <section class="section-block">
+              <div class="section-title"><h2>산책 기록</h2><span class="section-chip">GPS 준비</span></div>
+              <label class="field"><span>거리 km</span><input value="1.2" /></label>
+              <div class="walk-controls">
+                <button class="surface-action" type="button">산책 시작</button>
+                <button class="primary-action" type="button">산책 저장</button>
+              </div>
+              <div class="map-panel">수동 기록 가능</div>
+            </section>
+            <section class="section-block">
+              <div class="section-title"><h2>최근 산책</h2><span class="section-chip">오늘 완료</span></div>
+              <div class="walk-record-list">
+                <article><div><strong>오늘 산책</strong><span>23분 · 137kcal 소모</span></div><b>1.2km</b></article>
+                <article><div><strong>어제 저녁</strong><span>26분 · 동네 공원</span></div><b>1.4km</b></article>
+                <article><div><strong>주말 산책</strong><span>35분 · 컨디션 좋음</span></div><b>2.1km</b></article>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div data-view="experts" hidden>
+          <header class="detail-header">
+            <button class="back-button" data-go="today" type="button">← 뒤로가기</button>
+            <h1>동네케어</h1>
+          </header>
+          <div class="view-stack">
+            <section class="section-block detail-stat-panel">
+              <div class="section-title"><div><p class="eyebrow">LOCAL</p><h2>내 주변 현황</h2></div><span class="section-chip">반경 1km</span></div>
+              <div class="local-summary-grid">
+                <article><strong>3곳</strong><span>동물병원</span></article>
+                <article><strong>6곳</strong><span>펫샵</span></article>
+                <article><strong>5명</strong><span>산책 친구</span></article>
+                <article><strong>4명</strong><span>펫시터</span></article>
+              </div>
+            </section>
+            <section class="section-block">
+              <div class="section-title"><h2>동네케어</h2><span class="section-chip">6개 추천</span></div>
+              <div class="local-care-grid">
+                <article><span>병</span><strong>동물병원</strong><em>근처 병원 3곳</em><b>야간 진료 1곳</b></article>
+                <article><span>친</span><strong>산책 친구</strong><em>반경 1km 5명</em><b>저녁 루틴 맞음</b></article>
+                <article><span>카</span><strong>애견카페</strong><em>평점 높은 4곳</em><b>소형견 구역 있음</b></article>
+                <article><span>샵</span><strong>펫샵</strong><em>사료/간식 매장 6곳</em><b>오늘 영업 중</b></article>
+                <article><span>미</span><strong>미용샵</strong><em>예약 가능 2곳</em><b>목욕 패키지 추천</b></article>
+                <article><span>돌</span><strong>펫시터</strong><em>검증된 돌봄 4명</em><b>주말 가능</b></article>
+              </div>
+            </section>
+            <section class="section-block">
+              <div class="section-title"><h2>동네 케어 추천</h2><span class="section-chip">참고 추천</span></div>
+              <div class="expert-list">
+                <article class="expert-row"><div><strong>우리동네 24시 동물병원</strong><p>최근 건강 기록과 가까운 거리 기준으로 추천</p><span>성수동 · 평점 4.8</span></div></article>
+                <article class="expert-row"><div><strong>몽글몽글 미용샵</strong><p>소형견 미용 후기와 예약 가능 시간을 우선 표시</p><span>왕십리 · 평점 4.7</span></div></article>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const views = Array.from(document.querySelectorAll('[data-view]'));
+      const tabs = Array.from(document.querySelectorAll('[data-tab]'));
+      const moveButtons = Array.from(document.querySelectorAll('[data-go]'));
+
+      function activate(tabId) {
+        views.forEach((view) => {
+          view.hidden = view.dataset.view !== tabId;
+        });
+        tabs.forEach((tab) => {
+          tab.classList.toggle('active', tab.dataset.tab === tabId);
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      tabs.forEach((tab) => tab.addEventListener('click', () => activate(tab.dataset.tab)));
+      moveButtons.forEach((button) => button.addEventListener('click', () => activate(button.dataset.go)));
+    </script>
+  </body>
+</html>

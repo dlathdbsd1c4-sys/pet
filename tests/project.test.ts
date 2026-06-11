@@ -31,6 +31,18 @@ describe('mobile browser delivery', () => {
     assert.equal(dependencyNames.some((name) => name.includes('phosphor')), false);
   });
 
+  it('ships a dependency-free static preview for local browser review', () => {
+    const previewHtml = readFileSync('preview.html', 'utf8');
+    const previewServer = readFileSync('preview-server.mjs', 'utf8');
+
+    assert.match(previewHtml, /반려동물 통합 케어/);
+    assert.match(previewHtml, /data-tab="meal"/);
+    assert.match(previewHtml, /data-tab="walk"/);
+    assert.match(previewHtml, /stroke="currentColor"/);
+    assert.match(previewServer, /createServer/);
+    assert.doesNotMatch(previewHtml, /manifest|serviceWorker|service worker/i);
+  });
+
   it('puts main care content before utility controls', () => {
     const component = readFileSync('src/components/mobile-care-app.tsx', 'utf8');
 
