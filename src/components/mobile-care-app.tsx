@@ -138,6 +138,13 @@ const detailPageTitles: Record<Exclude<TabId, 'today'>, string> = {
   experts: '동네케어',
 };
 
+const expertDistances: Record<string, string> = {
+  'vet-1': '600m',
+  'trainer-1': '850m',
+  'groomer-1': '720m',
+  'sitter-1': '950m',
+};
+
 const initialCareState = createCareAppState({
   activeDate: today,
   pet: primaryPet,
@@ -344,7 +351,7 @@ export function MobileCareApp() {
   const healthStats = [
     { id: 'health-month', value: '12건', label: '이번 달 기록' },
     { id: 'health-medicine', value: '100%', label: '복약 완료율' },
-    { id: 'health-visit', value: 'D+7', label: '최근 병원 방문' },
+    { id: 'health-visit', value: 'D+7', label: '최근 방문' },
   ];
   const recentMealRecords = [
     { id: 'meal-breakfast', time: '08:00', title: '아침 급여', detail: `${mealAmount}g 완료` },
@@ -1100,8 +1107,10 @@ export function MobileCareApp() {
                   <article key={recommendation.expert.id} className="expert-row">
                     <div>
                       <strong>{recommendation.expert.name}</strong>
+                      <span>
+                        {recommendation.expert.area} · 평점 {recommendation.expert.rating} · {expertDistanceCopy(recommendation.expert.id)}
+                      </span>
                       <p>{recommendation.reason}</p>
-                      <span>{recommendation.expert.area} · 평점 {recommendation.expert.rating}</span>
                     </div>
                     <b>{recommendation.score}</b>
                   </article>
@@ -1154,6 +1163,10 @@ function timelineStatusCopy(status: 'due' | 'completed') {
 function timelineTitleWithStatus(title: string, status: 'due' | 'completed') {
   const statusCopy = timelineStatusCopy(status);
   return title.endsWith(statusCopy) ? title : `${title} ${statusCopy}`;
+}
+
+function expertDistanceCopy(expertId: string) {
+  return expertDistances[expertId] ?? '1km 이내';
 }
 
 function categoryCopy(category: CareCategory) {

@@ -39,6 +39,12 @@ describe('mobile browser delivery', () => {
     assert.match(previewHtml, /data-tab="meal"/);
     assert.match(previewHtml, /data-tab="walk"/);
     assert.match(previewHtml, /stroke="currentColor"/);
+    assert.match(previewHtml, /<div class="shortcut-grid">/);
+    assert.match(previewHtml, /<div class="week-check-grid">/);
+    assert.match(previewHtml, /<div class="walk-record-stack">/);
+    assert.match(previewHtml, /D\+7<\/strong><span>최근 방문<\/span>/);
+    assert.match(previewHtml, /4\.8 · 600m/);
+    assert.match(previewHtml, /4\.7 · 850m/);
     assert.match(previewServer, /createServer/);
     assert.doesNotMatch(previewHtml, /manifest|serviceWorker|service worker/i);
   });
@@ -132,6 +138,8 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.walk-controls \+ \.helper-text \{[\s\S]*margin: 0 0 18px/);
     assert.match(css, /\.walk-controls \+ \.map-panel \{[\s\S]*margin-top: 18px/);
     assert.match(css, /\.map-panel \{[\s\S]*border: 1px dashed rgba\(232, 138, 115, 0\.28\);[\s\S]*background: var\(--accent-primary-soft\);[\s\S]*color: var\(--accent-primary\);/);
+    assert.match(css, /\.shortcut-grid button \{[\s\S]*padding: 18px/);
+    assert.match(css, /\.shortcut-grid button em \{[\s\S]*line-height: 1\.45/);
     assert.match(componentFixture(), /이번 주 케어 현황/);
     assert.match(css, /\.weekly-care-grid/);
   });
@@ -159,9 +167,12 @@ describe('mobile browser delivery', () => {
     assert.match(component, /최근 건강 기록/);
     assert.match(component, /6\/8/);
     assert.match(component, /복약 완료율/);
+    assert.match(component, /label: '최근 방문'/);
     assert.match(component, /최근 급여 기록/);
     assert.match(component, /주간 급여 현황/);
     assert.match(component, /최근 산책/);
+    assert.match(component, /className="walk-record-stack"/);
+    assert.match(component, /className="week-check-grid"/);
     assert.match(component, /이번 주 총 거리/);
     assert.match(component, /오늘 기분 좋아요/);
     assert.match(component, /timelineStatusCopy/);
@@ -177,6 +188,8 @@ describe('mobile browser delivery', () => {
     assert.match(component, /펫샵/);
     assert.match(component, /미용샵/);
     assert.match(component, /펫시터/);
+    assert.match(component, /expertDistanceCopy/);
+    assert.match(component, /평점 \{recommendation\.expert\.rating\} · \{expertDistanceCopy\(recommendation\.expert\.id\)\}/);
     assert.match(component, /className="local-care-grid"/);
   });
 });
