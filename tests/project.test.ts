@@ -89,6 +89,7 @@ describe('mobile browser delivery', () => {
     assert.match(css, /--radius-card: 20px/);
     assert.match(css, /\.soft-metric/);
     assert.match(css, /\.pet-hero-card \.profile-stats strong \{[\s\S]*font-size: 24px/);
+    assert.match(css, /\.hero-pet-photo \{[\s\S]*display: block;[\s\S]*width: 100%;[\s\S]*height: 100%;[\s\S]*object-fit: cover/);
     assert.match(css, /\.pet-hero-card \{[\s\S]*linear-gradient\(160deg, #ffffff 0%, #eef8f4 100%\)/);
     assert.match(css, /\.section-chip,[\s\S]*\.ghost-action \{[\s\S]*color: var\(--accent-primary\)/);
     assert.match(css, /\.progress-ring \{[\s\S]*conic-gradient/);
