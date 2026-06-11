@@ -3,27 +3,25 @@
 }
 
 :root {
-  --bg-app: #faf8f2;
-  --bg-shell: #fffdfa;
-  --surface: #ffffff;
-  --surface-warm: #fff9f0;
-  --surface-sage: #eef8f4;
-  --surface-blue: #eef8f4;
-  --ink: #2b2b2b;
-  --muted: #6b7280;
-  --soft-muted: #8a918f;
-  --line: #e4ded2;
-  --line-strong: #c9ddcf;
-  --accent-primary: #6faf8f;
-  --accent-primary-hover: #5d9e7e;
-  --accent-primary-soft: #eaf6f0;
+  --bg-app: #f8f4ef;
+  --bg-shell: #fbf7f1;
+  --surface: #fffdf9;
+  --surface-warm: #fff3ed;
+  --surface-sage: #fff3ed;
+  --surface-blue: #fff7f2;
+  --ink: #2d2a26;
+  --muted: #756d65;
+  --soft-muted: #948a7f;
+  --line: #eaded2;
+  --line-strong: #dccabc;
+  --accent-primary: #e88a73;
+  --accent-primary-soft: #fff0eb;
   --accent-coral: var(--accent-primary);
   --accent-coral-soft: var(--accent-primary-soft);
-  --accent-sage: #8bc5a3;
+  --accent-sage: var(--accent-primary);
   --accent-blue: var(--accent-primary);
   --radius-card: 20px;
-  --shadow-soft: 0 5px 16px rgba(43, 43, 43, 0.055);
-  --shadow-hero: 0 14px 32px rgba(95, 142, 116, 0.16);
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 html,
@@ -33,8 +31,8 @@ body {
 }
 
 body {
-  background: var(--bg-app);
-  color: var(--ink);
+  background: #f4f6f2;
+  color: #24302b;
   font-family: Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 }
 
@@ -51,7 +49,7 @@ button {
 .app-canvas {
   min-height: 100vh;
   padding: 0;
-  background: var(--bg-app);
+  background: #f4f6f2;
 }
 
 .mobile-shell {
@@ -59,7 +57,7 @@ button {
   min-height: 100vh;
   margin: 0 auto;
   padding: 12px 14px 112px;
-  background: var(--bg-shell);
+  background: #f7f8f5;
 }
 
 .commerce-header {
@@ -97,7 +95,7 @@ button {
   border: 0;
   border-radius: 999px;
   background: #ffffff;
-  color: var(--ink);
+  color: #24302b;
   font-weight: 900;
   white-space: nowrap;
   box-shadow: 0 5px 18px rgba(36, 48, 43, 0.07);
@@ -136,7 +134,7 @@ button {
   flex: 0 0 36px;
   width: 36px;
   padding: 0;
-  color: var(--ink);
+  color: #24302b;
 }
 
 .search-pill {
@@ -167,10 +165,10 @@ button {
   gap: 10px;
   min-height: 148px;
   padding: 18px;
-  border: 1px solid var(--line);
+  border: 1px solid #f1ded1;
   border-radius: 8px;
-  background: var(--surface);
-  box-shadow: var(--shadow-soft);
+  background: #fff4ea;
+  box-shadow: 0 10px 28px rgba(139, 77, 54, 0.1);
 }
 
 .hero-copy {
@@ -185,13 +183,13 @@ button {
 }
 
 .hero-copy h1 {
-  color: var(--ink);
+  color: #24302b;
   font-size: 25px;
   line-height: 1.18;
 }
 
 .hero-copy span {
-  color: var(--muted);
+  color: #7d5a48;
   font-size: 13px;
   font-weight: 800;
 }
@@ -202,7 +200,7 @@ button {
   justify-content: center;
   width: 76px;
   height: 92px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid #ffe0d5;
   border-radius: 8px;
   background: #ffffff;
   color: var(--accent-primary);
@@ -246,7 +244,7 @@ h2 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface-warm);
-  color: var(--accent-primary);
+  color: #1f6e54;
 }
 
 .icon-button {
@@ -315,7 +313,7 @@ h2 {
 }
 
 .tab.active {
-  background: var(--accent-primary-soft);
+  background: #fff0f5;
   color: var(--accent-primary);
   font-weight: 800;
 }
@@ -361,7 +359,7 @@ h2 {
   border: 1px solid #eadde4;
   border-radius: 8px;
   background: #ffffff;
-  color: var(--ink);
+  color: #24302b;
   font-size: 12px;
   font-weight: 900;
   box-shadow: 0 5px 16px rgba(36, 48, 43, 0.05);
@@ -401,10 +399,10 @@ h2 {
   justify-content: center;
   min-height: 30px;
   padding: 0 10px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid #e5e9e4;
   border-radius: 999px;
-  background: var(--accent-primary-soft);
-  color: var(--accent-primary);
+  background: #f8faf7;
+  color: #637168;
   font-size: 12px;
   font-weight: 900;
   white-space: nowrap;
@@ -480,10 +478,10 @@ h2 {
 
 .profile-actions button {
   min-height: 42px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid #eadde4;
   border-radius: 8px;
-  background: var(--accent-primary-soft);
-  color: var(--accent-primary);
+  background: #fff8fb;
+  color: #b51f5a;
   font-size: 13px;
   font-weight: 900;
 }
@@ -505,13 +503,13 @@ h2 {
   border: 1px solid #e2e9e3;
   border-radius: 8px;
   background: #fbfdfc;
-  color: var(--ink);
+  color: #24302b;
   text-align: left;
 }
 
 .care-status-item.done {
   border-color: var(--line);
-  background: var(--accent-primary-soft);
+  background: #f2fbf6;
 }
 
 .status-icon {
@@ -557,7 +555,7 @@ h2 {
   border: 1px solid #e6e9ee;
   border-radius: 8px;
   background: #ffffff;
-  color: var(--ink);
+  color: #24302b;
   text-align: left;
 }
 
@@ -674,7 +672,7 @@ h2 {
 }
 
 .timeline-status.completed {
-  border-color: rgba(111, 175, 143, 0.28);
+  border-color: rgba(232, 138, 115, 0.22);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
 }
@@ -770,7 +768,7 @@ h2 {
   border: 1px solid #cbdcd4;
   border-radius: 8px;
   background: #ffffff;
-  color: var(--ink);
+  color: #24302b;
 }
 
 .notice-row,
@@ -834,7 +832,7 @@ h2 {
   border: 1px solid #cbdcd4;
   border-radius: 8px;
   background: #fbfdfc;
-  color: var(--ink);
+  color: #24302b;
 }
 
 .primary-action,
@@ -944,8 +942,8 @@ h2 {
 
 .calendar-row button {
   min-height: 48px;
-  border-color: var(--accent-primary);
-  background: var(--accent-primary);
+  border-color: #24302b;
+  background: #24302b;
 }
 
 body {
@@ -965,8 +963,8 @@ body {
 .care-room-chip,
 .header-icon,
 .search-pill {
-  border: 1px solid rgba(228, 222, 210, 0.9);
-  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(234, 223, 210, 0.88);
+  background: rgba(255, 253, 249, 0.92);
   box-shadow: var(--shadow-soft);
 }
 
@@ -999,7 +997,7 @@ body {
 
 .hero-pet-card,
 .profile-avatar {
-  border-color: var(--line-strong);
+  border-color: #f0d9c5;
   background: var(--surface-warm);
   color: var(--accent-coral);
 }
@@ -1036,9 +1034,9 @@ body {
 
 .section-chip,
 .ghost-action {
-  border-color: rgba(111, 175, 143, 0.26);
-  background: var(--accent-primary-soft);
-  color: var(--accent-primary);
+  border-color: var(--line);
+  background: var(--surface-warm);
+  color: var(--ink);
 }
 
 .profile-stats span,
@@ -1046,7 +1044,7 @@ body {
 .notice-row,
 .record-row,
 .expert-row {
-  background: #f7fbf8;
+  background: #f8f3eb;
 }
 
 .profile-actions button,
@@ -1084,8 +1082,8 @@ body {
 }
 
 .neighborhood-grid button {
-  background: var(--surface-sage);
-  border-color: var(--line-strong);
+  background: var(--surface-warm);
+  border-color: #eddfcf;
 }
 
 .shortcut-rail button,
@@ -1141,16 +1139,16 @@ body {
 }
 
 .primary-action.action-button {
-  border-color: var(--accent-primary);
-  background: var(--accent-primary);
+  border-color: var(--ink);
+  background: var(--ink);
   color: #ffffff;
-  box-shadow: 0 10px 22px rgba(95, 142, 116, 0.2);
+  box-shadow: 0 8px 18px rgba(39, 35, 31, 0.16);
 }
 
 .secondary-action.action-button {
   border-color: var(--line-strong);
-  background: var(--accent-primary-soft);
-  color: var(--accent-primary);
+  background: var(--surface-warm);
+  color: var(--ink);
   box-shadow: none;
 }
 
@@ -1187,8 +1185,8 @@ body {
 
 .bottom-tabbar {
   border-color: var(--line);
-  background: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 -10px 24px rgba(95, 142, 116, 0.12);
+  background: rgba(255, 253, 249, 0.96);
+  box-shadow: 0 -8px 22px rgba(65, 52, 40, 0.1);
 }
 
 .tab {
@@ -1201,8 +1199,8 @@ body {
 }
 
 .calendar-row button {
-  border-color: var(--accent-primary);
-  background: var(--accent-primary);
+  border-color: var(--ink);
+  background: var(--ink);
 }
 
 .calm-header {
@@ -1305,10 +1303,7 @@ body {
 .pet-hero-card {
   gap: 18px;
   padding: 20px;
-  border-color: rgba(111, 175, 143, 0.28);
   border-radius: 24px;
-  background: linear-gradient(160deg, #ffffff 0%, #eef8f4 100%);
-  box-shadow: var(--shadow-hero);
 }
 
 .pet-hero-main {
@@ -1326,7 +1321,7 @@ body {
 
 .hero-pet-photo {
   border-radius: 24px;
-  box-shadow: 0 14px 28px rgba(95, 142, 116, 0.18);
+  box-shadow: 0 14px 26px rgba(45, 42, 38, 0.1);
 }
 
 .completion-badge {
@@ -1338,9 +1333,9 @@ body {
   gap: 4px;
   min-height: 28px;
   padding: 0 9px;
-  border: 1px solid rgba(111, 175, 143, 0.34);
+  border: 1px solid rgba(232, 138, 115, 0.26);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 253, 249, 0.94);
   color: var(--accent-primary);
   font-size: 12px;
   font-weight: 900;
@@ -1375,7 +1370,7 @@ body {
 .hero-status-tags span {
   min-height: 28px;
   padding: 6px 10px;
-  border: 1px solid rgba(111, 175, 143, 0.3);
+  border: 1px solid rgba(232, 138, 115, 0.22);
   border-radius: 999px;
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
@@ -1389,9 +1384,9 @@ body {
   align-items: center;
   gap: 14px;
   padding: 16px;
-  border: 1px solid rgba(111, 175, 143, 0.28);
+  border: 1px solid rgba(232, 138, 115, 0.2);
   border-radius: 20px;
-  background: linear-gradient(135deg, #ffffff 0%, #eef8f4 100%);
+  background: var(--surface-warm);
 }
 
 .progress-ring {
@@ -1400,7 +1395,7 @@ body {
   width: 82px;
   height: 82px;
   border-radius: 50%;
-  background: conic-gradient(var(--accent-primary) var(--progress-value, 100%), #dfeee7 0);
+  background: conic-gradient(var(--accent-primary) var(--progress-value), #f0e3d8 0);
 }
 
 .progress-ring > div {
@@ -1447,12 +1442,12 @@ body {
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: #dfeee7;
+  background: #f0e3d8;
 }
 
 .hero-progress-bar span {
   display: block;
-  width: var(--progress-value, 100%);
+  width: var(--progress-value);
   height: 100%;
   border-radius: inherit;
   background: var(--accent-primary);
@@ -1474,7 +1469,7 @@ body {
 .status-strip div,
 .profile-stats span {
   min-height: 58px;
-  background: var(--surface-sage);
+  background: #fbf4ec;
 }
 
 .status-strip span:last-child,
@@ -1487,8 +1482,8 @@ body {
 }
 
 .care-status-item.done {
-  border-color: rgba(111, 175, 143, 0.28);
-  background: var(--accent-primary-soft);
+  border-color: #ead7ca;
+  background: var(--surface-warm);
 }
 
 .status-icon,
@@ -1585,8 +1580,8 @@ body {
 .pet-hero-card .profile-stats span {
   min-height: 76px;
   padding: 14px;
-  border: 1px solid rgba(111, 175, 143, 0.2);
-  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(234, 222, 210, 0.72);
+  background: #fffaf6;
 }
 
 .pet-hero-card .profile-stats strong {
@@ -1614,7 +1609,7 @@ body {
   height: 138px;
   min-height: 138px;
   padding: 16px;
-  box-shadow: 0 8px 18px rgba(43, 43, 43, 0.055);
+  box-shadow: 0 8px 18px rgba(45, 42, 38, 0.05);
 }
 
 .shortcut-icon {
@@ -1629,17 +1624,17 @@ body {
 }
 
 .care-status-item.done {
-  box-shadow: 0 8px 18px rgba(95, 142, 116, 0.12);
+  box-shadow: 0 8px 18px rgba(232, 138, 115, 0.08);
 }
 
 .bottom-tabbar {
   gap: 8px;
   padding: 14px 18px calc(14px + env(safe-area-inset-bottom));
-  border: 1px solid rgba(201, 221, 207, 0.9);
+  border: 1px solid rgba(234, 222, 210, 0.9);
   border-bottom: 0;
   border-radius: 28px 28px 0 0;
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 -16px 28px rgba(95, 142, 116, 0.14);
+  background: rgba(255, 253, 249, 0.98);
+  box-shadow: 0 -16px 28px rgba(45, 42, 38, 0.1);
 }
 
 .tab {
@@ -1647,7 +1642,7 @@ body {
   gap: 6px;
   border: 1px solid transparent;
   border-radius: 22px;
-  color: var(--muted);
+  color: #746f66;
   font-size: 13px;
   font-weight: 850;
 }
@@ -1662,12 +1657,12 @@ body {
 }
 
 .tab.active {
-  border: 1px solid rgba(111, 175, 143, 0.3);
+  border: 1px solid rgba(232, 138, 115, 0.2);
   border-radius: 22px;
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
   font-weight: 950;
-  box-shadow: inset 0 0 0 1px rgba(111, 175, 143, 0.1), var(--shadow-soft);
+  box-shadow: inset 0 0 0 1px rgba(232, 138, 115, 0.08), var(--shadow-soft);
 }
 
 .tab svg {
@@ -1692,7 +1687,7 @@ body {
 .soft-metric strong,
 .profile-stats strong,
 .metric {
-  color: var(--accent-primary-hover);
+  color: #3c332b;
   font-size: 16px;
   font-weight: 800;
 }
@@ -1732,11 +1727,10 @@ body {
 .calendar-row button {
   border-color: var(--accent-primary);
   background: var(--accent-primary);
-  box-shadow: 0 10px 22px rgba(95, 142, 116, 0.2);
 }
 
 .bottom-tabbar {
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(255, 253, 249, 0.98);
 }
 
 .detail-stat-grid,
@@ -1963,10 +1957,6 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
-.pet-profile-card.pet-hero-card {
-  box-shadow: var(--shadow-hero);
-}
-
 .care-status-item.done {
   box-shadow: var(--shadow-soft);
 }
@@ -2002,7 +1992,7 @@ body {
 
   .bottom-tabbar {
     bottom: 28px;
-    border: 1px solid rgba(201, 221, 207, 0.9);
+    border: 1px solid rgba(234, 222, 210, 0.9);
     border-radius: 28px;
   }
 }
