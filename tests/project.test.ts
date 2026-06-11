@@ -113,6 +113,7 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.walk-controls \{[\s\S]*margin: 14px 0 16px/);
     assert.match(css, /\.walk-controls \+ \.helper-text \{[\s\S]*margin: 0 0 18px/);
     assert.match(css, /\.walk-controls \+ \.map-panel \{[\s\S]*margin-top: 18px/);
+    assert.match(css, /\.map-panel \{[\s\S]*border: 1px dashed rgba\(232, 138, 115, 0\.28\);[\s\S]*background: var\(--accent-primary-soft\);[\s\S]*color: var\(--accent-primary\);/);
     assert.match(componentFixture(), /이번 주 케어 현황/);
     assert.match(css, /\.weekly-care-grid/);
   });

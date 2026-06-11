@@ -889,10 +889,10 @@ h2 {
   gap: 8px;
   min-height: 110px;
   margin-top: 10px;
-  border: 1px dashed #9cb7aa;
+  border: 1px dashed rgba(232, 138, 115, 0.28);
   border-radius: 8px;
-  background: #f6faf8;
-  color: #52655c;
+  background: var(--accent-primary-soft);
+  color: var(--accent-primary);
   font-weight: 800;
 }
 
