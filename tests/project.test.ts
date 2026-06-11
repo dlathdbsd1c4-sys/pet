@@ -52,10 +52,13 @@ describe('mobile browser delivery', () => {
     assert.match(component, /experts: '동네케어'/);
     assert.match(component, /icon: Bell/);
     assert.match(component, /icon: HeartPulse/);
-    assert.match(component, /icon: Utensils/);
-    assert.match(component, /icon: Grip/);
+    assert.match(component, /\{ id: 'meal', label: '식사', icon: DogBowlIcon \}/);
+    assert.match(component, /\{ id: 'walk', label: '산책', icon: PawPrint \}/);
+    assert.match(component, /function DogBowlIcon/);
     assert.match(component, /icon: Store/);
     assert.match(component, /className="tab-symbol"/);
+    assert.doesNotMatch(component, /\{ id: 'meal', label: '식사', icon: Utensils \}/);
+    assert.doesNotMatch(component, /\{ id: 'walk', label: '산책', icon: Grip \}/);
     assert.doesNotMatch(component, /mark: '⌂'|mark: '♡'|mark: '⋔'|mark: '⌁'|mark: '⌖'/);
     assert.doesNotMatch(component, /emoji: '🏠'|emoji: '🩺'|emoji: '🍽️'|emoji: '🐾'|emoji: '📍'/);
     assert.doesNotMatch(component, /🎉|🏠|🩺|🍽️|🐾|📍/);

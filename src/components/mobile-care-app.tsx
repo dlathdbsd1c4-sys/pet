@@ -8,11 +8,11 @@ import {
   CheckCircle2,
   Circle,
   Footprints,
-  Grip,
   HeartPulse,
   MapPin,
   MessageCircle,
   Navigation,
+  PawPrint,
   Play,
   Plus,
   Stethoscope,
@@ -50,11 +50,39 @@ type WalkPoint = {
 
 const today = '2026-05-29';
 
+function DogBowlIcon({ size = 24, strokeWidth = 2.25 }: { size?: number; strokeWidth?: number }) {
+  return (
+    <svg aria-hidden="true" fill="none" height={size} viewBox="0 0 24 24" width={size}>
+      <path
+        d="M5 10.5h14l-1.2 6.1A3 3 0 0 1 14.9 19H9.1a3 3 0 0 1-2.9-2.4L5 10.5Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
+      />
+      <path
+        d="M8 10.5c.6-2.2 2-3.5 4-3.5s3.4 1.3 4 3.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
+      />
+      <path
+        d="M10 14h4"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={strokeWidth}
+      />
+    </svg>
+  );
+}
+
 const tabs: Array<{ id: TabId; label: string; icon: ComponentType<{ size?: number; strokeWidth?: number }> }> = [
   { id: 'today', label: '오늘', icon: Bell },
   { id: 'health', label: '건강', icon: HeartPulse },
-  { id: 'meal', label: '식사', icon: Utensils },
-  { id: 'walk', label: '산책', icon: Grip },
+  { id: 'meal', label: '식사', icon: DogBowlIcon },
+  { id: 'walk', label: '산책', icon: PawPrint },
   { id: 'experts', label: '동네케어', icon: Store },
 ];
 
