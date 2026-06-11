@@ -42,10 +42,13 @@ describe('mobile browser delivery', () => {
     assert.match(previewHtml, /<div class="shortcut-grid">/);
     assert.match(previewHtml, /<div class="week-check-grid">/);
     assert.match(previewHtml, /<div class="walk-record-stack">/);
+    assert.match(previewHtml, /class="hero-status-list"/);
+    assert.match(previewHtml, /class="goal-achievement-card"/);
     assert.match(previewHtml, /D\+7<\/strong><span>최근 방문<\/span>/);
     assert.match(previewHtml, /4\.8 · 600m/);
     assert.match(previewHtml, /4\.7 · 850m/);
     assert.match(previewServer, /createServer/);
+    assert.doesNotMatch(previewHtml, /class="progress-ring"/);
     assert.doesNotMatch(previewHtml, /manifest|serviceWorker|service worker/i);
   });
 
@@ -60,8 +63,13 @@ describe('mobile browser delivery', () => {
     assert.match(component, /식사 3회 완료/);
     assert.match(component, /건강 상태 양호/);
     assert.match(component, /className="pet-profile-card pet-hero-card"/);
-    assert.match(component, /오늘 목표/);
-    assert.match(component, /className="progress-ring"/);
+    assert.match(component, /오늘 목표 달성/);
+    assert.match(component, /\{completedCareCount\}\/\{todayGoalTotal\} 완료/);
+    assert.match(component, /className="hero-status-list"/);
+    assert.match(component, /className="goal-achievement-card"/);
+    assert.doesNotMatch(component, /className="progress-ring"/);
+    assert.doesNotMatch(component, /heroProgressStyle/);
+    assert.doesNotMatch(component, /todayGoalProgress/);
     assert.match(component, /className="detail-header"/);
     assert.match(component, /className="back-button"/);
     assert.match(component, /뒤로가기/);
@@ -105,8 +113,10 @@ describe('mobile browser delivery', () => {
     assert.doesNotMatch(css, /#d8296d|#0f7d5e|#1f7a5e|#345d8a|#244d7a/);
     assert.match(css, /--radius-card: 20px/);
     assert.match(css, /\.soft-metric/);
-    assert.match(css, /\.pet-hero-card \.profile-stats strong \{[\s\S]*font-size: 24px/);
-    assert.match(css, /\.progress-ring \{[\s\S]*conic-gradient/);
+    assert.match(css, /\.pet-hero-card \.profile-stats strong \{[\s\S]*font-size: 26px/);
+    assert.match(css, /\.hero-status-list \{[\s\S]*border-radius: var\(--radius-card\)/);
+    assert.match(css, /\.goal-achievement-card \{[\s\S]*border-radius: var\(--radius-card\)/);
+    assert.doesNotMatch(css, /\.progress-ring \{/);
     assert.match(css, /\.shortcut-grid/);
     assert.match(css, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
     assert.match(css, /\.shortcut-grid button \{[\s\S]*height: 138px/);
@@ -138,8 +148,10 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.walk-controls \+ \.helper-text \{[\s\S]*margin: 0 0 18px/);
     assert.match(css, /\.walk-controls \+ \.map-panel \{[\s\S]*margin-top: 18px/);
     assert.match(css, /\.map-panel \{[\s\S]*border: 1px dashed rgba\(232, 138, 115, 0\.28\);[\s\S]*background: var\(--accent-primary-soft\);[\s\S]*color: var\(--accent-primary\);/);
-    assert.match(css, /\.shortcut-grid button \{[\s\S]*padding: 18px/);
-    assert.match(css, /\.shortcut-grid button em \{[\s\S]*line-height: 1\.45/);
+    assert.match(css, /\.hero-status-list \{[\s\S]*padding: 16px/);
+    assert.match(css, /\.goal-achievement-card \{[\s\S]*padding: 16px/);
+    assert.match(css, /\.shortcut-grid button \{[\s\S]*padding: 20px/);
+    assert.match(css, /\.shortcut-grid button em \{[\s\S]*line-height: 1\.5/);
     assert.match(componentFixture(), /이번 주 케어 현황/);
     assert.match(css, /\.weekly-care-grid/);
   });

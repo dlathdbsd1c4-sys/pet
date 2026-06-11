@@ -19,7 +19,7 @@ import {
   Utensils,
   Users,
 } from 'lucide-react';
-import type { ComponentType, CSSProperties } from 'react';
+import type { ComponentType } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -208,8 +208,6 @@ export function MobileCareApp() {
   const emailReminder = careState.notificationPreferences.emailEnabled;
   const completedCareCount = 3;
   const todayGoalTotal = 3;
-  const todayGoalProgress = Math.min(100, Math.round((completedCareCount / todayGoalTotal) * 100));
-  const heroProgressStyle = { '--progress-value': `${todayGoalProgress}%` } as CSSProperties;
   const detailPageTitle = activeTab === 'today' ? null : detailPageTitles[activeTab];
   const careStatusItems = [
     {
@@ -542,33 +540,67 @@ export function MobileCareApp() {
                 <div className="hero-copy-block">
                   <p className="eyebrow">우리 아이 프로필</p>
                   <h2>{primaryPet.name}의 하루가 잘 채워지고 있어요</h2>
-                  <p className="pet-mood-copy">오늘 기분 좋아요. 산책 1.2km와 식사 3회까지 안정적으로 완료했어요.</p>
+                  <p className="pet-mood-copy">오늘 기분 좋아요.</p>
                   <p className="profile-meta">
                     {primaryPet.breed} · {primaryPet.weightKg}kg · {primaryPet.sex}
                   </p>
-                  <div className="hero-status-tags" aria-label="오늘 상태 태그">
-                    <span>오늘 상태 좋음</span>
-                    <span>산책 1.2km 완료</span>
-                    <span>식사 3회 완료</span>
-                    <span>건강 상태 양호</span>
-                  </div>
                 </div>
               </div>
 
-              <div className="hero-progress-panel">
-                <div className="progress-ring" style={heroProgressStyle} aria-label={`오늘 목표 ${completedCareCount}/${todayGoalTotal} 완료`}>
+              <div className="hero-status-list" aria-label="오늘 상태">
+                <p>오늘 상태 좋음</p>
+                <ul>
+                  <li>
+                    <span className="hero-check">
+                      <CheckCircle2 size={14} />
+                    </span>
+                    산책 1.2km 완료
+                  </li>
+                  <li>
+                    <span className="hero-check">
+                      <CheckCircle2 size={14} />
+                    </span>
+                    식사 3회 완료
+                  </li>
+                  <li>
+                    <span className="hero-check">
+                      <CheckCircle2 size={14} />
+                    </span>
+                    건강 상태 양호
+                  </li>
+                </ul>
+              </div>
+
+              <div className="goal-achievement-card" aria-label="오늘 목표 달성 상태">
+                <header>
                   <div>
-                    <strong>{todayGoalProgress}%</strong>
-                    <span>완료</span>
+                    <p className="eyebrow">TODAY GOAL</p>
+                    <h3>오늘 목표 달성</h3>
                   </div>
-                </div>
-                <div className="hero-progress-copy">
-                  <strong>오늘 목표 {completedCareCount}/{todayGoalTotal} 완료</strong>
-                  <span>산책 1.2km · 식사 완료</span>
-                  <div className="hero-progress-bar" style={heroProgressStyle} aria-hidden="true">
-                    <span />
-                  </div>
-                </div>
+                  <strong>
+                    {completedCareCount}/{todayGoalTotal} 완료
+                  </strong>
+                </header>
+                <ul>
+                  <li>
+                    <span className="hero-check">
+                      <CheckCircle2 size={14} />
+                    </span>
+                    산책 1.2km 완료
+                  </li>
+                  <li>
+                    <span className="hero-check">
+                      <CheckCircle2 size={14} />
+                    </span>
+                    식사 완료
+                  </li>
+                  <li>
+                    <span className="hero-check">
+                      <CheckCircle2 size={14} />
+                    </span>
+                    건강 상태 양호
+                  </li>
+                </ul>
               </div>
 
               <div className="profile-stats" aria-label="프로필 요약">

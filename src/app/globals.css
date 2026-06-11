@@ -1360,97 +1360,91 @@ body {
   line-height: 1.45;
 }
 
-.hero-status-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 4px;
+.hero-status-list {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(232, 138, 115, 0.18);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
 }
 
-.hero-status-tags span {
-  min-height: 28px;
-  padding: 6px 10px;
-  border: 1px solid rgba(232, 138, 115, 0.22);
-  border-radius: 999px;
-  background: var(--accent-primary-soft);
-  color: var(--accent-primary);
-  font-size: 12px;
+.hero-status-list p {
+  color: var(--ink);
+  font-size: 15px;
   font-weight: 900;
 }
 
-.hero-progress-panel {
-  display: grid;
-  grid-template-columns: 86px 1fr;
-  align-items: center;
-  gap: 14px;
-  padding: 16px;
-  border: 1px solid rgba(232, 138, 115, 0.2);
-  border-radius: 20px;
-  background: var(--surface-warm);
-}
-
-.progress-ring {
-  display: grid;
-  place-items: center;
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  background: conic-gradient(var(--accent-primary) var(--progress-value), #f0e3d8 0);
-}
-
-.progress-ring > div {
-  display: grid;
-  width: 62px;
-  height: 62px;
-  place-items: center;
-  align-content: center;
-  border-radius: 50%;
-  background: var(--surface);
-}
-
-.progress-ring strong {
-  color: var(--ink);
-  font-size: 18px;
-  line-height: 1;
-}
-
-.progress-ring span {
-  color: var(--soft-muted);
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.hero-progress-copy {
+.hero-status-list ul,
+.goal-achievement-card ul {
   display: grid;
   gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.hero-progress-copy strong {
+.hero-status-list li,
+.goal-achievement-card li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.48;
+}
+
+.hero-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  border-radius: 999px;
+  background: var(--accent-primary-soft);
+  color: var(--accent-primary);
+}
+
+.goal-achievement-card {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(232, 138, 115, 0.24);
+  border-radius: var(--radius-card);
+  background: var(--surface-warm);
+  box-shadow: var(--shadow-soft);
+}
+
+.goal-achievement-card header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.goal-achievement-card .eyebrow {
+  margin-bottom: 4px;
+  color: var(--accent-primary);
+}
+
+.goal-achievement-card h3 {
   color: var(--ink);
   font-size: 17px;
   line-height: 1.25;
 }
 
-.hero-progress-copy span {
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 750;
+.goal-achievement-card strong {
+  color: var(--accent-primary);
+  font-size: 20px;
+  font-weight: 950;
+  white-space: nowrap;
 }
 
-.hero-progress-bar {
-  width: 100%;
-  height: 8px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #f0e3d8;
-}
-
-.hero-progress-bar span {
-  display: block;
-  width: var(--progress-value);
-  height: 100%;
-  border-radius: inherit;
-  background: var(--accent-primary);
+.goal-achievement-card li {
+  color: var(--ink);
 }
 
 .profile-summary {
@@ -1527,7 +1521,7 @@ body {
   font-size: 12px;
   font-style: normal;
   font-weight: 850;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .shortcut-rail {
@@ -1586,7 +1580,7 @@ body {
 
 .pet-hero-card .profile-stats strong {
   color: var(--ink);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 900;
 }
 
@@ -1608,7 +1602,7 @@ body {
   grid-template-rows: 40px auto 1fr;
   height: 138px;
   min-height: 138px;
-  padding: 18px;
+  padding: 20px;
   box-shadow: 0 8px 18px rgba(45, 42, 38, 0.05);
 }
 
@@ -1621,6 +1615,7 @@ body {
 .shortcut-grid button strong {
   align-self: end;
   font-size: 15px;
+  line-height: 1.35;
 }
 
 .care-status-item.done {
@@ -2023,24 +2018,12 @@ body {
     font-size: 19px;
   }
 
-  .hero-progress-panel {
-    grid-template-columns: 72px 1fr;
-    gap: 12px;
-    padding: 14px;
-  }
-
-  .progress-ring {
-    width: 70px;
-    height: 70px;
-  }
-
-  .progress-ring > div {
-    width: 52px;
-    height: 52px;
+  .goal-achievement-card header {
+    display: grid;
   }
 
   .pet-hero-card .profile-stats strong {
-    font-size: 22px;
+    font-size: 23px;
   }
 
   .commerce-header,
