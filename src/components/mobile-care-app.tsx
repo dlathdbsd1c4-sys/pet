@@ -12,7 +12,6 @@ import {
   MapPin,
   MessageCircle,
   Navigation,
-  PawPrint,
   Play,
   Plus,
   Stethoscope,
@@ -51,28 +50,74 @@ type WalkPoint = {
 const today = '2026-05-29';
 
 function DogBowlIcon({ size = 24, strokeWidth = 2.25 }: { size?: number; strokeWidth?: number }) {
+  const navStroke = Math.max(1.9, strokeWidth - 0.2);
+
   return (
     <svg aria-hidden="true" fill="none" height={size} viewBox="0 0 24 24" width={size}>
       <path
-        d="M5 10.5h14l-1.2 6.1A3 3 0 0 1 14.9 19H9.1a3 3 0 0 1-2.9-2.4L5 10.5Z"
+        d="M5.2 10.8h13.6l-1.15 5.25A3 3 0 0 1 14.72 18.4H9.28a3 3 0 0 1-2.93-2.35L5.2 10.8Z"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={strokeWidth}
+        strokeWidth={navStroke}
+        vectorEffect="non-scaling-stroke"
       />
       <path
-        d="M8 10.5c.6-2.2 2-3.5 4-3.5s3.4 1.3 4 3.5"
+        d="M4.75 10.8h14.5"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={strokeWidth}
+        strokeWidth={navStroke}
+        vectorEffect="non-scaling-stroke"
       />
       <path
-        d="M10 14h4"
+        d="M10 14.15h4"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={strokeWidth}
+        strokeWidth={navStroke}
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  );
+}
+
+function DogPawIcon({ size = 24, strokeWidth = 2.25 }: { size?: number; strokeWidth?: number }) {
+  const navStroke = Math.max(1.9, strokeWidth - 0.2);
+
+  return (
+    <svg aria-hidden="true" fill="none" height={size} viewBox="0 0 24 24" width={size}>
+      <circle
+        cx="7.2"
+        cy="9.1"
+        r="1.55"
+        stroke="currentColor"
+        strokeWidth={navStroke}
+        vectorEffect="non-scaling-stroke"
+      />
+      <circle
+        cx="12"
+        cy="7"
+        r="1.6"
+        stroke="currentColor"
+        strokeWidth={navStroke}
+        vectorEffect="non-scaling-stroke"
+      />
+      <circle
+        cx="16.8"
+        cy="9.1"
+        r="1.55"
+        stroke="currentColor"
+        strokeWidth={navStroke}
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d="M8.55 15.85c0-2.35 1.62-4.18 3.45-4.18s3.45 1.83 3.45 4.18c0 1.45-.9 2.35-2.08 2.35-.53 0-.88-.22-1.37-.22s-.84.22-1.37.22c-1.18 0-2.08-.9-2.08-2.35Z"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={navStroke}
+        vectorEffect="non-scaling-stroke"
       />
     </svg>
   );
@@ -82,7 +127,7 @@ const tabs: Array<{ id: TabId; label: string; icon: ComponentType<{ size?: numbe
   { id: 'today', label: '오늘', icon: Bell },
   { id: 'health', label: '건강', icon: HeartPulse },
   { id: 'meal', label: '식사', icon: DogBowlIcon },
-  { id: 'walk', label: '산책', icon: PawPrint },
+  { id: 'walk', label: '산책', icon: DogPawIcon },
   { id: 'experts', label: '동네케어', icon: Store },
 ];
 
