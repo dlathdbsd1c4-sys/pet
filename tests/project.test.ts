@@ -110,6 +110,9 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.care-status-list,[\s\S]*\.family-feed \{[\s\S]*gap: 20px/);
     assert.match(css, /\.shortcut-grid \{[\s\S]*gap: 20px/);
     assert.match(css, /\.recent-record-grid,[\s\S]*\.quick-actions \{[\s\S]*gap: 14px/);
+    assert.match(css, /\.walk-controls \{[\s\S]*margin: 14px 0 16px/);
+    assert.match(css, /\.walk-controls \+ \.helper-text \{[\s\S]*margin: 0 0 18px/);
+    assert.match(css, /\.walk-controls \+ \.map-panel \{[\s\S]*margin-top: 18px/);
     assert.match(componentFixture(), /이번 주 케어 현황/);
     assert.match(css, /\.weekly-care-grid/);
   });

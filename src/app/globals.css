@@ -1961,6 +1961,23 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
+.walk-controls {
+  gap: 12px;
+  margin: 14px 0 16px;
+}
+
+.walk-controls + .helper-text {
+  margin: 0 0 18px;
+}
+
+.walk-controls + .map-panel {
+  margin-top: 18px;
+}
+
+.walk-controls + .helper-text + .map-panel {
+  margin-top: 0;
+}
+
 @media (min-width: 720px) {
   .app-canvas {
     padding: 28px;
