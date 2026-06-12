@@ -165,6 +165,8 @@ describe('mobile browser delivery', () => {
     assert.match(component, /className="secondary-action action-button"/);
     assert.match(component, /className="action-icon"/);
     assert.match(component, /빠른 기록/);
+    assert.match(component, /onClick=\{\(\) => addLog\('memory', '빠른 케어 기록', \['빠른 기록'\]\)\}/);
+    assert.doesNotMatch(component, /className="surface-action" onClick=\{\(\) => setActiveTab\('today'\)\}/);
     assert.match(component, /기록 추가/);
     assert.match(component, /산책 시작/);
     assert.match(component, /급여 추가/);

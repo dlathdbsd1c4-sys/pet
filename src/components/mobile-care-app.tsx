@@ -894,7 +894,7 @@ export function MobileCareApp() {
             <section className="section-block">
               <div className="section-title">
                 <h2>오늘 케어 타임라인</h2>
-                <button className="surface-action" onClick={() => setActiveTab('today')} type="button">
+                <button className="surface-action" onClick={() => addLog('memory', '빠른 케어 기록', ['빠른 기록'])} type="button">
                   <span className="action-icon">
                     <Plus size={16} />
                   </span>
