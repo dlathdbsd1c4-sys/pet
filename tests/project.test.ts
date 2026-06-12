@@ -231,6 +231,25 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.editable-routine/);
     assert.match(css, /\.routine-edit-grid/);
   });
+
+  it('shows a small calendar in photo diary for date-based memory logs', () => {
+    const component = readFileSync('src/components/mobile-care-app.tsx', 'utf8');
+    const css = readFileSync('src/app/globals.css', 'utf8');
+
+    assert.match(component, /showMemoryCalendar/);
+    assert.match(component, /selectedMemoryDate/);
+    assert.match(component, /memoryCalendarDays/);
+    assert.match(component, /groupLogsByLocalDate/);
+    assert.match(component, /createMonthCalendarDays/);
+    assert.match(component, /aria-label="사진 일지 달력 보기"/);
+    assert.match(component, /className="memory-calendar"/);
+    assert.match(component, /className="memory-date-list"/);
+    assert.match(component, /선택한 날짜의 일지/);
+    assert.match(css, /\.calendar-toggle/);
+    assert.match(css, /\.memory-calendar/);
+    assert.match(css, /\.memory-calendar-grid/);
+    assert.match(css, /\.memory-date-list/);
+  });
 });
 
 function componentFixture() {

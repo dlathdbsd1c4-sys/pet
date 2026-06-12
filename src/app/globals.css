@@ -1034,6 +1034,134 @@ h2 {
   color: var(--accent-primary);
 }
 
+.section-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.icon-action {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  box-shadow: var(--shadow-soft);
+}
+
+.calendar-toggle.active {
+  border-color: rgba(232, 138, 115, 0.28);
+  background: var(--accent-primary-soft);
+  color: var(--accent-primary);
+}
+
+.memory-calendar {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface-warm);
+  box-shadow: var(--shadow-soft);
+}
+
+.memory-calendar-header,
+.memory-date-list > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.memory-calendar-header strong,
+.memory-date-list strong {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.memory-calendar-header span,
+.memory-date-list span {
+  color: var(--accent-primary);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.memory-weekdays,
+.memory-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.memory-weekdays span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.memory-calendar-grid button,
+.memory-calendar-grid .empty {
+  min-height: 34px;
+  border-radius: 12px;
+}
+
+.memory-calendar-grid button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.memory-calendar-grid button.has-memory {
+  border-color: rgba(232, 138, 115, 0.24);
+  background: #fff6f1;
+  color: var(--accent-primary);
+}
+
+.memory-calendar-grid button.selected {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.memory-calendar-grid button i {
+  position: absolute;
+  right: 5px;
+  bottom: 4px;
+  font-size: 9px;
+  font-style: normal;
+  line-height: 1;
+}
+
+.memory-date-list {
+  display: grid;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.memory-date-list p {
+  margin: 0;
+  padding: 12px;
+  border: 1px dashed rgba(232, 138, 115, 0.24);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .file-picker {
   position: relative;
   width: 100%;

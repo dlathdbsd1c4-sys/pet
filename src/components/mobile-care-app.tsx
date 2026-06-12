@@ -35,6 +35,7 @@ import {
   type CareLog,
   type Routine,
 } from '../lib/care';
+import { createMonthCalendarDays, groupLogsByLocalDate } from '../lib/care-calendar';
 import {
   addRoutineToState,
   appendCareLog,
@@ -148,6 +149,8 @@ const detailPageTitles: Record<Exclude<TabId, 'today'>, string> = {
   experts: '동네케어',
 };
 
+const memoryWeekdays = ['일', '월', '화', '수', '목', '금', '토'];
+
 const expertDistances: Record<string, string> = {
   'vet-1': '600m',
   'trainer-1': '850m',
@@ -183,6 +186,8 @@ export function MobileCareApp() {
     category: 'walk' as CareCategory,
     reminderMinutesBefore: '',
   });
+  const [showMemoryCalendar, setShowMemoryCalendar] = useState(false);
+  const [selectedMemoryDate, setSelectedMemoryDate] = useState(today);
   const [memoryPreview, setMemoryPreview] = useState<string | null>(null);
   const [locationConsent, setLocationConsent] = useState(false);
   const [walkPath, setWalkPath] = useState<WalkPoint[]>([]);
@@ -407,6 +412,10 @@ export function MobileCareApp() {
   const healthLogs = careState.logs.filter((log) => log.category === 'health').slice().reverse();
   const mealLogs = careState.logs.filter((log) => log.category === 'meal').slice().reverse();
   const walkLogs = careState.logs.filter((log) => log.category === 'walk').slice().reverse();
+  const memoryLogs = careState.logs.filter((log) => log.category === 'memory').slice().reverse();
+  const memoryLogsByDate = groupLogsByLocalDate(memoryLogs);
+  const memoryCalendarDays = createMonthCalendarDays(careState.activeDate);
+  const selectedMemoryLogs = memoryLogsByDate[selectedMemoryDate] ?? [];
   const recentCareLogs = careState.logs.slice().reverse().slice(0, 4);
 
   function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string) {
@@ -1377,8 +1386,64 @@ export function MobileCareApp() {
             <section className="section-block">
               <div className="section-title">
                 <h2>사진 일지</h2>
-                <Camera size={18} />
+                <div className="section-actions">
+                  <button
+                    aria-label="사진 일지 달력 보기"
+                    className={showMemoryCalendar ? 'icon-action calendar-toggle active' : 'icon-action calendar-toggle'}
+                    onClick={() => setShowMemoryCalendar((current) => !current)}
+                    type="button"
+                  >
+                    <CalendarDays size={18} />
+                  </button>
+                  <Camera size={18} />
+                </div>
               </div>
+              {showMemoryCalendar && (
+                <div className="memory-calendar">
+                  <div className="memory-calendar-header">
+                    <strong>{memoryMonthLabel(careState.activeDate)}</strong>
+                    <span>{memoryLogs.length}개 일지</span>
+                  </div>
+                  <div className="memory-weekdays" aria-hidden="true">
+                    {memoryWeekdays.map((weekday) => (
+                      <span key={weekday}>{weekday}</span>
+                    ))}
+                  </div>
+                  <div className="memory-calendar-grid">
+                    {memoryCalendarDays.map((day) =>
+                      day.dateKey ? (
+                        <button
+                          key={day.id}
+                          className={[
+                            selectedMemoryDate === day.dateKey ? 'selected' : '',
+                            memoryLogsByDate[day.dateKey] ? 'has-memory' : '',
+                          ]
+                            .filter(Boolean)
+                            .join(' ')}
+                          onClick={() => setSelectedMemoryDate(day.dateKey as string)}
+                          type="button"
+                        >
+                          <span>{day.label}</span>
+                          {memoryLogsByDate[day.dateKey] && <i>{memoryLogsByDate[day.dateKey].length}</i>}
+                        </button>
+                      ) : (
+                        <span key={day.id} className="empty" />
+                      ),
+                    )}
+                  </div>
+                  <div className="memory-date-list">
+                    <div>
+                      <strong>선택한 날짜의 일지</strong>
+                      <span>{memoryDateLabel(selectedMemoryDate)}</span>
+                    </div>
+                    {selectedMemoryLogs.length > 0 ? (
+                      selectedMemoryLogs.map((log) => renderEditableLog(log, `${logTimeCopy(log.occurredAt)} · ${log.tags?.join(', ') || '추억'}`))
+                    ) : (
+                      <p>이 날짜에는 아직 등록한 일지가 없어요.</p>
+                    )}
+                  </div>
+                </div>
+              )}
               <label className="field">
                 <span>일지 제목</span>
                 <input value={memoryTitle} onChange={(event) => setMemoryTitle(event.target.value)} />
@@ -1470,6 +1535,16 @@ function logMetaCopy(log: CareLog) {
 function logTimeCopy(occurredAt: string) {
   const time = occurredAt.split('T')[1]?.slice(0, 5);
   return time || '시간 없음';
+}
+
+function memoryMonthLabel(dateKey: string) {
+  const [year, month] = dateKey.split('-');
+  return `${year}년 ${Number(month)}월`;
+}
+
+function memoryDateLabel(dateKey: string) {
+  const [, month, day] = dateKey.split('-');
+  return `${Number(month)}월 ${Number(day)}일`;
 }
 
 function categoryCopy(category: CareCategory) {
