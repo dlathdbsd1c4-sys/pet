@@ -204,6 +204,31 @@ describe('mobile browser delivery', () => {
     assert.match(component, /평점 \{recommendation\.expert\.rating\} · \{expertDistanceCopy\(recommendation\.expert\.id\)\}/);
     assert.match(component, /className="local-care-grid"/);
   });
+
+  it('lets user-created logs and routines be edited or deleted from the app UI', () => {
+    const component = readFileSync('src/components/mobile-care-app.tsx', 'utf8');
+    const css = readFileSync('src/app/globals.css', 'utf8');
+
+    assert.match(component, /updateCareLog/);
+    assert.match(component, /deleteCareLog/);
+    assert.match(component, /updateRoutineInState/);
+    assert.match(component, /deleteRoutineFromState/);
+    assert.match(component, /editingLogId/);
+    assert.match(component, /editingRoutineId/);
+    assert.match(component, /수정/);
+    assert.match(component, /삭제/);
+    assert.match(component, /저장/);
+    assert.match(component, /취소/);
+    assert.match(component, /renderEditableLog/);
+    assert.match(component, /className="record-list editable-log-list"/);
+    assert.match(component, /className=\{isEditingRoutine \? 'notice-row editable-routine is-editing' : 'notice-row editable-routine'\}/);
+    assert.match(css, /\.editable-record/);
+    assert.match(css, /\.record-actions/);
+    assert.match(css, /\.danger-action/);
+    assert.match(css, /\.timeline-actions/);
+    assert.match(css, /\.editable-routine/);
+    assert.match(css, /\.routine-edit-grid/);
+  });
 });
 
 function componentFixture() {

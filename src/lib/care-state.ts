@@ -71,6 +71,36 @@ export function appendCareLog(
   };
 }
 
+export function updateCareLog(
+  state: CareAppState,
+  input: {
+    id: string;
+    title: string;
+    tags?: string[];
+  },
+): CareAppState {
+  const title = input.title.trim();
+  if (!title) return state;
+
+  let didUpdate = false;
+  const logs = state.logs.map((log) => {
+    if (log.id !== input.id) return log;
+    didUpdate = true;
+    return {
+      ...log,
+      title,
+      tags: input.tags ? normalizeTags(input.tags) : log.tags,
+    };
+  });
+
+  return didUpdate ? { ...state, logs } : state;
+}
+
+export function deleteCareLog(state: CareAppState, id: string): CareAppState {
+  const logs = state.logs.filter((log) => log.id !== id);
+  return logs.length === state.logs.length ? state : { ...state, logs };
+}
+
 export function addRoutineToState(
   state: CareAppState,
   input: {
@@ -100,6 +130,40 @@ export function addRoutineToState(
       },
     ],
   };
+}
+
+export function updateRoutineInState(
+  state: CareAppState,
+  input: {
+    id: string;
+    title: string;
+    category: CareCategory;
+    time: string;
+    reminderMinutesBefore: number;
+  },
+): CareAppState {
+  const title = input.title.trim();
+  if (!title || !isValidRoutineTime(input.time)) return state;
+
+  let didUpdate = false;
+  const routines = state.routines.map((routine) => {
+    if (routine.id !== input.id) return routine;
+    didUpdate = true;
+    return {
+      ...routine,
+      title,
+      category: input.category,
+      time: input.time,
+      reminderMinutesBefore: input.reminderMinutesBefore,
+    };
+  });
+
+  return didUpdate ? { ...state, routines } : state;
+}
+
+export function deleteRoutineFromState(state: CareAppState, id: string): CareAppState {
+  const routines = state.routines.filter((routine) => routine.id !== id);
+  return routines.length === state.routines.length ? state : { ...state, routines };
 }
 
 export function completeRoutineInState(
@@ -133,6 +197,11 @@ export function completeRoutineInState(
 
 function isValidRoutineTime(value: string) {
   return /^([01]\d|2[0-3]):[0-5]\d$/.test(value);
+}
+
+function normalizeTags(tags: string[]) {
+  const normalized = tags.map((tag) => tag.trim()).filter(Boolean);
+  return normalized.length > 0 ? normalized : undefined;
 }
 
 export function updateNotificationPreferences(

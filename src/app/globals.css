@@ -412,6 +412,32 @@ h2 {
   background: #ffffff;
 }
 
+.mini-action {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.save-action {
+  border: 1px solid var(--accent-primary);
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.danger-action {
+  border: 1px solid rgba(179, 89, 66, 0.18);
+  background: #fff3ef;
+  color: #b35942;
+}
+
 .pet-profile-card {
   display: grid;
   gap: 14px;
@@ -793,6 +819,102 @@ h2 {
   color: #68766f;
   font-size: 12px;
   font-style: normal;
+}
+
+.editable-record {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.editable-record.is-editing {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+.record-copy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.record-copy strong {
+  overflow-wrap: anywhere;
+}
+
+.record-actions,
+.timeline-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.inline-edit-field {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.inline-edit-field span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.inline-edit-field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.timeline-actions {
+  grid-column: 5;
+}
+
+.timeline-item.is-editing {
+  align-items: start;
+}
+
+.timeline-edit-field {
+  gap: 5px;
+}
+
+.editable-log-list {
+  margin-bottom: 12px;
+}
+
+.editable-log-list + .detail-record-list,
+.editable-log-list + .walk-record-stack {
+  margin-top: 12px;
+}
+
+.notice-row.editable-routine {
+  grid-template-columns: 48px minmax(0, 1fr) auto auto;
+  gap: 8px 10px;
+}
+
+.notice-row.editable-routine.is-editing {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+.routine-title-field {
+  grid-column: 1 / -1;
+}
+
+.routine-edit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  gap: 8px;
 }
 
 .toggle-on,
@@ -2061,6 +2183,36 @@ body {
   .timeline-item .small-action {
     grid-column: 4;
     width: 74px;
+  }
+
+  .timeline-actions {
+    grid-column: 3 / -1;
+    justify-content: flex-start;
+  }
+
+  .editable-record {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .record-actions {
+    justify-content: flex-start;
+  }
+
+  .notice-row.editable-routine {
+    grid-template-columns: 48px 1fr;
+  }
+
+  .notice-row.editable-routine > em {
+    grid-column: 2;
+  }
+
+  .notice-row.editable-routine > .record-actions {
+    grid-column: 1 / -1;
+  }
+
+  .routine-edit-grid {
+    grid-template-columns: 1fr;
   }
 
   .timeline-status {

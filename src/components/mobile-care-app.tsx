@@ -12,12 +12,16 @@ import {
   MapPin,
   MessageCircle,
   Navigation,
+  Pencil,
   Play,
   Plus,
+  Save,
   Stethoscope,
   Store,
+  Trash2,
   Utensils,
   Users,
+  X,
 } from 'lucide-react';
 import type { ComponentType } from 'react';
 import { useEffect, useMemo, useState } from 'react';
@@ -28,6 +32,8 @@ import {
   recommendExperts,
   toIcsCalendar,
   type CareCategory,
+  type CareLog,
+  type Routine,
 } from '../lib/care';
 import {
   addRoutineToState,
@@ -35,7 +41,11 @@ import {
   completeRoutineInState,
   createCareAppState,
   createCareStateStorage,
+  deleteCareLog,
+  deleteRoutineFromState,
+  updateCareLog,
   updateNotificationPreferences,
+  updateRoutineInState,
 } from '../lib/care-state';
 import { experts, initialLogs, primaryPet, routines } from '../lib/sample-data';
 
@@ -164,6 +174,15 @@ export function MobileCareApp() {
   const [routineTime, setRoutineTime] = useState('19:00');
   const [routineCategory, setRoutineCategory] = useState<CareCategory>('walk');
   const [routineReminder, setRoutineReminder] = useState('30');
+  const [editingLogId, setEditingLogId] = useState<string | null>(null);
+  const [editingLogTitle, setEditingLogTitle] = useState('');
+  const [editingRoutineId, setEditingRoutineId] = useState<string | null>(null);
+  const [editingRoutineDraft, setEditingRoutineDraft] = useState({
+    title: '',
+    time: '',
+    category: 'walk' as CareCategory,
+    reminderMinutesBefore: '',
+  });
   const [memoryPreview, setMemoryPreview] = useState<string | null>(null);
   const [locationConsent, setLocationConsent] = useState(false);
   const [walkPath, setWalkPath] = useState<WalkPoint[]>([]);
@@ -385,6 +404,10 @@ export function MobileCareApp() {
     { id: 'near-friends', value: '5명', label: '산책 친구' },
     { id: 'near-sitters', value: '4명', label: '펫시터' },
   ];
+  const healthLogs = careState.logs.filter((log) => log.category === 'health').slice().reverse();
+  const mealLogs = careState.logs.filter((log) => log.category === 'meal').slice().reverse();
+  const walkLogs = careState.logs.filter((log) => log.category === 'walk').slice().reverse();
+  const recentCareLogs = careState.logs.slice().reverse().slice(0, 4);
 
   function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string) {
     setCareState((current) =>
@@ -419,6 +442,118 @@ export function MobileCareApp() {
         frequency: 'daily',
         reminderMinutesBefore: Number(routineReminder) || 0,
       }),
+    );
+  }
+
+  function startEditingLog(log: CareLog) {
+    setEditingLogId(log.id);
+    setEditingLogTitle(log.title);
+  }
+
+  function cancelEditingLog() {
+    setEditingLogId(null);
+    setEditingLogTitle('');
+  }
+
+  function saveEditingLog(logId: string) {
+    if (!editingLogTitle.trim()) return;
+    setCareState((current) =>
+      updateCareLog(current, {
+        id: logId,
+        title: editingLogTitle,
+      }),
+    );
+    cancelEditingLog();
+  }
+
+  function removeLog(logId: string) {
+    setCareState((current) => deleteCareLog(current, logId));
+    if (editingLogId === logId) cancelEditingLog();
+  }
+
+  function startEditingRoutine(routine: Routine) {
+    setEditingRoutineId(routine.id);
+    setEditingRoutineDraft({
+      title: routine.title,
+      time: routine.time,
+      category: routine.category,
+      reminderMinutesBefore: String(routine.reminderMinutesBefore),
+    });
+  }
+
+  function cancelEditingRoutine() {
+    setEditingRoutineId(null);
+    setEditingRoutineDraft({
+      title: '',
+      time: '',
+      category: 'walk',
+      reminderMinutesBefore: '',
+    });
+  }
+
+  function saveEditingRoutine(routineId: string) {
+    if (!editingRoutineDraft.title.trim()) return;
+    const reminderMinutesBefore = Math.max(0, Number(editingRoutineDraft.reminderMinutesBefore) || 0);
+
+    setCareState((current) =>
+      updateRoutineInState(current, {
+        id: routineId,
+        title: editingRoutineDraft.title,
+        category: editingRoutineDraft.category,
+        time: editingRoutineDraft.time,
+        reminderMinutesBefore,
+      }),
+    );
+    cancelEditingRoutine();
+  }
+
+  function removeRoutine(routineId: string) {
+    setCareState((current) => deleteRoutineFromState(current, routineId));
+    if (editingRoutineId === routineId) cancelEditingRoutine();
+  }
+
+  function renderEditableLog(log: CareLog, meta?: string) {
+    const isEditing = editingLogId === log.id;
+
+    return (
+      <article key={log.id} className={isEditing ? 'record-row editable-record is-editing' : 'record-row editable-record'}>
+        {isEditing ? (
+          <label className="inline-edit-field">
+            <span>기록 제목</span>
+            <input value={editingLogTitle} onChange={(event) => setEditingLogTitle(event.target.value)} />
+          </label>
+        ) : (
+          <div className="record-copy">
+            <strong>{log.title}</strong>
+            <span>{meta ?? logMetaCopy(log)}</span>
+          </div>
+        )}
+        <div className="record-actions">
+          {isEditing ? (
+            <>
+              <button className="mini-action save-action" onClick={() => saveEditingLog(log.id)} type="button">
+                <Save size={13} />
+                저장
+              </button>
+              <button className="mini-action ghost-action" onClick={cancelEditingLog} type="button">
+                <X size={13} />
+                취소
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="mini-action ghost-action" onClick={() => startEditingLog(log)} type="button">
+                <Pencil size={13} />
+                수정
+              </button>
+              <button className="mini-action danger-action" onClick={() => removeLog(log.id)} type="button">
+                <Trash2 size={13} />
+                삭제
+              </button>
+            </>
+          )}
+        </div>
+      </article>
     );
   }
 
@@ -769,12 +904,24 @@ export function MobileCareApp() {
               <div className="timeline">
                 {timeline.map((item) => {
                   const statusLabel = timelineStatusCopy(item.status);
+                  const editableLog = item.kind === 'log' ? careState.logs.find((log) => log.id === item.id) : null;
+                  const isEditingTimelineLog = Boolean(editableLog && editingLogId === editableLog.id);
                   return (
-                    <article key={`${item.kind}-${item.id}`} className={`timeline-item ${item.status}`}>
+                    <article
+                      key={`${item.kind}-${item.id}`}
+                      className={`timeline-item ${item.status}${isEditingTimelineLog ? ' is-editing' : ''}`}
+                    >
                       <span className="time">{item.time}</span>
                       <span className="timeline-icon">{item.status === 'completed' ? <CheckCircle2 size={18} /> : <Circle size={18} />}</span>
                       <div>
-                        <strong>{timelineTitleWithStatus(item.title, item.status)}</strong>
+                        {isEditingTimelineLog && editableLog ? (
+                          <label className="inline-edit-field timeline-edit-field">
+                            <span>기록 제목</span>
+                            <input value={editingLogTitle} onChange={(event) => setEditingLogTitle(event.target.value)} />
+                          </label>
+                        ) : (
+                          <strong>{timelineTitleWithStatus(item.title, item.status)}</strong>
+                        )}
                         <p>{categoryCopy(item.category)} · {statusLabel}</p>
                       </div>
                       <span className={`timeline-status ${item.status}`}>{statusLabel}</span>
@@ -785,6 +932,33 @@ export function MobileCareApp() {
                           </span>
                           완료
                         </button>
+                      )}
+                      {editableLog && (
+                        <div className="timeline-actions">
+                          {isEditingTimelineLog ? (
+                            <>
+                              <button className="mini-action save-action" onClick={() => saveEditingLog(editableLog.id)} type="button">
+                                <Save size={13} />
+                                저장
+                              </button>
+                              <button className="mini-action ghost-action" onClick={cancelEditingLog} type="button">
+                                <X size={13} />
+                                취소
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button className="mini-action ghost-action" onClick={() => startEditingLog(editableLog)} type="button">
+                                <Pencil size={13} />
+                                수정
+                              </button>
+                              <button className="mini-action danger-action" onClick={() => removeLog(editableLog.id)} type="button">
+                                <Trash2 size={13} />
+                                삭제
+                              </button>
+                            </>
+                          )}
+                        </div>
                       )}
                     </article>
                   );
@@ -865,13 +1039,104 @@ export function MobileCareApp() {
                     {emailReminder ? '켜짐' : '꺼짐'}
                   </button>
                 </div>
-                {careState.routines.map((routine) => (
-                  <div key={routine.id} className="notice-row">
-                    <span>{routine.time}</span>
-                    <strong>{routine.title}</strong>
-                    <em>{routine.reminderMinutesBefore}분 전</em>
-                  </div>
-                ))}
+                {careState.routines.map((routine) => {
+                  const isEditingRoutine = editingRoutineId === routine.id;
+
+                  return (
+                    <div
+                      key={routine.id}
+                      className={isEditingRoutine ? 'notice-row editable-routine is-editing' : 'notice-row editable-routine'}
+                    >
+                      {isEditingRoutine ? (
+                        <>
+                          <label className="inline-edit-field routine-title-field">
+                            <span>루틴</span>
+                            <input
+                              value={editingRoutineDraft.title}
+                              onChange={(event) =>
+                                setEditingRoutineDraft((current) => ({
+                                  ...current,
+                                  title: event.target.value,
+                                }))
+                              }
+                            />
+                          </label>
+                          <div className="routine-edit-grid">
+                            <label className="compact-field">
+                              <span>시간</span>
+                              <input
+                                type="time"
+                                value={editingRoutineDraft.time}
+                                onChange={(event) =>
+                                  setEditingRoutineDraft((current) => ({
+                                    ...current,
+                                    time: event.target.value,
+                                  }))
+                                }
+                              />
+                            </label>
+                            <label className="compact-field">
+                              <span>분류</span>
+                              <select
+                                value={editingRoutineDraft.category}
+                                onChange={(event) =>
+                                  setEditingRoutineDraft((current) => ({
+                                    ...current,
+                                    category: event.target.value as CareCategory,
+                                  }))
+                                }
+                              >
+                                <option value="meal">식사</option>
+                                <option value="walk">산책</option>
+                                <option value="health">건강</option>
+                                <option value="memory">추억</option>
+                              </select>
+                            </label>
+                            <label className="compact-field">
+                              <span>알림</span>
+                              <input
+                                inputMode="numeric"
+                                value={editingRoutineDraft.reminderMinutesBefore}
+                                onChange={(event) =>
+                                  setEditingRoutineDraft((current) => ({
+                                    ...current,
+                                    reminderMinutesBefore: event.target.value,
+                                  }))
+                                }
+                              />
+                            </label>
+                          </div>
+                          <div className="record-actions">
+                            <button className="mini-action save-action" onClick={() => saveEditingRoutine(routine.id)} type="button">
+                              <Save size={13} />
+                              저장
+                            </button>
+                            <button className="mini-action ghost-action" onClick={cancelEditingRoutine} type="button">
+                              <X size={13} />
+                              취소
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <span>{routine.time}</span>
+                          <strong>{routine.title}</strong>
+                          <em>{routine.reminderMinutesBefore}분 전</em>
+                          <div className="record-actions">
+                            <button className="mini-action ghost-action" onClick={() => startEditingRoutine(routine)} type="button">
+                              <Pencil size={13} />
+                              수정
+                            </button>
+                            <button className="mini-action danger-action" onClick={() => removeRoutine(routine.id)} type="button">
+                              <Trash2 size={13} />
+                              삭제
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </section>
           </div>
@@ -905,14 +1170,7 @@ export function MobileCareApp() {
                 기록 추가
               </button>
               <div className="record-list">
-                {careState.logs
-                  .filter((log) => log.category === 'health')
-                  .map((log) => (
-                    <article key={log.id} className="record-row">
-                      <strong>{log.title}</strong>
-                      <span>{log.tags?.join(', ')}</span>
-                    </article>
-                  ))}
+                {healthLogs.map((log) => renderEditableLog(log, `${logTimeCopy(log.occurredAt)} · ${log.tags?.join(', ') || '태그 없음'}`))}
               </div>
             </section>
             <section className="section-block">
@@ -961,6 +1219,9 @@ export function MobileCareApp() {
               <div className="section-title">
                 <h2>최근 급여 기록</h2>
                 <span className="section-chip">오늘 2/3</span>
+              </div>
+              <div className="record-list editable-log-list">
+                {mealLogs.map((log) => renderEditableLog(log, `${logTimeCopy(log.occurredAt)} · ${log.tags?.join(', ') || '태그 없음'}`))}
               </div>
               <div className="detail-record-list">
                 {recentMealRecords.map((record) => (
@@ -1044,6 +1305,11 @@ export function MobileCareApp() {
                 <h2>최근 산책</h2>
                 <span className="section-chip">오늘 완료</span>
               </div>
+              {walkLogs.length > 0 && (
+                <div className="record-list editable-log-list">
+                  {walkLogs.map((log) => renderEditableLog(log, `${logTimeCopy(log.occurredAt)} · ${log.tags?.join(', ') || '태그 없음'}`))}
+                </div>
+              )}
               <div className="walk-record-stack">
                 {recentWalkRecords.map((record) => (
                   <article key={record.id}>
@@ -1105,12 +1371,7 @@ export function MobileCareApp() {
                 <Camera size={18} />
               </div>
               <div className="record-list">
-                {careState.logs.slice(0, 4).map((log) => (
-                  <article key={log.id} className="record-row">
-                    <strong>{log.title}</strong>
-                    <span>{categoryCopy(log.category)} · {log.tags?.join(', ') || '태그 없음'}</span>
-                  </article>
-                ))}
+                {recentCareLogs.map((log) => renderEditableLog(log))}
               </div>
             </section>
             <section className="section-block">
@@ -1199,6 +1460,16 @@ function timelineTitleWithStatus(title: string, status: 'due' | 'completed') {
 
 function expertDistanceCopy(expertId: string) {
   return expertDistances[expertId] ?? '1km 이내';
+}
+
+function logMetaCopy(log: CareLog) {
+  const tags = log.tags?.join(', ') || '태그 없음';
+  return `${categoryCopy(log.category)} · ${logTimeCopy(log.occurredAt)} · ${tags}`;
+}
+
+function logTimeCopy(occurredAt: string) {
+  const time = occurredAt.split('T')[1]?.slice(0, 5);
+  return time || '시간 없음';
 }
 
 function categoryCopy(category: CareCategory) {

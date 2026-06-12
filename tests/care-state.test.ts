@@ -7,7 +7,11 @@ import {
   completeRoutineInState,
   createCareAppState,
   createCareStateStorage,
+  deleteCareLog,
+  deleteRoutineFromState,
+  updateCareLog,
   updateNotificationPreferences,
+  updateRoutineInState,
 } from '../src/lib/care-state.ts';
 import type { CareLog, PetProfile, Routine } from '../src/lib/care.ts';
 
@@ -86,6 +90,66 @@ describe('appendCareLog', () => {
       tags: ['snack'],
       sourceRoutineId: undefined,
     });
+  });
+});
+
+describe('updateCareLog', () => {
+  it('updates a log title and tags without mutating the previous state', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    const next = updateCareLog(state, {
+      id: 'log-existing',
+      title: '  Updated diary  ',
+      tags: [' memory ', ''],
+    });
+
+    assert.equal(state.logs[0].title, 'First diary');
+    assert.equal(next.logs[0].title, 'Updated diary');
+    assert.deepEqual(next.logs[0].tags, ['memory']);
+  });
+
+  it('ignores missing logs and blank titles', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    assert.equal(updateCareLog(state, { id: 'missing-log', title: 'Next' }), state);
+    assert.equal(updateCareLog(state, { id: 'log-existing', title: '   ' }), state);
+  });
+});
+
+describe('deleteCareLog', () => {
+  it('removes a log without mutating the previous state', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    const next = deleteCareLog(state, 'log-existing');
+
+    assert.equal(state.logs.length, 1);
+    assert.equal(next.logs.length, 0);
+  });
+
+  it('keeps the same state when the log does not exist', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    assert.equal(deleteCareLog(state, 'missing-log'), state);
   });
 });
 
@@ -174,6 +238,114 @@ describe('addRoutineToState', () => {
 
     assert.equal(missingTitle, state);
     assert.equal(invalidTime, state);
+  });
+});
+
+describe('updateRoutineInState', () => {
+  it('updates routine fields without mutating the previous state', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    const next = updateRoutineInState(state, {
+      id: 'routine-breakfast',
+      title: '  Brunch  ',
+      category: 'meal',
+      time: '10:20',
+      reminderMinutesBefore: 5,
+    });
+
+    assert.equal(state.routines[0].title, 'Morning meal');
+    assert.deepEqual(next.routines[0], {
+      id: 'routine-breakfast',
+      petId: 'pet-1',
+      title: 'Brunch',
+      category: 'meal',
+      time: '10:20',
+      frequency: 'daily',
+      reminderMinutesBefore: 5,
+    });
+  });
+
+  it('ignores missing routines, blank titles, and invalid times', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    assert.equal(
+      updateRoutineInState(state, {
+        id: 'missing-routine',
+        title: 'Walk',
+        category: 'walk',
+        time: '19:00',
+        reminderMinutesBefore: 20,
+      }),
+      state,
+    );
+    assert.equal(
+      updateRoutineInState(state, {
+        id: 'routine-breakfast',
+        title: '   ',
+        category: 'meal',
+        time: '08:00',
+        reminderMinutesBefore: 20,
+      }),
+      state,
+    );
+    assert.equal(
+      updateRoutineInState(state, {
+        id: 'routine-breakfast',
+        title: 'Lunch',
+        category: 'meal',
+        time: 'noon',
+        reminderMinutesBefore: 20,
+      }),
+      state,
+    );
+  });
+});
+
+describe('deleteRoutineFromState', () => {
+  it('removes a routine without deleting existing completion logs', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs: [
+        ...logs,
+        {
+          id: 'log-routine',
+          petId: 'pet-1',
+          category: 'meal',
+          title: 'Morning meal 완료',
+          occurredAt: '2026-06-05T08:05:00+09:00',
+          sourceRoutineId: 'routine-breakfast',
+        },
+      ],
+    });
+
+    const next = deleteRoutineFromState(state, 'routine-breakfast');
+
+    assert.equal(state.routines.length, 1);
+    assert.equal(next.routines.length, 0);
+    assert.equal(next.logs.length, 2);
+  });
+
+  it('keeps the same state when the routine does not exist', () => {
+    const state = createCareAppState({
+      activeDate: '2026-06-05',
+      pet,
+      routines,
+      logs,
+    });
+
+    assert.equal(deleteRoutineFromState(state, 'missing-routine'), state);
   });
 });
 
