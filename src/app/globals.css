@@ -20,7 +20,19 @@
   --accent-coral-soft: var(--accent-primary-soft);
   --accent-sage: var(--accent-primary);
   --accent-blue: var(--accent-primary);
-  --radius-card: 20px;
+  --radius-main-card: 24px;
+  --radius-sub-card: 20px;
+  --radius-button: 16px;
+  --radius-pill: 999px;
+  --radius-card: var(--radius-main-card);
+  --card-padding-main: 18px;
+  --card-padding-sub: 16px;
+  --list-card-padding: 16px;
+  --chip-height: 30px;
+  --chip-padding: 0 10px;
+  --button-height: 42px;
+  --stat-card-height: 96px;
+  --list-card-height: 84px;
   --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
@@ -93,7 +105,7 @@ button {
   gap: 5px;
   min-height: 36px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: #ffffff;
   color: #24302b;
   font-weight: 900;
@@ -146,7 +158,7 @@ button {
   margin: 8px 0 12px;
   padding: 0 14px;
   border: 1px solid #e6ebe6;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: #ffffff;
   color: #7a877f;
   box-shadow: 0 6px 18px rgba(36, 48, 43, 0.06);
@@ -164,9 +176,9 @@ button {
   align-items: center;
   gap: 10px;
   min-height: 148px;
-  padding: 18px;
+  padding: var(--card-padding-main);
   border: 1px solid #f1ded1;
-  border-radius: 8px;
+  border-radius: var(--radius-main-card);
   background: #fff4ea;
   box-shadow: 0 10px 28px rgba(139, 77, 54, 0.1);
 }
@@ -201,7 +213,7 @@ button {
   width: 76px;
   height: 92px;
   border: 1px solid #ffe0d5;
-  border-radius: 8px;
+  border-radius: var(--radius-sub-card);
   background: #ffffff;
   color: var(--accent-primary);
 }
@@ -242,7 +254,7 @@ h2 {
   width: 46px;
   height: 46px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: var(--surface-warm);
   color: #1f6e54;
 }
@@ -260,10 +272,10 @@ h2 {
 }
 
 .status-strip div {
-  min-height: 64px;
-  padding: 12px 10px;
+  min-height: var(--stat-card-height);
+  padding: var(--card-padding-sub);
   border: 1px solid #e2e9e3;
-  border-radius: 8px;
+  border-radius: var(--radius-sub-card);
   background: #ffffff;
   box-shadow: 0 5px 16px rgba(36, 48, 43, 0.05);
 }
@@ -306,7 +318,7 @@ h2 {
   justify-content: center;
   gap: 4px;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: transparent;
   color: #50625a;
   font-size: 12px;
@@ -357,7 +369,7 @@ h2 {
   min-height: 74px;
   padding: 10px 8px;
   border: 1px solid #eadde4;
-  border-radius: 8px;
+  border-radius: var(--radius-sub-card);
   background: #ffffff;
   color: #24302b;
   font-size: 12px;
@@ -377,9 +389,9 @@ h2 {
 .section-block,
 .quick-actions,
 .recommendation-slot {
-  padding: 14px;
+  padding: var(--card-padding-main);
   border: 1px solid #e2e9e3;
-  border-radius: 8px;
+  border-radius: var(--radius-main-card);
   background: #ffffff;
   box-shadow: 0 6px 18px rgba(36, 48, 43, 0.05);
 }
@@ -397,10 +409,10 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 30px;
-  padding: 0 10px;
+  min-height: var(--chip-height);
+  padding: var(--chip-padding);
   border: 1px solid #e5e9e4;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: #f8faf7;
   color: #637168;
   font-size: 12px;
@@ -414,12 +426,12 @@ h2 {
 
 .mini-action {
   display: inline-flex;
-  min-height: 30px;
+  min-height: var(--chip-height);
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 0 9px;
-  border-radius: 999px;
+  padding: var(--chip-padding);
+  border-radius: var(--radius-pill);
   font-size: 11px;
   font-weight: 900;
   line-height: 1;
@@ -441,9 +453,9 @@ h2 {
 .pet-profile-card {
   display: grid;
   gap: 14px;
-  padding: 16px;
+  padding: var(--card-padding-main);
   border: 1px solid #dfe8e2;
-  border-radius: 8px;
+  border-radius: var(--radius-main-card);
   background: #ffffff;
   box-shadow: 0 8px 22px rgba(36, 48, 43, 0.07);
 }
@@ -461,7 +473,7 @@ h2 {
   width: 58px;
   height: 58px;
   border: 1px solid #ffe0d5;
-  border-radius: 8px;
+  border-radius: var(--radius-sub-card);
   background: #fff4ea;
   color: var(--accent-primary);
 }
@@ -482,9 +494,9 @@ h2 {
 .profile-stats span {
   display: grid;
   gap: 3px;
-  min-height: 58px;
-  padding: 9px;
-  border-radius: 8px;
+  min-height: var(--stat-card-height);
+  padding: var(--card-padding-sub);
+  border-radius: var(--radius-sub-card);
   background: #f4f8f6;
   color: #6c7971;
   font-size: 12px;
@@ -503,9 +515,9 @@ h2 {
 }
 
 .profile-actions button {
-  min-height: 42px;
+  min-height: var(--button-height);
   border: 1px solid #eadde4;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: #fff8fb;
   color: #b51f5a;
   font-size: 13px;
@@ -524,10 +536,10 @@ h2 {
   align-items: center;
   gap: 10px;
   width: 100%;
-  min-height: 64px;
-  padding: 10px;
+  min-height: var(--list-card-height);
+  padding: var(--list-card-padding);
   border: 1px solid #e2e9e3;
-  border-radius: 8px;
+  border-radius: var(--radius-sub-card);
   background: #fbfdfc;
   color: #24302b;
   text-align: left;
@@ -543,7 +555,7 @@ h2 {
   place-items: center;
   width: 38px;
   height: 38px;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: #ffffff;
   color: var(--accent-primary);
 }
@@ -576,10 +588,10 @@ h2 {
   align-content: start;
   gap: 7px;
   min-width: 0;
-  min-height: 108px;
-  padding: 11px 9px;
+  min-height: var(--list-card-height);
+  padding: var(--list-card-padding);
   border: 1px solid #e6e9ee;
-  border-radius: 8px;
+  border-radius: var(--radius-sub-card);
   background: #ffffff;
   color: #24302b;
   text-align: left;
@@ -606,9 +618,9 @@ h2 {
   grid-template-columns: 36px 1fr auto;
   align-items: center;
   gap: 9px;
-  min-height: 58px;
-  padding: 9px;
-  border-radius: 8px;
+  min-height: var(--list-card-height);
+  padding: var(--list-card-padding);
+  border-radius: var(--radius-sub-card);
   background: #f5f8fb;
 }
 
@@ -617,7 +629,7 @@ h2 {
   place-items: center;
   width: 36px;
   height: 36px;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
   font-weight: 900;
@@ -641,7 +653,7 @@ h2 {
 .neighborhood-grid button {
   grid-template-columns: 32px 1fr;
   align-items: center;
-  min-height: 78px;
+  min-height: var(--list-card-height);
   background: #fffaf4;
   border-color: #efe0d2;
 }
@@ -684,12 +696,12 @@ h2 {
 
 .timeline-status {
   display: inline-flex;
-  min-height: 28px;
+  min-height: var(--chip-height);
   align-items: center;
   justify-content: center;
-  padding: 0 9px;
+  padding: var(--chip-padding);
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--surface);
   color: var(--muted);
   font-size: 11px;
@@ -701,6 +713,19 @@ h2 {
   border-color: rgba(232, 138, 115, 0.22);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
+}
+
+.section-chip,
+.timeline-status,
+.completion-badge,
+.mini-action,
+.toggle-on,
+.toggle-off,
+.detail-record-row time,
+.walk-record-stack b {
+  min-height: var(--chip-height);
+  padding: var(--chip-padding);
+  border-radius: var(--radius-pill);
 }
 
 .timeline-item p,
@@ -722,9 +747,9 @@ h2 {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  min-height: 42px;
+  min-height: var(--button-height);
   border: 1px solid var(--accent-primary);
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: var(--accent-primary);
   color: #ffffff;
   font-weight: 800;
@@ -762,9 +787,9 @@ h2 {
 .routine-form {
   display: grid;
   gap: 8px;
-  padding: 10px;
+  padding: var(--card-padding-sub);
   border: 1px solid #dce8e2;
-  border-radius: 8px;
+  border-radius: var(--radius-sub-card);
   background: #fbfdfc;
 }
 
@@ -792,7 +817,7 @@ h2 {
   min-height: 38px;
   padding: 0 9px;
   border: 1px solid #cbdcd4;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: #ffffff;
   color: #24302b;
 }
@@ -802,8 +827,9 @@ h2 {
 .expert-row {
   display: grid;
   gap: 4px;
-  padding: 10px;
-  border-radius: 8px;
+  min-height: var(--list-card-height);
+  padding: var(--list-card-padding);
+  border-radius: var(--radius-sub-card);
   background: #f4f8f6;
 }
 
@@ -869,7 +895,7 @@ h2 {
   min-height: 38px;
   padding: 0 10px;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: var(--radius-button);
   background: var(--surface);
   color: var(--ink);
   font-size: 13px;
@@ -919,10 +945,10 @@ h2 {
 
 .toggle-on,
 .toggle-off {
-  min-height: 30px;
-  padding: 0 10px;
+  min-height: var(--chip-height);
+  padding: var(--chip-padding);
   border: 1px solid var(--accent-primary);
-  border-radius: 8px;
+  border-radius: var(--radius-pill);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
   font-size: 12px;
@@ -952,7 +978,7 @@ h2 {
   min-height: 44px;
   padding: 0 12px;
   border: 1px solid #cbdcd4;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: #fbfdfc;
   color: #24302b;
 }
@@ -971,8 +997,8 @@ h2 {
 .calorie-band {
   display: grid;
   gap: 6px;
-  padding: 12px;
-  border-radius: 8px;
+  padding: var(--card-padding-sub);
+  border-radius: var(--radius-sub-card);
   background: #edf7f2;
 }
 
@@ -1012,7 +1038,7 @@ h2 {
   min-height: 110px;
   margin-top: 10px;
   border: 1px dashed rgba(232, 138, 115, 0.28);
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
   font-weight: 800;
@@ -1029,7 +1055,7 @@ h2 {
   justify-content: center;
   width: 42px;
   height: 42px;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
 }
@@ -1048,7 +1074,7 @@ h2 {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius-button);
   background: var(--surface);
   color: var(--muted);
   box-shadow: var(--shadow-soft);
@@ -1064,9 +1090,9 @@ h2 {
   display: grid;
   gap: 10px;
   margin: 0 0 12px;
-  padding: 12px;
+  padding: var(--card-padding-sub);
   border: 1px solid var(--line);
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-sub-card);
   background: var(--surface-warm);
   box-shadow: var(--shadow-soft);
 }
@@ -1109,7 +1135,7 @@ h2 {
 .memory-calendar-grid button,
 .memory-calendar-grid .empty {
   min-height: 34px;
-  border-radius: 12px;
+  border-radius: var(--radius-button);
 }
 
 .memory-calendar-grid button {
@@ -1161,10 +1187,10 @@ h2 {
   grid-template-columns: 72px minmax(0, 1fr);
   align-items: center;
   gap: 12px;
-  min-height: 88px;
-  padding: 10px;
+  min-height: var(--list-card-height);
+  padding: var(--list-card-padding);
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: var(--radius-sub-card);
   background: var(--surface);
   box-shadow: var(--shadow-soft);
 }
@@ -1173,7 +1199,7 @@ h2 {
   width: 72px;
   height: 68px;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: var(--radius-button);
   background: var(--surface-warm);
 }
 
@@ -1200,13 +1226,20 @@ h2 {
 
 .memory-date-list p {
   margin: 0;
-  padding: 12px;
+  padding: var(--list-card-padding);
   border: 1px dashed rgba(232, 138, 115, 0.24);
-  border-radius: 14px;
+  border-radius: var(--radius-sub-card);
   background: var(--surface);
   color: var(--muted);
   font-size: 12px;
   line-height: 1.45;
+}
+
+.detail-record-row,
+.walk-record-stack article,
+.memory-photo-card {
+  min-height: var(--list-card-height);
+  padding: var(--list-card-padding);
 }
 
 .memory-save-button {
@@ -1236,7 +1269,7 @@ h2 {
   max-height: 220px;
   margin-top: 10px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: var(--radius-sub-card);
 }
 
 .calendar-row {
@@ -1341,6 +1374,9 @@ body {
 
 .section-chip,
 .ghost-action {
+  min-height: var(--chip-height);
+  padding: var(--chip-padding);
+  border-radius: var(--radius-pill);
   border-color: var(--line);
   background: var(--surface-warm);
   color: var(--ink);
@@ -1416,9 +1452,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 9px;
-  min-height: 42px;
+  min-height: var(--button-height);
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   font-weight: 900;
   letter-spacing: 0;
 }
@@ -1441,7 +1477,7 @@ body {
   width: 28px;
   height: 28px;
   flex: 0 0 28px;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   background: rgba(255, 255, 255, 0.72);
 }
 
@@ -1554,7 +1590,7 @@ body {
   gap: 7px;
   padding: 0 12px 0 8px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--surface);
   color: var(--muted);
   font-size: 13px;
@@ -1563,11 +1599,14 @@ body {
 }
 
 .care-hero,
-.status-strip div,
 .section-block,
 .quick-actions,
 .recommendation-slot,
-.pet-profile-card,
+.pet-profile-card {
+  border-radius: var(--radius-main-card);
+}
+
+.status-strip div,
 .care-status-item,
 .recent-record-grid button,
 .neighborhood-grid button,
@@ -1583,20 +1622,27 @@ body {
 .detail-record-row,
 .week-check-grid span,
 .walk-record-stack article,
-.local-care-grid article {
-  border-radius: var(--radius-card);
+.local-care-grid article,
+.hero-status-list,
+.goal-achievement-card,
+.memory-calendar,
+.memory-photo-card {
+  border-radius: var(--radius-sub-card);
 }
 
-.bottom-tabbar,
+.bottom-tabbar {
+  border-radius: 28px 28px 0 0;
+}
+
 .tab.active {
-  border-radius: 20px 20px 0 0;
+  border-radius: var(--radius-button);
 }
 
 .profile-avatar {
   width: 76px;
   height: 76px;
   overflow: hidden;
-  border-radius: 22px;
+  border-radius: var(--radius-sub-card);
   background: var(--surface-warm);
 }
 
@@ -1609,8 +1655,8 @@ body {
 
 .pet-hero-card {
   gap: 18px;
-  padding: 20px;
-  border-radius: 24px;
+  padding: var(--card-padding-main);
+  border-radius: var(--radius-main-card);
 }
 
 .pet-hero-main {
@@ -1627,7 +1673,7 @@ body {
 }
 
 .hero-pet-photo {
-  border-radius: 24px;
+  border-radius: var(--radius-main-card);
   box-shadow: 0 14px 26px rgba(45, 42, 38, 0.1);
 }
 
@@ -1638,10 +1684,10 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  min-height: 28px;
-  padding: 0 9px;
+  min-height: var(--chip-height);
+  padding: var(--chip-padding);
   border: 1px solid rgba(232, 138, 115, 0.26);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 253, 249, 0.94);
   color: var(--accent-primary);
   font-size: 12px;
@@ -1672,7 +1718,7 @@ body {
   gap: 12px;
   padding: 16px;
   border: 1px solid rgba(232, 138, 115, 0.18);
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-sub-card);
   background: var(--surface);
   box-shadow: var(--shadow-soft);
 }
@@ -1710,7 +1756,7 @@ body {
   width: 20px;
   height: 20px;
   flex: 0 0 20px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
 }
@@ -1720,7 +1766,7 @@ body {
   gap: 14px;
   padding: 16px;
   border: 1px solid rgba(232, 138, 115, 0.24);
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-sub-card);
   background: var(--surface-warm);
   box-shadow: var(--shadow-soft);
 }
@@ -1805,7 +1851,7 @@ body {
   gap: 10px;
   padding: 16px;
   border: 1px solid var(--line);
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-sub-card);
   background: var(--surface);
   color: var(--ink);
   text-align: left;
@@ -1818,7 +1864,7 @@ body {
   justify-content: center;
   width: 34px;
   height: 34px;
-  border-radius: 12px;
+  border-radius: var(--radius-button);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
 }
@@ -1851,7 +1897,8 @@ body {
 .quick-actions,
 .recommendation-slot,
 .pet-profile-card {
-  padding: 18px;
+  padding: var(--card-padding-main);
+  border-radius: var(--radius-main-card);
 }
 
 .care-shortcuts {
@@ -1879,8 +1926,8 @@ body {
 }
 
 .pet-hero-card .profile-stats span {
-  min-height: 76px;
-  padding: 14px;
+  min-height: var(--stat-card-height);
+  padding: var(--card-padding-sub);
   border: 1px solid rgba(234, 222, 210, 0.72);
   background: #fffaf6;
 }
@@ -1916,7 +1963,7 @@ body {
 .shortcut-icon {
   width: 40px;
   height: 40px;
-  border-radius: 14px;
+  border-radius: var(--radius-button);
 }
 
 .shortcut-grid button strong {
@@ -1943,7 +1990,7 @@ body {
   min-height: 72px;
   gap: 6px;
   border: 1px solid transparent;
-  border-radius: 22px;
+  border-radius: var(--radius-button);
   color: #746f66;
   font-size: 13px;
   font-weight: 850;
@@ -1960,7 +2007,7 @@ body {
 
 .tab.active {
   border: 1px solid rgba(232, 138, 115, 0.2);
-  border-radius: 22px;
+  border-radius: var(--radius-button);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
   font-weight: 950;
@@ -2051,18 +2098,18 @@ body {
 .weekly-care-grid article,
 .local-summary-grid article {
   display: grid;
-  min-height: 96px;
+  min-height: var(--stat-card-height);
   align-content: start;
   gap: 5px;
-  padding: 14px;
+  padding: var(--card-padding-sub);
   border: 1px solid var(--line);
   background: var(--surface);
   box-shadow: var(--shadow-soft);
 }
 
 .compact-stat-panel .detail-stat-grid article {
-  min-height: 76px;
-  padding: 12px 10px;
+  min-height: var(--stat-card-height);
+  padding: var(--card-padding-sub);
 }
 
 .detail-stat-grid strong,
@@ -2110,8 +2157,8 @@ body {
   grid-template-columns: 58px 1fr;
   align-items: center;
   gap: 12px;
-  min-height: 70px;
-  padding: 12px;
+  min-height: var(--list-card-height);
+  padding: var(--list-card-padding);
   border: 1px solid var(--line);
   background: var(--surface-warm);
   box-shadow: var(--shadow-soft);
@@ -2119,10 +2166,10 @@ body {
 
 .detail-record-row time {
   display: inline-flex;
-  min-height: 34px;
+  min-height: var(--chip-height);
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--surface);
   color: var(--accent-primary);
   font-size: 12px;
@@ -2160,10 +2207,10 @@ body {
 
 .week-check-grid span {
   display: grid;
-  min-height: 76px;
+  min-height: var(--list-card-height);
   place-items: center;
   gap: 6px;
-  padding: 12px 8px;
+  padding: var(--list-card-padding);
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--muted);
@@ -2191,8 +2238,8 @@ body {
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 16px;
-  min-height: 84px;
-  padding: 16px;
+  min-height: var(--list-card-height);
+  padding: var(--list-card-padding);
   border: 1px solid var(--line);
   background: var(--surface);
   box-shadow: var(--shadow-soft);
@@ -2201,10 +2248,10 @@ body {
 .walk-record-stack b {
   display: inline-flex;
   min-width: 64px;
-  min-height: 38px;
+  min-height: var(--chip-height);
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--accent-primary-soft);
   color: var(--accent-primary);
   font-size: 13px;
@@ -2219,7 +2266,7 @@ body {
 .local-care-grid article {
   min-height: 154px;
   align-content: start;
-  padding: 15px;
+  padding: var(--card-padding-sub);
   border: 1px solid var(--line);
   background: var(--surface);
   box-shadow: var(--shadow-soft);

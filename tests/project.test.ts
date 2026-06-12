@@ -111,11 +111,15 @@ describe('mobile browser delivery', () => {
     assert.match(css, /--accent-blue: var\(--accent-primary\)/);
     assert.match(css, /--surface-blue: #fff7f2/);
     assert.doesNotMatch(css, /#d8296d|#0f7d5e|#1f7a5e|#345d8a|#244d7a/);
-    assert.match(css, /--radius-card: 20px/);
+    assert.match(css, /--radius-main-card: 24px/);
+    assert.match(css, /--radius-sub-card: 20px/);
+    assert.match(css, /--radius-button: 16px/);
+    assert.match(css, /--radius-pill: 999px/);
+    assert.match(css, /--card-padding-main: 18px/);
     assert.match(css, /\.soft-metric/);
     assert.match(css, /\.pet-hero-card \.profile-stats strong \{[\s\S]*font-size: 26px/);
-    assert.match(css, /\.hero-status-list \{[\s\S]*border-radius: var\(--radius-card\)/);
-    assert.match(css, /\.goal-achievement-card \{[\s\S]*border-radius: var\(--radius-card\)/);
+    assert.match(css, /\.hero-status-list \{[\s\S]*border-radius: var\(--radius-sub-card\)/);
+    assert.match(css, /\.goal-achievement-card \{[\s\S]*border-radius: var\(--radius-sub-card\)/);
     assert.doesNotMatch(css, /\.progress-ring \{/);
     assert.match(css, /\.shortcut-grid/);
     assert.match(css, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
@@ -140,7 +144,7 @@ describe('mobile browser delivery', () => {
 
     assert.match(css, /\.mobile-shell \{[\s\S]*padding: 20px 16px 124px/);
     assert.match(css, /\.view-stack \{[\s\S]*gap: 30px/);
-    assert.match(css, /\.section-block,[\s\S]*\.pet-profile-card \{[\s\S]*padding: 18px/);
+    assert.match(css, /\.section-block,[\s\S]*\.pet-profile-card \{[\s\S]*padding: var\(--card-padding-main\)/);
     assert.match(css, /\.care-status-list,[\s\S]*\.family-feed \{[\s\S]*gap: 20px/);
     assert.match(css, /\.shortcut-grid \{[\s\S]*gap: 20px/);
     assert.match(css, /\.recent-record-grid,[\s\S]*\.quick-actions \{[\s\S]*gap: 14px/);
@@ -173,6 +177,25 @@ describe('mobile browser delivery', () => {
     assert.match(css, /\.action-button/);
     assert.match(css, /\.action-icon/);
     assert.match(css, /\.surface-action/);
+  });
+
+  it('uses one radius, padding, badge, and list-card system across pages', () => {
+    const css = readFileSync('src/app/globals.css', 'utf8');
+
+    assert.match(css, /--radius-main-card: 24px/);
+    assert.match(css, /--radius-sub-card: 20px/);
+    assert.match(css, /--radius-button: 16px/);
+    assert.match(css, /--radius-pill: 999px/);
+    assert.match(css, /--chip-height: 30px/);
+    assert.match(css, /--chip-padding: 0 10px/);
+    assert.match(css, /--stat-card-height: 96px/);
+    assert.match(css, /--list-card-height: 84px/);
+    assert.match(css, /\.section-block,[\s\S]*\.pet-profile-card \{[\s\S]*padding: var\(--card-padding-main\);[\s\S]*border-radius: var\(--radius-main-card\)/);
+    assert.match(css, /\.care-status-item,[\s\S]*\.memory-photo-card \{[\s\S]*border-radius: var\(--radius-sub-card\)/);
+    assert.match(css, /\.section-chip,[\s\S]*\.timeline-status \{[\s\S]*min-height: var\(--chip-height\);[\s\S]*padding: var\(--chip-padding\);[\s\S]*border-radius: var\(--radius-pill\)/);
+    assert.match(css, /\.primary-action,[\s\S]*\.file-picker \{[\s\S]*border-radius: var\(--radius-button\)/);
+    assert.match(css, /\.detail-stat-grid article,[\s\S]*\.local-summary-grid article \{[\s\S]*min-height: var\(--stat-card-height\)/);
+    assert.match(css, /\.detail-record-row,[\s\S]*\.memory-photo-card \{[\s\S]*min-height: var\(--list-card-height\);[\s\S]*padding: var\(--list-card-padding\)/);
   });
 
   it('fills detail pages with service-like data sections', () => {
