@@ -77,6 +77,7 @@ describe('appendCareLog', () => {
       category: 'meal',
       title: 'Snack',
       tags: ['snack'],
+      imageUrl: 'data:image/png;base64,abc',
     });
 
     assert.equal(state.logs.length, 1);
@@ -89,6 +90,7 @@ describe('appendCareLog', () => {
       occurredAt: '2026-06-05T10:30:00+09:00',
       tags: ['snack'],
       sourceRoutineId: undefined,
+      imageUrl: 'data:image/png;base64,abc',
     });
   });
 });

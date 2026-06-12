@@ -52,6 +52,7 @@ export function appendCareLog(
     title: string;
     tags?: string[];
     sourceRoutineId?: string;
+    imageUrl?: string;
   },
 ): CareAppState {
   return {
@@ -66,6 +67,7 @@ export function appendCareLog(
         occurredAt: input.now,
         tags: input.tags ? [...input.tags] : undefined,
         sourceRoutineId: input.sourceRoutineId,
+        imageUrl: input.imageUrl,
       },
     ],
   };

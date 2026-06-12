@@ -150,6 +150,7 @@ const detailPageTitles: Record<Exclude<TabId, 'today'>, string> = {
 };
 
 const memoryWeekdays = ['일', '월', '화', '수', '목', '금', '토'];
+const defaultMemoryImageUrl = 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=420&q=80';
 
 const expertDistances: Record<string, string> = {
   'vet-1': '600m',
@@ -418,7 +419,7 @@ export function MobileCareApp() {
   const selectedMemoryLogs = memoryLogsByDate[selectedMemoryDate] ?? [];
   const recentCareLogs = careState.logs.slice().reverse().slice(0, 4);
 
-  function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string) {
+  function addLog(category: CareCategory, title: string, tags: string[] = [], sourceRoutineId?: string, imageUrl?: string) {
     setCareState((current) =>
       appendCareLog(current, {
         id: createLogId(),
@@ -427,8 +428,26 @@ export function MobileCareApp() {
         title,
         tags,
         sourceRoutineId,
+        imageUrl,
       }),
     );
+  }
+
+  function addMemoryDiary() {
+    if (!memoryPreview) return;
+    setCareState((current) =>
+      appendCareLog(current, {
+        id: createLogId(),
+        now: createOccurredAt(current.activeDate),
+        category: 'memory',
+        title: memoryTitle.trim() || '오늘의 사진 일지',
+        tags: ['사진', '추억'],
+        imageUrl: memoryPreview,
+      }),
+    );
+    setSelectedMemoryDate(careState.activeDate);
+    setShowMemoryCalendar(true);
+    setMemoryPreview(null);
   }
 
   function completeRoutine(routineId: string) {
@@ -561,6 +580,54 @@ export function MobileCareApp() {
               </button>
             </>
           )}
+        </div>
+      </article>
+    );
+  }
+
+  function renderMemoryPhotoCard(log: CareLog) {
+    const isEditing = editingLogId === log.id;
+
+    return (
+      <article key={log.id} className={isEditing ? 'memory-photo-card is-editing' : 'memory-photo-card'}>
+        <img src={memoryImageCopy(log)} alt={`${log.title} 사진`} />
+        <div>
+          {isEditing ? (
+            <label className="inline-edit-field">
+              <span>짧은 제목</span>
+              <input value={editingLogTitle} onChange={(event) => setEditingLogTitle(event.target.value)} />
+            </label>
+          ) : (
+            <>
+              <strong>{shortMemoryTitle(log.title)}</strong>
+              <span>{logTimeCopy(log.occurredAt)}</span>
+            </>
+          )}
+          <div className="record-actions">
+            {isEditing ? (
+              <>
+                <button className="mini-action save-action" onClick={() => saveEditingLog(log.id)} type="button">
+                  <Save size={13} />
+                  저장
+                </button>
+                <button className="mini-action ghost-action" onClick={cancelEditingLog} type="button">
+                  <X size={13} />
+                  취소
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="mini-action ghost-action" onClick={() => startEditingLog(log)} type="button">
+                  <Pencil size={13} />
+                  수정
+                </button>
+                <button className="mini-action danger-action" onClick={() => removeLog(log.id)} type="button">
+                  <Trash2 size={13} />
+                  삭제
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </article>
     );
@@ -1437,7 +1504,7 @@ export function MobileCareApp() {
                       <span>{memoryDateLabel(selectedMemoryDate)}</span>
                     </div>
                     {selectedMemoryLogs.length > 0 ? (
-                      selectedMemoryLogs.map((log) => renderEditableLog(log, `${logTimeCopy(log.occurredAt)} · ${log.tags?.join(', ') || '추억'}`))
+                      <div className="memory-photo-list">{selectedMemoryLogs.map((log) => renderMemoryPhotoCard(log))}</div>
                     ) : (
                       <p>이 날짜에는 아직 등록한 일지가 없어요.</p>
                     )}
@@ -1454,6 +1521,12 @@ export function MobileCareApp() {
                 <input type="file" accept="image/*" onChange={(event) => handleMemoryFile(event.target.files?.[0])} />
               </label>
               {memoryPreview && <img className="memory-preview" src={memoryPreview} alt="선택한 추억 사진 미리보기" />}
+              <button className="primary-action action-button memory-save-button" disabled={!memoryPreview} onClick={addMemoryDiary} type="button">
+                <span className="action-icon">
+                  <Camera size={18} />
+                </span>
+                사진 일지 등록
+              </button>
             </section>
             <section className="section-block">
               <div className="section-title">
@@ -1535,6 +1608,16 @@ function logMetaCopy(log: CareLog) {
 function logTimeCopy(occurredAt: string) {
   const time = occurredAt.split('T')[1]?.slice(0, 5);
   return time || '시간 없음';
+}
+
+function memoryImageCopy(log: CareLog) {
+  return log.imageUrl || defaultMemoryImageUrl;
+}
+
+function shortMemoryTitle(title: string) {
+  const trimmed = title.trim();
+  if (trimmed.length <= 14) return trimmed;
+  return `${trimmed.slice(0, 14)}...`;
 }
 
 function memoryMonthLabel(dateKey: string) {

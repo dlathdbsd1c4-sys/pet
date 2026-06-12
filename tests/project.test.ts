@@ -244,11 +244,19 @@ describe('mobile browser delivery', () => {
     assert.match(component, /aria-label="사진 일지 달력 보기"/);
     assert.match(component, /className="memory-calendar"/);
     assert.match(component, /className="memory-date-list"/);
+    assert.match(component, /className="memory-photo-list"/);
+    assert.match(component, /memory-photo-card/);
+    assert.match(component, /addMemoryDiary/);
+    assert.match(component, /imageUrl: memoryPreview/);
+    assert.match(component, /사진 일지 등록/);
+    assert.match(component, /memoryImageCopy/);
     assert.match(component, /선택한 날짜의 일지/);
     assert.match(css, /\.calendar-toggle/);
     assert.match(css, /\.memory-calendar/);
     assert.match(css, /\.memory-calendar-grid/);
     assert.match(css, /\.memory-date-list/);
+    assert.match(css, /\.memory-photo-list/);
+    assert.match(css, /\.memory-photo-card/);
   });
 });
 

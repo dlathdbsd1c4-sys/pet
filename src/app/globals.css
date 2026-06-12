@@ -1151,6 +1151,53 @@ h2 {
   padding-top: 4px;
 }
 
+.memory-photo-list {
+  display: grid;
+  gap: 10px;
+}
+
+.memory-photo-card {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 88px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.memory-photo-card img {
+  width: 72px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--surface-warm);
+}
+
+.memory-photo-card > div {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.memory-photo-card strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.memory-photo-card span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
 .memory-date-list p {
   margin: 0;
   padding: 12px;
@@ -1160,6 +1207,16 @@ h2 {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.45;
+}
+
+.memory-save-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.memory-save-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .file-picker {

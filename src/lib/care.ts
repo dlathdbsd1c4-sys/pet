@@ -18,6 +18,7 @@ export type CareLog = {
   occurredAt: string;
   sourceRoutineId?: string;
   tags?: string[];
+  imageUrl?: string;
 };
 
 export type PetProfile = {
